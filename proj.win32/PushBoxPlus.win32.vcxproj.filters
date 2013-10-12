@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="source">
+      <UniqueIdentifier>{5aadc7c4-8a85-44bb-b84e-310c2d39c441}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{2296e193-6a21-4cc1-a915-e5f170dbb416}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc</Extensions>
+    </Filter>
+    <Filter Include="resource">
+      <UniqueIdentifier>{a47bac66-14d4-4bde-848c-6cf9cd643689}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;jpg;jpeg;jpe;png;manifest</Extensions>
+    </Filter>
+    <Filter Include="JvGame">
+      <UniqueIdentifier>{4c358071-06cc-4683-85cf-76de5bdc74a5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\PushBoxPlus.ico">
+      <Filter>resource</Filter>
+    </None>
+    <None Include="..\Resources\CloseSelected.png">
+      <Filter>resource</Filter>
+    </None>
+    <None Include="..\Resources\CloseNormal.png">
+      <Filter>resource</Filter>
+    </None>
+    <None Include="..\Resources\HelloWorld.png">
+      <Filter>resource</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PushBoxPlus.rc">
+      <Filter>resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\AppDelegate.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MapData.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JvGame\JvCamera.h">
+      <Filter>JvGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JvGame\JvG.h">
+      <Filter>JvGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JvGame\JvGroup.h">
+      <Filter>JvGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JvGame\JvH.h">
+      <Filter>JvGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JvGame\JvList.h">
+      <Filter>JvGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JvGame\JvObject.h">
+      <Filter>JvGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JvGame\JvPoint.h">
+      <Filter>JvGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JvGame\JvQuadTree.h">
+      <Filter>JvGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JvGame\JvRect.h">
+      <Filter>JvGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JvGame\JvSave.h">
+      <Filter>JvGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JvGame\JvSprite.h">
+      <Filter>JvGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JvGame\JvState.h">
+      <Filter>JvGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JvGame\JvTilemap.h">
+      <Filter>JvGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\JvGame\JvU.h">
+      <Filter>JvGame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\StateGame.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AppDelegate.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MapData.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\JvGame\JvCamera.cpp">
+      <Filter>JvGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\JvGame\JvG.cpp">
+      <Filter>JvGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\JvGame\JvGroup.cpp">
+      <Filter>JvGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\JvGame\JvList.cpp">
+      <Filter>JvGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\JvGame\JvObject.cpp">
+      <Filter>JvGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\JvGame\JvPoint.cpp">
+      <Filter>JvGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\JvGame\JvQuadTree.cpp">
+      <Filter>JvGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\JvGame\JvRect.cpp">
+      <Filter>JvGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\JvGame\JvSave.cpp">
+      <Filter>JvGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\JvGame\JvSprite.cpp">
+      <Filter>JvGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\JvGame\JvState.cpp">
+      <Filter>JvGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\JvGame\JvTilemap.cpp">
+      <Filter>JvGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\JvGame\JvU.cpp">
+      <Filter>JvGame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\StateGame.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
