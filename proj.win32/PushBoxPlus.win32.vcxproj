@@ -132,20 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
-    <ClInclude Include="..\Classes\JvGame\JvCamera.h" />
-    <ClInclude Include="..\Classes\JvGame\JvG.h" />
-    <ClInclude Include="..\Classes\JvGame\JvGroup.h" />
-    <ClInclude Include="..\Classes\JvGame\JvH.h" />
-    <ClInclude Include="..\Classes\JvGame\JvList.h" />
-    <ClInclude Include="..\Classes\JvGame\JvObject.h" />
-    <ClInclude Include="..\Classes\JvGame\JvPoint.h" />
-    <ClInclude Include="..\Classes\JvGame\JvQuadTree.h" />
-    <ClInclude Include="..\Classes\JvGame\JvRect.h" />
-    <ClInclude Include="..\Classes\JvGame\JvSave.h" />
-    <ClInclude Include="..\Classes\JvGame\JvSprite.h" />
-    <ClInclude Include="..\Classes\JvGame\JvState.h" />
-    <ClInclude Include="..\Classes\JvGame\JvTilemap.h" />
-    <ClInclude Include="..\Classes\JvGame\JvU.h" />
     <ClInclude Include="..\Classes\MapData.h" />
     <ClInclude Include="..\Classes\StateGame.h" />
     <ClInclude Include="main.h" />
@@ -153,19 +139,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\JvGame\JvCamera.cpp" />
-    <ClCompile Include="..\Classes\JvGame\JvG.cpp" />
-    <ClCompile Include="..\Classes\JvGame\JvGroup.cpp" />
-    <ClCompile Include="..\Classes\JvGame\JvList.cpp" />
-    <ClCompile Include="..\Classes\JvGame\JvObject.cpp" />
-    <ClCompile Include="..\Classes\JvGame\JvPoint.cpp" />
-    <ClCompile Include="..\Classes\JvGame\JvQuadTree.cpp" />
-    <ClCompile Include="..\Classes\JvGame\JvRect.cpp" />
-    <ClCompile Include="..\Classes\JvGame\JvSave.cpp" />
-    <ClCompile Include="..\Classes\JvGame\JvSprite.cpp" />
-    <ClCompile Include="..\Classes\JvGame\JvState.cpp" />
-    <ClCompile Include="..\Classes\JvGame\JvTilemap.cpp" />
-    <ClCompile Include="..\Classes\JvGame\JvU.cpp" />
     <ClCompile Include="..\Classes\MapData.cpp" />
     <ClCompile Include="..\Classes\StateGame.cpp" />
     <ClCompile Include="main.cpp" />

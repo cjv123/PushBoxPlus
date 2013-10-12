@@ -1,9 +1,10 @@
 #ifndef _STATEGAME_H
 #define _STATEGAME_H
 
-#include <JvState.h>
+#include <cocos2d.h>
+using namespace cocos2d;
 
-class StateGame : public JvState
+class StateGame : public CCScene
 {
 public:
 	StateGame();
