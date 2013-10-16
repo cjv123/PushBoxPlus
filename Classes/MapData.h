@@ -28,6 +28,7 @@ public:
 	void initMap(const char* mapfilename);
 	static char* readLine(char* source,char* des);
 	
+	vector<MapInfo*>& getMapLvDatas();
 private:
 	MapData();
 	~MapData();

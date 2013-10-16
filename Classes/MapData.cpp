@@ -131,4 +131,9 @@ MapData* MapData::getInstance()
 	return &instance;
 }
 
+vector<MapInfo*>& MapData::getMapLvDatas()
+{
+	return mMapLvDatas;
+}
+
 
