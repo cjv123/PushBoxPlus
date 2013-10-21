@@ -6,7 +6,11 @@
 #define KEY_UP(vk_code) (GetAsyncKeyState(vk_code) & 0x8000 ? 0 : 1)  
 #endif
 
-StateGame::StateGame()
+float StateGame::tileH = 32.0f;
+
+float StateGame::tileW = 32.0f;
+
+StateGame::StateGame() : mIsmove(false)
 {
 
 }
@@ -34,23 +38,82 @@ bool StateGame::init()
 	scheduleUpdate();
 
 	MapData::getInstance()->initMap("map.mp");
-
+	CCTexture2D* textureWall = CCTextureCache::sharedTextureCache()->addImage("wall.png");
+	CCTexture2D* textureBox = CCTextureCache::sharedTextureCache()->addImage("box.png");
+	CCTexture2D* textureFloor = CCTextureCache::sharedTextureCache()->addImage("floor.png");
 
 	MapInfo* mapinfo = MapData::getInstance()->getMapLvDatas().at(0);
 	mMapData = new MapInfo(*mapinfo);
 
-	mPusher = PusherSprite::create();
-	addChild(mPusher);
-	mPusher->setPosition(ccp(300,300));
+
 
 	vector<string>& mapdata = mapinfo->getMapData();
 	for (int i=0;i<(int)mapdata.size();i++)
 	{
 		for (int j=0;j<(int)mapdata[i].size();j++)
 		{
-			if (mapdata[i][j]=='*')
-			{
+			float x = j*tileW;
+			float y = mapinfo->getMapSize().height*tileH - i*tileH;
 
+			if (mapdata[i][j]=='.')
+			{
+				CCSprite* floor = CCSprite::createWithTexture(textureFloor,CCRectMake(0,9*tileH,tileW,tileH));
+				addChild(floor);
+				floor->setAnchorPoint(ccp(0.0f,0.0f));
+				floor->setPosition(ccp(x,y));
+			}
+			else if (mapdata[i][j]=='#')
+			{
+				CCSprite* wall = CCSprite::createWithTexture(textureWall,CCRectMake(0,tileH,tileW,tileH));
+				addChild(wall);
+				mWalls.push_back(wall);
+				wall->setAnchorPoint(ccp(0.0f,0.0f));
+				wall->setPosition(ccp(x,y));
+			}
+			else if (mapdata[i][j]=='@')
+			{
+				mPusher = PusherSprite::create();
+				mPusher->setAnchorPoint(ccp(0,0));
+				addChild(mPusher);
+				mPusher->setPosition(ccp(x,y));
+				mPusherMapPos = ccp(i,j);
+			}
+			else if (mapdata[i][j]=='$')
+			{
+				CCSprite* box = CCSprite::createWithTexture(textureBox,CCRectMake(0,0,tileW,tileH));
+				addChild(box);
+				mBoxs.push_back(box);
+				box->setAnchorPoint(ccp(0.0f,0.0f));
+				box->setPosition(ccp(x,y));
+			}
+			else if (mapdata[i][j]=='+')
+			{
+				CCSprite* floor = CCSprite::createWithTexture(textureFloor,CCRectMake(0,9*tileH,tileW,tileH));
+				addChild(floor);
+				floor->setAnchorPoint(ccp(0.0f,0.0f));
+				floor->setPosition(ccp(x,y));
+
+				mPusher = PusherSprite::create();
+				mPusher->setAnchorPoint(ccp(0,0));
+				addChild(mPusher);
+				mPusher->setPosition(ccp(x,y));
+				mPusherMapPos = ccp(i,j);
+			}
+			else if (mapdata[i][j]=='*')
+			{
+				CCSprite* floor = CCSprite::createWithTexture(textureFloor,CCRectMake(0,9*tileH,tileW,tileH));
+				addChild(floor);
+				floor->setAnchorPoint(ccp(0.0f,0.0f));
+				floor->setPosition(ccp(x,y));
+
+				CCSprite* box = CCSprite::createWithTexture(textureBox,CCRectMake(0,0,tileW,tileH));
+				addChild(box);
+				mBoxs.push_back(box);
+				box->setAnchorPoint(ccp(0.0f,0.0f));
+				box->setPosition(ccp(x,y));
+			}
+			else if (mapdata[i][j]==' ')
+			{
 			}
 		}
 	}
@@ -62,24 +125,93 @@ bool StateGame::init()
 void StateGame::update( float delta )
 {
 #ifdef WIN32
-	if (KEY_DOWN(VK_UP))
+	if(!mIsmove)
 	{
-		mPusher->playUpMoveAnim();
+		if (KEY_DOWN(VK_UP))
+		{
+			mPusher->playUpMoveAnim();
+			move(dir_up);
+		}
+		else if (KEY_DOWN(VK_DOWN))
+		{
+			mPusher->playDownMoveAnim();
+			move(dir_down);
+		}
+		else if (KEY_DOWN(VK_LEFT))
+		{
+			mPusher->playLeftMoveAnim();
+			move(dir_left);
+		}
+		else if (KEY_DOWN(VK_RIGHT))
+		{
+			mPusher->playRightMoveAnim();
+			move(dir_right);
+		}
 	}
-	else if (KEY_DOWN(VK_DOWN))
-	{
-		mPusher->playDownMoveAnim();
-	}
-	else if (KEY_DOWN(VK_LEFT))
-	{
-		mPusher->playLeftMoveAnim();
-	}
-	else if (KEY_DOWN(VK_RIGHT))
-	{
-		mPusher->playRightMoveAnim();
-	}
+	
 #endif
 }
+
+bool StateGame::move( int direct )
+{
+	if (mIsmove)
+		return false;
+
+	CCPoint nextp;
+	if (direct == dir_up)
+	{
+		int nextrow = mPusherMapPos.x-1;
+		if (nextrow<1)
+			return false;
+		nextp = ccp(nextrow,mPusherMapPos.y);
+		
+	}
+	else if (direct == dir_down)
+	{
+		int nextrow = mPusherMapPos.x+1;
+		if (nextrow>mMapData->getMapSize().height - 1)
+			return false;
+		nextp = ccp(nextrow,mPusherMapPos.y);
+
+	}
+	else if (direct == dir_left)
+	{
+		int nextcol = mPusherMapPos.y-1;
+		if (nextcol<1)
+			return false;
+		nextp = ccp(mPusherMapPos.x,nextcol);
+	}
+	else if (direct == dir_right)
+	{
+		int nextcol = mPusherMapPos.y+1;
+		if (nextcol>mMapData->getMapSize().width - 1)
+			return false;
+		nextp = ccp(mPusherMapPos.x,nextcol);
+	}
+
+	char nextsign = mMapData->getMapData().at(nextp.x).at(nextp.y);
+	if (nextsign == ' ')
+	{
+		float x = nextp.y*tileW;
+		float y = mMapData->getMapSize().height*tileH - nextp.x*tileH;
+		CCMoveTo* moveanim = CCMoveTo::create(0.5f,ccp(x,y));
+		CCSequence* seq = CCSequence::create(moveanim,CCCallFunc::create(this,callfunc_selector(StateGame::onMoveAnimComplete)),NULL);
+		mPusher->runAction(seq);
+		mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y) = ' ';
+		mMapData->getMapData().at(nextp.x).at(nextp.y) = '@';
+		mPusherMapPos = nextp;
+		mIsmove = true;
+	}
+
+	return true;
+}
+
+void StateGame::onMoveAnimComplete()
+{
+	mIsmove = false;
+}
+
+
 
 
 

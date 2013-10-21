@@ -17,11 +17,27 @@ public:
 	virtual bool init();
 
 	virtual void update( float delta );
+	
+	enum direct
+	{
+		dir_up=0,dir_down,dir_left,dir_right
+	};
+	bool move(int direct);
 
 	CREATE_FUNC(StateGame);
 
+	static float tileW;
+	static float tileH;
 private:
+	void onMoveAnimComplete();
+
 	PusherSprite* mPusher;
+	CCPoint mPusherMapPos;
+	
+	vector<CCSprite*> mWalls;
+	vector<CCSprite*> mBoxs;
+
+	bool mIsmove;
 
 	MapInfo* mMapData;
 };
