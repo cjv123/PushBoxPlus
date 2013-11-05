@@ -45,8 +45,6 @@ bool StateGame::init()
 	MapInfo* mapinfo = MapData::getInstance()->getMapLvDatas().at(0);
 	mMapData = new MapInfo(*mapinfo);
 
-
-
 	vector<string>& mapdata = mapinfo->getMapData();
 	for (int i=0;i<(int)mapdata.size();i++)
 	{
@@ -152,55 +150,87 @@ void StateGame::update( float delta )
 #endif
 }
 
+
+CCPoint StateGame::getNextPos( int direct,const CCPoint& nowpoint )
+{
+	CCPoint nextp;
+	if (direct == dir_up)
+	{
+		int nextrow = nowpoint.x-1;
+		if (nextrow<1)
+			return nextp;
+		nextp = ccp(nextrow,nowpoint.y);
+
+	}
+	else if (direct == dir_down)
+	{
+		int nextrow = nowpoint.x+1;
+		if (nextrow>mMapData->getMapSize().height - 1)
+			return nextp;
+		nextp = ccp(nextrow,nowpoint.y);
+
+	}
+	else if (direct == dir_left)
+	{
+		int nextcol = nowpoint.y-1;
+		if (nextcol<1)
+			return nextp;
+		nextp = ccp(nowpoint.x,nextcol);
+	}
+	else if (direct == dir_right)
+	{
+		int nextcol = nowpoint.y+1;
+		if (nextcol>mMapData->getMapSize().width - 1)
+			return nextp;
+		nextp = ccp(nowpoint.x,nextcol);
+	}
+
+	return nextp;
+}
+
+
+void StateGame::playMoveAnim( const CCPoint& nextp,CCNode* target )
+{
+	float x = nextp.y*tileW;
+	float y = mMapData->getMapSize().height*tileH - nextp.x*tileH;
+	CCMoveTo* moveanim = CCMoveTo::create(0.5f,ccp(x,y));
+	CCSequence* seq = CCSequence::create(moveanim,CCCallFunc::create(this,callfunc_selector(StateGame::onMoveAnimComplete)),NULL);
+	target->runAction(seq);
+
+	mIsmove = true;
+}
+
 bool StateGame::move( int direct )
 {
 	if (mIsmove)
 		return false;
 
-	CCPoint nextp;
-	if (direct == dir_up)
+	CCPoint nextp = getNextPos(direct,mPusherMapPos);
+	if (nextp.x ==0 && nextp.y ==0)
 	{
-		int nextrow = mPusherMapPos.x-1;
-		if (nextrow<1)
-			return false;
-		nextp = ccp(nextrow,mPusherMapPos.y);
-		
-	}
-	else if (direct == dir_down)
-	{
-		int nextrow = mPusherMapPos.x+1;
-		if (nextrow>mMapData->getMapSize().height - 1)
-			return false;
-		nextp = ccp(nextrow,mPusherMapPos.y);
-
-	}
-	else if (direct == dir_left)
-	{
-		int nextcol = mPusherMapPos.y-1;
-		if (nextcol<1)
-			return false;
-		nextp = ccp(mPusherMapPos.x,nextcol);
-	}
-	else if (direct == dir_right)
-	{
-		int nextcol = mPusherMapPos.y+1;
-		if (nextcol>mMapData->getMapSize().width - 1)
-			return false;
-		nextp = ccp(mPusherMapPos.x,nextcol);
+		return false;
 	}
 
 	char nextsign = mMapData->getMapData().at(nextp.x).at(nextp.y);
 	if (nextsign == ' ')
 	{
-		float x = nextp.y*tileW;
-		float y = mMapData->getMapSize().height*tileH - nextp.x*tileH;
-		CCMoveTo* moveanim = CCMoveTo::create(0.5f,ccp(x,y));
-		CCSequence* seq = CCSequence::create(moveanim,CCCallFunc::create(this,callfunc_selector(StateGame::onMoveAnimComplete)),NULL);
-		mPusher->runAction(seq);
 		mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y) = ' ';
 		mMapData->getMapData().at(nextp.x).at(nextp.y) = '@';
-		mPusherMapPos = nextp;
-		mIsmove = true;
+		playMoveAnim(nextp,mPusher);
+	}
+	else if (nextsign == '$')
+	{
+		CCPoint& boxp = nextp;
+		CCPoint boxnextp = getNextPos(direct,boxp);
+		char boxnextsign = mMapData->getMapData().at(boxnextp.x).at(boxnextp.y);
+		if (boxnextsign==' ')
+		{
+			mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y) = ' ';
+			mMapData->getMapData().at(boxp.x).at(boxp.y) = '@';
+			mMapData->getMapData().at(boxnextp.x).at(boxnextp.y) = '$';
+			playMoveAnim(nextp,mPusher);
+			playMoveAnim(boxnextp,getBox(boxnextp.x,boxnextp.y));
+		}
 	}
 
 	return true;
@@ -209,6 +239,22 @@ bool StateGame::move( int direct )
 void StateGame::onMoveAnimComplete()
 {
 	mIsmove = false;
+}
+
+CCSprite* StateGame::getBox( int row,int col )
+{
+	float x = col*tileW;
+	float y = mMapData->getMapSize().height*tileH - row*tileH;
+
+	for (int i=0;i<(int)mBoxs.size();i++)
+	{
+		if (mBoxs[i]->getPositionX() == x && mBoxs[i]->getPositionY() == y)
+		{
+			return mBoxs[i];
+		}
+	}
+
+	return NULL;
 }
 
 

@@ -22,14 +22,18 @@ public:
 	{
 		dir_up=0,dir_down,dir_left,dir_right
 	};
-	bool move(int direct);
-
+	
 	CREATE_FUNC(StateGame);
 
 	static float tileW;
 	static float tileH;
 private:
 	void onMoveAnimComplete();
+
+	bool move(int direct);
+	void playMoveAnim(const CCPoint& nextp,CCNode* target);
+	CCPoint getNextPos(int direct,const CCPoint& nowpoint);
+	CCSprite* getBox(int row,int col);
 
 	PusherSprite* mPusher;
 	CCPoint mPusherMapPos;
