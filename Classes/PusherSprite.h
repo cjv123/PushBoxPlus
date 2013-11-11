@@ -2,6 +2,7 @@
 #define _PUSHERSPRITE_H
 
 #include <cocos2d.h>
+#include "StateGame.h"
 using namespace cocos2d;
 
 class PusherSprite : public CCSprite
@@ -21,7 +22,7 @@ public:
 
 	virtual void update( float delta );
 private:
-
+	StateGame::direct mFaceDir;
 	CCTexture2D* mTexture;
 };
 

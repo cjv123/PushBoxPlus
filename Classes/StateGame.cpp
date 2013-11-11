@@ -1,10 +1,12 @@
 #include "StateGame.h"
+#include "PusherSprite.h"
 
 #ifdef WIN32
 #include <windows.h>  
 #define KEY_DOWN(vk_code) (GetAsyncKeyState(vk_code) & 0x8000 ? 1 : 0)  
 #define KEY_UP(vk_code) (GetAsyncKeyState(vk_code) & 0x8000 ? 0 : 1)  
 #endif
+
 
 float StateGame::tileH = 32.0f;
 
@@ -72,7 +74,7 @@ bool StateGame::init()
 			{
 				mPusher = PusherSprite::create();
 				mPusher->setAnchorPoint(ccp(0,0));
-				addChild(mPusher);
+				addChild(mPusher,100);
 				mPusher->setPosition(ccp(x,y));
 				mPusherMapPos = ccp(i,j);
 			}
@@ -93,7 +95,7 @@ bool StateGame::init()
 
 				mPusher = PusherSprite::create();
 				mPusher->setAnchorPoint(ccp(0,0));
-				addChild(mPusher);
+				addChild(mPusher,100);
 				mPusher->setPosition(ccp(x,y));
 				mPusherMapPos = ccp(i,j);
 			}
@@ -157,7 +159,7 @@ CCPoint StateGame::getNextPos( int direct,const CCPoint& nowpoint )
 	if (direct == dir_up)
 	{
 		int nextrow = nowpoint.x-1;
-		if (nextrow<1)
+		if (nextrow<0)
 			return nextp;
 		nextp = ccp(nextrow,nowpoint.y);
 
@@ -173,7 +175,7 @@ CCPoint StateGame::getNextPos( int direct,const CCPoint& nowpoint )
 	else if (direct == dir_left)
 	{
 		int nextcol = nowpoint.y-1;
-		if (nextcol<1)
+		if (nextcol<0)
 			return nextp;
 		nextp = ccp(nowpoint.x,nextcol);
 	}
@@ -193,10 +195,9 @@ void StateGame::playMoveAnim( const CCPoint& nextp,CCNode* target )
 {
 	float x = nextp.y*tileW;
 	float y = mMapData->getMapSize().height*tileH - nextp.x*tileH;
-	CCMoveTo* moveanim = CCMoveTo::create(0.5f,ccp(x,y));
+	CCMoveTo* moveanim = CCMoveTo::create(0.2f,ccp(x,y));
 	CCSequence* seq = CCSequence::create(moveanim,CCCallFunc::create(this,callfunc_selector(StateGame::onMoveAnimComplete)),NULL);
 	target->runAction(seq);
-
 	mIsmove = true;
 }
 
@@ -212,27 +213,53 @@ bool StateGame::move( int direct )
 	}
 
 	char nextsign = mMapData->getMapData().at(nextp.x).at(nextp.y);
-	if (nextsign == ' ')
+	if (nextsign == ' ' || nextsign=='.')
 	{
-		mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y) = ' ';
-		mMapData->getMapData().at(nextp.x).at(nextp.y) = '@';
+		char standSign = mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y);
+		if (standSign=='@')
+			mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y) = ' ';
+		else if (standSign =='+')
+			mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y) = '.';
+		
+		if (nextsign==' ')
+			mMapData->getMapData().at(nextp.x).at(nextp.y) = '@';
+		else if(nextsign =='.')
+			mMapData->getMapData().at(nextp.x).at(nextp.y) = '+';
 		playMoveAnim(nextp,mPusher);
+		mPusherMapPos = nextp;
 	}
-	else if (nextsign == '$')
+	else if (nextsign == '$' || nextsign == '*')
 	{
 		CCPoint& boxp = nextp;
 		CCPoint boxnextp = getNextPos(direct,boxp);
 		char boxnextsign = mMapData->getMapData().at(boxnextp.x).at(boxnextp.y);
-		if (boxnextsign==' ')
+		if (boxnextsign==' ' || boxnextsign =='.')
 		{
-			mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y) = ' ';
-			mMapData->getMapData().at(boxp.x).at(boxp.y) = '@';
-			mMapData->getMapData().at(boxnextp.x).at(boxnextp.y) = '$';
+			char standSign = mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y);
+
+			if (standSign=='@')
+				mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y) = ' ';
+			else if (standSign =='+')
+				mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y) = '.';
+
+			if (nextsign=='$')
+				mMapData->getMapData().at(boxp.x).at(boxp.y) = '@';
+			else if(nextsign=='*')
+				mMapData->getMapData().at(boxp.x).at(boxp.y) = '+';
+
+			if (boxnextsign == ' ')
+				mMapData->getMapData().at(boxnextp.x).at(boxnextp.y) = '$';
+			else if (boxnextsign == '.')
+				mMapData->getMapData().at(boxnextp.x).at(boxnextp.y) = '*';
+
 			playMoveAnim(nextp,mPusher);
-			playMoveAnim(boxnextp,getBox(boxnextp.x,boxnextp.y));
+			CCSprite* boxsp = getBox(boxp.x,boxp.y);
+			if (boxsp)
+				playMoveAnim(boxnextp,boxsp);
+			mPusherMapPos = nextp;
 		}
 	}
-
+	
 	return true;
 }
 

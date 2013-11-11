@@ -2,9 +2,10 @@
 #define _STATEGAME_H
 
 #include <cocos2d.h>
-#include "PusherSprite.h"
 #include "MapData.h"
 using namespace cocos2d;
+
+class PusherSprite;
 
 class StateGame : public CCLayer
 {
