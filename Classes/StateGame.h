@@ -29,6 +29,9 @@ public:
 	static float tileW;
 	static float tileH;
 private:
+	void initMap();
+	void initBackground();
+
 	void onMoveAnimComplete();
 
 	bool move(int direct);
@@ -36,6 +39,9 @@ private:
 	CCPoint getNextPos(int direct,const CCPoint& nowpoint);
 	CCSprite* getBox(int row,int col);
 
+	bool checkPassLv();
+
+	CCLayer* mMapLayer;
 	PusherSprite* mPusher;
 	CCPoint mPusherMapPos;
 	
@@ -45,6 +51,8 @@ private:
 	bool mIsmove;
 
 	MapInfo* mMapData;
+
+
 };
 
 #endif
