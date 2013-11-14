@@ -1,5 +1,6 @@
 #include "StateGame.h"
 #include "PusherSprite.h"
+#include "MapSearcher.h"
 
 #ifdef WIN32
 #include <windows.h>  
@@ -8,11 +9,12 @@
 #endif
 
 
+
 float StateGame::tileH = 32.0f;
 
 float StateGame::tileW = 32.0f;
 
-StateGame::StateGame() : mIsmove(false),mMapLayer(NULL)
+StateGame::StateGame() : mIsmove(false),mMapLayer(NULL),mNowLevel(1)
 {
 
 }
@@ -45,7 +47,7 @@ void StateGame::initBackground()
 			float x = j*tileW;
 			float y = getContentSize().height - i*tileH;
 			CCSprite* floor = CCSprite::createWithTexture(
-				CCTextureCache::sharedTextureCache()->textureForKey("floor.png"),CCRectMake(0,tileH,tileW,tileH));
+				CCTextureCache::sharedTextureCache()->textureForKey("floor.png"),CCRectMake(tileW,0,tileW,tileH));
 			addChild(floor);
 			floor->setAnchorPoint(ccp(0.0f,0.0f));
 			floor->setPosition(ccp(x,y));
@@ -55,7 +57,7 @@ void StateGame::initBackground()
 
 void StateGame::initMap()
 {
-	MapInfo* mapinfo = MapData::getInstance()->getMapLvDatas().at(0);
+	MapInfo* mapinfo = MapData::getInstance()->getMapLvDatas().at(mNowLevel-1);
 	mMapData = new MapInfo(*mapinfo);
 
 	float mapw = mapinfo->getMapSize().width*tileW;
@@ -157,12 +159,16 @@ bool StateGame::init()
 	scheduleUpdate();
 
 	MapData::getInstance()->initMap("map.mp");
+	MapSearcher::getInstance()->initSearcher("mapanwser.txt");
+
 	CCTexture2D* textureWall = CCTextureCache::sharedTextureCache()->addImage("wall.png");
 	CCTexture2D* textureBox = CCTextureCache::sharedTextureCache()->addImage("box.png");
 	CCTexture2D* textureFloor = CCTextureCache::sharedTextureCache()->addImage("floor.png");
 
 	initBackground();
 	initMap();
+
+	searchRoad();
 
 	return true;
 }
@@ -174,22 +180,18 @@ void StateGame::update( float delta )
 	{
 		if (KEY_DOWN(VK_UP))
 		{
-			mPusher->playUpMoveAnim();
 			move(dir_up);
 		}
 		else if (KEY_DOWN(VK_DOWN))
 		{
-			mPusher->playDownMoveAnim();
 			move(dir_down);
 		}
 		else if (KEY_DOWN(VK_LEFT))
 		{
-			mPusher->playLeftMoveAnim();
 			move(dir_left);
 		}
 		else if (KEY_DOWN(VK_RIGHT))
 		{
-			mPusher->playRightMoveAnim();
 			move(dir_right);
 		}
 	}
@@ -250,6 +252,15 @@ bool StateGame::move( int direct )
 {
 	if (mIsmove)
 		return false;
+
+	if (direct == dir_up)
+		mPusher->playUpMoveAnim();
+	else if (direct == dir_down)
+		mPusher->playDownMoveAnim();
+	else if (direct == dir_left)
+		mPusher->playLeftMoveAnim();
+	else if (direct == dir_right)
+		mPusher->playRightMoveAnim();
 
 	CCPoint nextp = getNextPos(direct,mPusherMapPos);
 	if (nextp.x ==0 && nextp.y ==0)
@@ -349,6 +360,39 @@ bool StateGame::checkPassLv()
 
 	return true;
 }
+
+void StateGame::searchRoad()
+{
+	string searchData = MapSearcher::getInstance()->getAnswerdata().at(mNowLevel-1);
+	
+	CCArray* array = CCArray::create();
+	for (int i=0;i<(int)searchData.size();i++)
+	{
+		int direct = 0;
+		char dirchar = tolower(searchData[i]);
+		if (dirchar == 'u')
+			direct = dir_up;
+		else if(dirchar == 'd')
+			direct = dir_down;
+		else if(dirchar == 'l')
+			direct = dir_left;
+		else if(dirchar == 'r')
+			direct = dir_right;
+
+		array->addObject(CCDelayTime::create(0.5f));
+		CCCallFuncND* callback = CCCallFuncND::create(this,callfuncND_selector(StateGame::onSearchCallback),(void*)direct);
+		array->addObject(callback);
+	}
+	CCSequence* seq = CCSequence::create(array);
+	runAction(seq);
+}
+
+void StateGame::onSearchCallback( CCNode* pObj,void* par )
+{
+	int direct = (int)par;
+	move(direct);
+}
+
 
 
 

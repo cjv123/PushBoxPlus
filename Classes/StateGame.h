@@ -41,6 +41,11 @@ private:
 
 	bool checkPassLv();
 
+	void searchRoad();
+	void onSearchCallback(CCNode* pObj,void* par);
+
+	int mNowLevel;
+
 	CCLayer* mMapLayer;
 	PusherSprite* mPusher;
 	CCPoint mPusherMapPos;
@@ -51,8 +56,6 @@ private:
 	bool mIsmove;
 
 	MapInfo* mMapData;
-
-
 };
 
 #endif
