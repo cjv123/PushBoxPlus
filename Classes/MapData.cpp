@@ -64,7 +64,7 @@ MapData::~MapData()
 
 void MapData::initMap( const char* mapfilename )
 {
-	unsigned long len;
+	unsigned long len=0;
 	unsigned char* filedata = CCFileUtils::sharedFileUtils()->getFileData(mapfilename,"r",&len);
 	
 	int lv =0;

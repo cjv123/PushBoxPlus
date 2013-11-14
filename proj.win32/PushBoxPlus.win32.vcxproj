@@ -133,6 +133,7 @@
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\MapData.h" />
+    <ClInclude Include="..\Classes\MapSearcher.h" />
     <ClInclude Include="..\Classes\PusherSprite.h" />
     <ClInclude Include="..\Classes\StateGame.h" />
     <ClInclude Include="main.h" />
@@ -141,6 +142,7 @@
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\MapData.cpp" />
+    <ClCompile Include="..\Classes\MapSearcher.cpp" />
     <ClCompile Include="..\Classes\PusherSprite.cpp" />
     <ClCompile Include="..\Classes\StateGame.cpp" />
     <ClCompile Include="main.cpp" />
