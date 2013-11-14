@@ -1,0 +1,14 @@
+# Sokoban Automatic Solver Ver7.2.2 (JAN/2008) by Takaken
+# Options: TimeLimit=600sec / Memory=2178MB(auto) / BeginEnd=On
+# LevelSetName = map.mp (2013/11/14 17:47:38 Start)
+   1 [19*11( 6)] Ok   0sec  309moves 121pushes ullluuuLrdddllLrrruuulUluurDldlDDDDuuulldddRRRRRRRRRRRRRurDllllllllluuulLulDDDuulldddrRRRRRRRRRRurrdLLLLLLLddllllUUUUddrrRRRRRRRRdrUluRdlllllllluuullulDDDuulldddrRRRRRRRRRRRurDlllllllllllllulldRRRRRRRRRRRRRRRlllllllluuulluurDldldddrrruuuLLulDDDuulldddrRRRRRRRRRRdrUluRdllllllluuuluuullDDDDDuulldddrRRRRRRRRRRR
+   2 [14*10(10)] Ok   0sec  730moves 171pushes rdrRllullUdddddllluRdrruuuurrdrrdddrruuLUUruulLullllDDuurrrrdrrddldlllulLLLLLdlUUUrrrddrrddddlluRdrUUUUrrdrrruruullulllldDuurrrrdrrddldlllulLLLulldRRRRuuurrrrdrrddlddrddlllluLLrrdrruLLrrdrruuluuruullulllldddddddlluRdrUUUUUddddRRdrruLLrrdrruulullDurrdLddlluLLrrdrruLLrruulluLLLLLdlUUUrrddrrrrdrrruruullullllDDuurrrrdrrddldlllulLLLLLulDrrrrruuurrdLulDDuurrrrdrrddldlllulLLLLdlUruLrrdrrddddlluRdrUUUUrrdrrruruullulldllDuurrrrdrrddldlllulLLLulldRRRRuurrRllldddddRRdrruLLrruururuulDDDllDuluLLLLLdlUUruLrrddrrrrdrrdddlluLLdlluRdrUUUddrrdrruuullulLLLLdlUUrrdrrrrdrrruuuLLLLulDDurrrrrdddlllulLLLLulDrrrrrrdrrddLLLLdlluRdrUUUddrrruululLLLLLrrrrrrdrrdddrruuLLulDrdLLLLdlluRdrUUUddrrruululLLLdlUruLrdrrrrdrrrdrdLLLLLLdlluRdrUUUddrrruululLLLL
+   3 [17*10(11)] Ok   0sec  507moves 178pushes lllllddRRddddlLLLLLLLdlUruLrrrrdrrrrrurRdrruLdlLLLLLLLLLLulDrdLurrrrrrrrrurRuuUddddrruLLdlluuuulluurrrrDDDDDrdLLLLLLLLLLLulDrrrrrrruuRlddrrrruuuuuullllddrrdDDullddrRuRRdrruLdlUUUddlldRRulluuulDrddrrrrdLLLLuuuulluurrrrdDDDDrdLuuuuuulllDurrrdddddlldLLLLLulldRRRRRuRRRluuuRlddddLLLLLLLdlUruLrrrdrrrurrrRdrruLdlLLLLLLLLLulDrrrrrrurruulDDrdLLLLLLLLrrrrrrrrrrruLLLLulDrdLLLLLdlUruLrrdrrrurrrruuLulDDDrdLLLLLLLulDrrrrruuruUluurDDDDDrdLLLLLLLrrrrruuruuuurrDDldddrruuLLulDDDrdLLLLLdlUruLrdrrruuruurrurDDDDrdLLLLLLLLL
+---------------- (2013/11/14 17:47:40 Finish)
+Solved    =    3
+Cancel(-) =    0
+Failed(X) =    2
+Skips (?) =    0
+----------------
+Total     =    5
+
