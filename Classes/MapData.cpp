@@ -49,6 +49,11 @@ CCSize& MapInfo::getMapSize()
 
 //--------------------------------class MapData
 
+
+float MapData::tileH = 32.0f;
+
+float MapData::tileW = 32.0f;
+
 MapData::MapData()
 {
 
@@ -134,6 +139,83 @@ MapData* MapData::getInstance()
 vector<MapInfo*>& MapData::getMapLvDatas()
 {
 	return mMapLvDatas;
+}
+
+CCLayer* MapData::makeMapView(int mapindex)
+{
+	MapInfo* mapinfo = MapData::getInstance()->getMapLvDatas().at(mapindex);
+
+	float mapw = mapinfo->getMapSize().width*tileW;
+	float maph = mapinfo->getMapSize().height*tileH;
+	float mapx =CCDirector::sharedDirector()->getWinSize().width/2-mapw/2;
+	float mapy =CCDirector::sharedDirector()->getWinSize().height/2-maph/2;
+
+	CCLayer* mapLayer = CCLayer::create();
+	mapLayer->setContentSize(CCSizeMake(mapw,maph));
+	mapLayer->setPosition(ccp(mapx,mapy));
+
+	vector<string>& mapdata = mapinfo->getMapData();
+	for (int i=0;i<(int)mapdata.size();i++)
+	{
+		for (int j=0;j<(int)mapdata[i].size();j++)
+		{
+			float x = j*tileW;
+			float y = maph - i*tileH;
+
+			if (mapdata[i][j]=='.')
+			{
+				CCSprite* floor = CCSprite::createWithTexture(
+					CCTextureCache::sharedTextureCache()->textureForKey("floor.png"),CCRectMake(0,9*tileH,tileW,tileH));
+				mapLayer->addChild(floor);
+				floor->setAnchorPoint(ccp(0.0f,0.0f));
+				floor->setPosition(ccp(x,y));
+			}
+			else if (mapdata[i][j]=='+')
+			{
+				CCSprite* floor = CCSprite::createWithTexture(
+					CCTextureCache::sharedTextureCache()->textureForKey("floor.png"),CCRectMake(0,9*tileH,tileW,tileH));
+				mapLayer->addChild(floor);
+				floor->setAnchorPoint(ccp(0.0f,0.0f));
+				floor->setPosition(ccp(x,y));
+
+			}
+			else if (mapdata[i][j]=='*')
+			{
+				CCSprite* floor = CCSprite::createWithTexture(
+					CCTextureCache::sharedTextureCache()->textureForKey("floor.png"),CCRectMake(0,9*tileH,tileW,tileH));
+				mapLayer->addChild(floor);
+				floor->setAnchorPoint(ccp(0.0f,0.0f));
+				floor->setPosition(ccp(x,y));
+
+				CCSprite* box = CCSprite::createWithTexture(
+					CCTextureCache::sharedTextureCache()->textureForKey("box.png"),CCRectMake(0,0,tileW,tileH));
+				mapLayer->addChild(box);
+				box->setAnchorPoint(ccp(0.0f,0.0f));
+				box->setPosition(ccp(x,y));
+			}
+			else if (mapdata[i][j]=='$')
+			{
+				CCSprite* box = CCSprite::createWithTexture(
+					CCTextureCache::sharedTextureCache()->textureForKey("box.png"),CCRectMake(0,0,tileW,tileH));
+				mapLayer->addChild(box);
+				box->setAnchorPoint(ccp(0.0f,0.0f));
+				box->setPosition(ccp(x,y));
+			}
+			else if (mapdata[i][j]=='#')
+			{
+				CCSprite* wall = CCSprite::createWithTexture(
+					CCTextureCache::sharedTextureCache()->textureForKey("wall.png"),CCRectMake(0,tileH,tileW,tileH));
+				mapLayer->addChild(wall);
+				wall->setAnchorPoint(ccp(0.0f,0.0f));
+				wall->setPosition(ccp(x,y));
+			}
+			else if (mapdata[i][j]==' ')
+			{
+			}
+		}
+	}
+
+	return mapLayer;
 }
 
 

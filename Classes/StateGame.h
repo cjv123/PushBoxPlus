@@ -25,9 +25,6 @@ public:
 	};
 	
 	CREATE_FUNC(StateGame);
-
-	static float tileW;
-	static float tileH;
 private:
 	void initMap();
 	void initBackground();

@@ -29,6 +29,11 @@ public:
 	static char* readLine(char* source,char* des);
 	
 	vector<MapInfo*>& getMapLvDatas();
+	
+	CCLayer* makeMapView(int mapindex);
+
+	static float tileH;
+	static float tileW;
 private:
 	MapData();
 	~MapData();
