@@ -34,9 +34,9 @@ void StateGame::initBackground()
 {
 // 	CCLayerColor* background = CCLayerColor::create(ccc4(0,255,0,255));
 // 	addChild(background);
-
-	int colnum = getContentSize().width/MapData::tileW + 1;
-	int rownum = getContentSize().height/MapData::tileH + 1;
+	
+	int colnum = ceil(getContentSize().width/MapData::tileW);
+	int rownum = ceil(getContentSize().height/MapData::tileH);
 	for (int i=0;i<rownum;i++)
 	{
 		for (int j=0;j<colnum;j++)
@@ -46,7 +46,7 @@ void StateGame::initBackground()
 			CCSprite* floor = CCSprite::createWithTexture(
 				CCTextureCache::sharedTextureCache()->textureForKey("floor.png"),CCRectMake(MapData::tileW,0,MapData::tileW,MapData::tileH));
 			addChild(floor);
-			floor->setAnchorPoint(ccp(0.0f,0.0f));
+			floor->setAnchorPoint(ccp(0.0f,1.0f));
 			floor->setPosition(ccp(x,y));
 		}
 	}
@@ -154,13 +154,6 @@ bool StateGame::init()
 	}
 
 	scheduleUpdate();
-
-	MapData::getInstance()->initMap("map.mp");
-	MapSearcher::getInstance()->initSearcher("mapanwser.txt");
-
-	CCTexture2D* textureWall = CCTextureCache::sharedTextureCache()->addImage("wall.png");
-	CCTexture2D* textureBox = CCTextureCache::sharedTextureCache()->addImage("box.png");
-	CCTexture2D* textureFloor = CCTextureCache::sharedTextureCache()->addImage("floor.png");
 
 	initBackground();
 	initMap();

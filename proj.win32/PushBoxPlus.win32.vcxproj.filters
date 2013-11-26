@@ -55,6 +55,18 @@
     <ClInclude Include="..\Classes\MapSearcher.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\StateHome.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\StateSelectLv.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\GiftListView.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Config.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -73,6 +85,15 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\MapSearcher.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\StateHome.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\StateSelectLv.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\GiftListView.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
