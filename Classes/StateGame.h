@@ -28,6 +28,7 @@ public:
 private:
 	void initMap();
 	void initBackground();
+	void initMenu();
 
 	void onMoveAnimComplete();
 
@@ -40,6 +41,9 @@ private:
 
 	void searchRoad();
 	void onSearchCallback(CCNode* pObj,void* par);
+
+	void onButtonClick(CCObject* pObj);
+
 
 
 	CCLayer* mMapLayer;

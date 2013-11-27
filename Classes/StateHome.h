@@ -19,6 +19,7 @@ public:
 	virtual void onEnter();
 
 private:
+	
 };
 
 #endif

@@ -8,8 +8,10 @@ class StateLvInfo : public CCLayer
 {
 public:
 	static CCScene* scene(int lvindex);
+	~StateLvInfo();
 
 	virtual bool init();
+
 
 private:
 	void onButtonClick(CCObject* pObj);

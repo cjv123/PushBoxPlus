@@ -8,6 +8,8 @@
 #define KEY_UP(vk_code) (GetAsyncKeyState(vk_code) & 0x8000 ? 0 : 1)  
 #endif
 #include "GameData.h"
+#include "SpriteButton.h"
+#include "StateSelectLv.h"
 
 static int pusher_orderz = 100;
 static int box_orderz = 99;
@@ -148,6 +150,21 @@ void StateGame::initMap()
 }
 
 
+void StateGame::initMenu()
+{
+	SpriteButton* backbutton = SpriteButton::createWithName("lv9scale.png",this,menu_selector(StateGame::onButtonClick),Scale9SpriteCapDefine);
+	backbutton->setCapMode(Scale9SpriteCapDefine,CCRectMake(4,4,2,2));
+	backbutton->setBgImageSize(CCSizeMake(100,70));
+	backbutton->setTitle("back");
+	backbutton->setPosition(ccp(getContentSize().width/2,100));
+	backbutton->setTag(1);
+	
+	CCMenu* menu = CCMenu::create(backbutton,NULL);
+	addChild(menu);
+	menu->setPosition(ccp(0,0));
+}
+
+
 bool StateGame::init()
 {
 	if (!CCLayer::init())
@@ -159,6 +176,7 @@ bool StateGame::init()
 
 	initBackground();
 	initMap();
+	initMenu();
 
 	searchRoad();
 
@@ -383,6 +401,11 @@ void StateGame::onSearchCallback( CCNode* pObj,void* par )
 {
 	int direct = (int)par;
 	move(direct);
+}
+
+void StateGame::onButtonClick( CCObject* pObj )
+{
+	CCDirector::sharedDirector()->popScene();
 }
 
 

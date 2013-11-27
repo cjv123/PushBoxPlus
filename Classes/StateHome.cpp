@@ -45,3 +45,4 @@ void StateHome::onEnter()
 {
 	CCDirector::sharedDirector()->replaceScene(StateSelectLv::scene());
 }
+

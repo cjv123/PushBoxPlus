@@ -60,3 +60,8 @@ void StateLvInfo::onButtonClick( CCObject* pObj )
 	}
 }
 
+StateLvInfo::~StateLvInfo()
+{
+
+}
+
