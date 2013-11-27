@@ -1,14 +1,158 @@
 # Sokoban Automatic Solver Ver7.2.2 (JAN/2008) by Takaken
-# Options: TimeLimit=600sec / Memory=2178MB(auto) / BeginEnd=On
-# LevelSetName = map.mp (2013/11/14 17:47:38 Start)
-   1 [19*11( 6)] Ok   0sec  309moves 121pushes ullluuuLrdddllLrrruuulUluurDldlDDDDuuulldddRRRRRRRRRRRRRurDllllllllluuulLulDDDuulldddrRRRRRRRRRRurrdLLLLLLLddllllUUUUddrrRRRRRRRRdrUluRdlllllllluuullulDDDuulldddrRRRRRRRRRRRurDlllllllllllllulldRRRRRRRRRRRRRRRlllllllluuulluurDldldddrrruuuLLulDDDuulldddrRRRRRRRRRRdrUluRdllllllluuuluuullDDDDDuulldddrRRRRRRRRRRR
-   2 [14*10(10)] Ok   0sec  730moves 171pushes rdrRllullUdddddllluRdrruuuurrdrrdddrruuLUUruulLullllDDuurrrrdrrddldlllulLLLLLdlUUUrrrddrrddddlluRdrUUUUrrdrrruruullulllldDuurrrrdrrddldlllulLLLulldRRRRuuurrrrdrrddlddrddlllluLLrrdrruLLrrdrruuluuruullulllldddddddlluRdrUUUUUddddRRdrruLLrrdrruulullDurrdLddlluLLrrdrruLLrruulluLLLLLdlUUUrrddrrrrdrrruruullullllDDuurrrrdrrddldlllulLLLLLulDrrrrruuurrdLulDDuurrrrdrrddldlllulLLLLdlUruLrrdrrddddlluRdrUUUUrrdrrruruullulldllDuurrrrdrrddldlllulLLLulldRRRRuurrRllldddddRRdrruLLrruururuulDDDllDuluLLLLLdlUUruLrrddrrrrdrrdddlluLLdlluRdrUUUddrrdrruuullulLLLLdlUUrrdrrrrdrrruuuLLLLulDDurrrrrdddlllulLLLLulDrrrrrrdrrddLLLLdlluRdrUUUddrrruululLLLLLrrrrrrdrrdddrruuLLulDrdLLLLdlluRdrUUUddrrruululLLLdlUruLrdrrrrdrrrdrdLLLLLLdlluRdrUUUddrrruululLLLL
-   3 [17*10(11)] Ok   0sec  507moves 178pushes lllllddRRddddlLLLLLLLdlUruLrrrrdrrrrrurRdrruLdlLLLLLLLLLLulDrdLurrrrrrrrrurRuuUddddrruLLdlluuuulluurrrrDDDDDrdLLLLLLLLLLLulDrrrrrrruuRlddrrrruuuuuullllddrrdDDullddrRuRRdrruLdlUUUddlldRRulluuulDrddrrrrdLLLLuuuulluurrrrdDDDDrdLuuuuuulllDurrrdddddlldLLLLLulldRRRRRuRRRluuuRlddddLLLLLLLdlUruLrrrdrrrurrrRdrruLdlLLLLLLLLLulDrrrrrrurruulDDrdLLLLLLLLrrrrrrrrrrruLLLLulDrdLLLLLdlUruLrrdrrrurrrruuLulDDDrdLLLLLLLulDrrrrruuruUluurDDDDDrdLLLLLLLrrrrruuruuuurrDDldddrruuLLulDDDrdLLLLLdlUruLrdrrruuruurrurDDDDrdLLLLLLLLL
----------------- (2013/11/14 17:47:40 Finish)
-Solved    =    3
-Cancel(-) =    0
-Failed(X) =    2
-Skips (?) =    0
-----------------
-Total     =    5
+# Options: TimeLimit=600sec / Memory=1804MB(auto) / BeginEnd=On
+# LevelSetName = microban.txt (2013/11/27 14:42:51 Start)
+   1 [ 6* 7( 2)] OK   1sec   33moves   8pushes R
+   2 [ 6* 7( 3)] OK   1sec   16moves   3pushes rddLruulDuullddR
+   3 [ 9* 6( 2)] OK   1sec   41moves  13pushes ruuLLLulDrrrrddlUruLLLddllluurRDrdLuuurDD
+   4 [ 8* 6( 3)] OK   0sec   41moves  11pushes ullDurrddlLLruLurrrdLLulllddRRRurrddlUruL
+   5 [ 8* 7( 4)] OK   0sec   31moves   6pushes LuurrdLrrddlUlldRuuulldDrddlluR
+   6 [12* 6( 3)] OK   0sec  111moves  29pushes ulldllllulDulldRRRRRRdrrruullDurrddlLLLulllllddrrUdlluurRRRRRdrrruullDurrddlLLullllddlUluRRRRRRdrrruullDurrddlL
+   7 [ 7* 8( 6)] OK   0sec   32moves   6pushes lluuuurRdDlUrdrrddlUdllUdrruruuL
+   8 [ 8*12( 2)] OK   0sec  117moves  34pushes llDDDDDDldddrruuLrddlluUruLruuuuuurrdLulDDDDDDldddrruuLrddllulluuRRllddrrdrruulUUUUUUluRdddddddrddlluUdlluurRdrUUUUUU
+   9 [ 6* 7( 2)] OK   1sec   30moves  10pushes urrDulldRdRluurDrDDlUruLdlUruL
+  10 [11* 8( 3)] OK   1sec   91moves  21pushes rddrruuLLrrddrruuLLrruuurrdddLLddlluuRlddrruUUUddddlllluuRRRlddrruUUdddlllllluuRRRRRlddrruU
+  11 [ 9* 8( 2)] OK   1sec   80moves  16pushes ulllddddrrrruLdllluuuurrrdDDrdLLLLullddrUluRdrUdrrruulDrdLLLullddrUrrruuruullldD
+  12 [ 9* 8( 2)] OK   1sec   56moves  13pushes uululldRdRluurDrDDrddlluRdrUluRluulldRurDDrddlluRdrrruuL
+  13 [ 7* 9( 3)] OK   0sec   53moves  23pushes rDlDDRddlUUUUruLdlUrdddrdrruLLdlUUUruLrdDDrdLdlUUUruL
+  14 [ 7* 6( 2)] OK   0sec   55moves  10pushes uullllddrdrUlluurrrrddLLLdlUrrrruullDurrddlLdlluRRuullD
+  15 [ 9* 7( 2)] OK   0sec   43moves  12pushes DrdddllUUddrruuulLLLdlluRRRRdddrruuLrddlluU
+  16 [10* 8( 3)] OK   0sec  112moves  41pushes lddrUdrruLLdlUUUruLLLulDDDldRdrUluuurrrrdDlddrruLdlUUUruLLLulDDDlddrruLdlUruuurrrrdrDlddrruLLdlUUUruLLLulDDDDldR
+  17 [ 6* 7( 3)] OK   0sec   31moves   9pushes dlDurrDulldRddrruLdlUUdrUddllUU
+  18 [ 7* 9( 2)] OK   1sec   77moves  15pushes ruuLDuruulllddRRdrUUdllluuurrrrdLLrdddddlUUruuuullldddrRdrUUdllluuurrdLurrrdL
+  19 [ 8* 8( 2)] OK   1sec   41moves  20pushes urrDDDlddrUUUUruLLLdRurDDDlddrUUUUlllluRR
+  20 [ 9* 8( 2)] OK   0sec   50moves  16pushes urDDDrrruulLLLrddlddrUUUdrrruullulldRRRlulllldRRRR
+  21 [ 7* 6( 2)] OK   0sec   17moves   5pushes dllUdlUluurDRddlU
+  22 [ 7* 9( 2)] OK   0sec   49moves  15pushes drrruulDrdLLdlUUUUluRRdldddrruLdlUUUruLdddrruruuL
+  23 [ 7* 7( 2)] OK   0sec   56moves  10pushes ruulluRdrdddllUUdrruululldRddrruuruLLrdddlluuRurDDullluR
+  24 [ 7* 7( 2)] OK   0sec   35moves   9pushes ullDDlddrruLuuurrdLulDDDullddrRuulD
+  25 [ 7* 7( 3)] OK   1sec   33moves   7pushes urrdLullddrUluRluurDlddrrruuLLulD
+  26 [ 6* 8( 3)] OK   1sec   54moves  14pushes rdddlUrdddlUUlldRurrddlUruLruuulldRurDDDlddrUluUruulDD
+  27 [ 7* 7( 2)] OK   1sec   58moves  14pushes dlldlluuuurrrdDLLrddlluUrrrrdLulllddrrUruLruulllDDDuRRdrUU
+  28 [ 7* 7( 2)] OK   0sec   33moves   9pushes rDulldRddrruLdlUUluurrdDldRuuulDD
+  29 [11* 9( 2)] OK   0sec  108moves  22pushes ullldRurrdrrddllllllluuRurrdRRRlulllldlddrrrrrrruUUUruLdddllulllldRRRRRllllllddrrrrrrruUUruulDDDuuuulldRurDD
+  30 [ 6* 7( 3)] OK   0sec   21moves   5pushes uluurDlddrdrUruuLLulD
+  31 [ 7* 7( 3)] OK   0sec   23moves   6pushes RurDDullDurrdrddlluUluR
+  32 [ 7* 7( 3)] OK   0sec   36moves   9pushes ullDullddrUrurrdLLLddrUluRurrdLululD
+  33 [ 7* 7( 3)] OK   1sec   53moves  10pushes dlLLulDrrrruulLrrddllluluurDlddrrUdrruulLLrddlluUrrdL
+  34 [ 9* 6( 4)] OK   1sec   55moves  14pushes drrrUdllluurrRRldRdllUdlluurRurDldRullldRRdrrrruuLLLulD
+  35 [ 6*10( 5)] OK   1sec   95moves  37pushes lluluuRDrDLddrruLdlUUruLuluurDrDulDDDrddlUUUUruLdlUrrdDDlddrruLdlUUUUruLuurDDDDDlddrruLdlUUUruL
+  36 [15* 5( 5)] OK   0sec  180moves  63pushes dllllllllllluurDldRRRRRRRRlllluLLrrdrruLLrrdrruLLdlllllluurDldRRRRRRlluLLdlluurDldRRurrdrruLLdLLulldRRRRuLLdlluurDldRRurrrrrrRRdrruLLLLLLLLLLdlluurDrrrdLurrrdLLurrrrdLLLurrrrrdLLLL
+  37 [ 9* 8( 3)] OK   0sec   71moves  23pushes drruulLuLLdRRRlddrruUUUddllullullddRRRRRlddrruUUdllullulDldRRRRRlddrruU
+  38 [10* 7( 3)] OK   0sec   37moves   8pushes llluuurrrdDuurrrrddllLrrrddlllULLrURR
+  39 [10* 9( 2)] OK   0sec   89moves  27pushes ruuLLLuullddRluurrdDrrrddlUruLLLuullddRRRRurDldRulllDDllddrrUUUUlluurrDullddrRRRdrUddrruL
+  40 [ 7* 6( 3)] OK   0sec   37moves   9pushes UdrruLuulldDldRRluuurrddLruulldDuurDD
+  41 [ 8* 6( 3)] OK   1sec   59moves  15pushes urrrDullDurrdLrrddlUruulldRurDldRuulllldRRRurDlddllUluRRurD
+  42 [ 7* 8( 3)] OK   1sec   48moves  17pushes rddLLddrUluRUruulDDDlddrUrUUluurDldDldRdllluuRRR
+  43 [ 9* 9( 3)] OK   0sec   64moves  22pushes dddllLDLdlluurRRRRdrUUdllldlddrUUluRRRurDuluurDlddllddllUluRRRRR
+  44 [ 5* 3( 1)] OK   0sec    1moves   1pushes dlUrrrdLullddrUluRuulDrddrruLdlUU
+  45 [ 6* 7( 3)] OK   0sec   53moves  11pushes luluuurrrdLulldddrdrruLLdlUUUddrrUUruLdddlluuRlddrruU
+  46 [ 7* 8( 2)] OK   0sec   47moves   8pushes dlluuRuRDrUdlllddrrUdlluururrdLddlluuluururrrDD
+  47 [11* 7( 2)] OK   0sec   83moves  22pushes rrruuulldRRddlllluuRRRurDDullllddrrrRRRdrruLLLLLLrruuurrdLulDDulllldddrrurRlldlluRR
+  48 [ 8* 8( 3)] OK   1sec   67moves  14pushes rddDLruuullddlddrUUdrrurDrddlUruLLLruuulllddrDuluurDurrddrdddlUruLL
+  49 [ 8*10( 3)] OK   1sec   98moves  23pushes ldddRluuurrrddlDDDldRRluuulluRluurDDldRuuurrddLruulldlddrUrDDDlddrruLrdrruLdlluuuuuruullDDldRurDDD
+  50 [10* 7( 2)] OK   1sec   84moves  21pushes llulDDulldRRRurrrrdddlllllUUluRRdlddrrrrruuulldLLrrurrdddllllluUruLrRRRldllllluRRRRR
+  51 [ 8* 7( 2)] OK   0sec   34moves   8pushes rddllulURuLdlluurDldRRurDlddrrruuL
+  52 [ 6* 8( 4)] OK   0sec   37moves  10pushes dddLrddlUlluuurRurDDulldlddrUUluRRurD
+  53 [ 7* 7( 4)] OK   0sec   41moves  12pushes rUruuLullDlddRdrruUUdddlluUURldddrruLdlUU
+  54 [12* 8( 4)] OK   0sec  100moves  32pushes drUdrruLuRRRdrUUdlllddllluRRdrUluRRRRdrUUdlllllulDrddlluRRdrUluRRRdrruulDurruulDrdLdlllldlllluRRRRRR
+  55 [10* 8( 2)] OK   0sec   64moves  27pushes rdrrrddlUrdddlUUruuLLLulldRRRRurDDDldRRlulUruLLLulldRRRRurDDDldR
+  56 [ 7* 6( 2)] OK   1sec   37moves  10pushes uulLulldRRddlUruulldRurDldRdrruuLLulD
+  57 [ 8* 9( 2)] OK   1sec   62moves  23pushes dddrdLrrruLLdlUlldRRRulUUruulDDDDldRurrrddlUruLLLdRurDlllluRRR
+  58 [ 7* 7( 3)] OK   1sec   44moves  11pushes luluurDRDulldRddrruruuLLLrrrddlLdlUrUdrruulL
+  59 [13* 9( 3)] OK   0sec  185moves  50pushes dlllllldRRllddlUruurrrrruullllllllddddRRdrUllluuuurrrrrrrrddllllllDRurrrrruullllllllddddrRdrUUluRRRRRRurDDDrddlluRdrUUluulllldLullddrUluRRRRRRurDDDrdLuuurDDuullldLLLullddrUluRRRRRRurDDD
+  60 [10*10( 4)] OK   0sec  343moves  56pushes urrrrrrdddLLulldRRRllDDrddlULLdlluRUUluuruurrrrrrddDDDuullldDrddlUUUddlLdlluRRRlluuluuruurrrrrrdddllulldRRRllddrdLLLdlluRuuluuruurrrrrrddDDullldddlLdlluRRRlluuluuruurrrrrrdddlllddrddlUUUddllluuluuruurrrrrrdddllulldRRRlldddllluuluuruurrrrrrddDuuullllllddDDDuuuuurrrrrrdddllldddlldlluRRRlluuuuuurrrrrrdddlllddrddlUUUddllluuuuuurrrrrrdddllulldRRR
+  61 [ 9*10( 4)] OK   0sec  106moves  23pushes lDDlDDrrUruLLrddlluRuuuruullllldddddrRRdrUUUddlllluuuuurrrrrddLLrdddlluRdrUUddlllluuuuurrrrrddLddrrdLdlUUU
+  62 [13* 6( 4)] OK   0sec   72moves  30pushes LLLLullDRRRlldLLLrruulDLddlluuRRRRRRldlLulllddrrUdlluurRRRRdllldlUluRRRR
+  63 [19* 6( 2)] OK   0sec  105moves  50pushes llllLLulLLLLLLulldRurDrrrrrrrddlUruLLLLLLLulldRRRRRRRRurDldRullllllddlUruLulldRRRRRRRRdrUdRRRRRdrruLLLLLL
+  64 [10* 9( 4)] OK   1sec   95moves  30pushes ldlluulUluurrrddLLrruulDrdLdddrrurrdLLLdlUUUUruulDDDDDuuuuulldRurDDDDulUruulldRurDDDuullldRRurD
+  65 [ 9* 9( 4)] OK   1sec  164moves  41pushes uuuuLrddddlluuRUrDDullddrdrruLLLLdlUruLrrururuulDDrdddlluuRurDDullddrdrruLLLullddrUluRluRRRurDDulllddrrdrruLLLrruullldlddrUrrruuuuullldRRurDDDDullllddrrrdrruLLLLdlU
+  66 [ 9*14( 3)] OK   1sec  109moves  31pushes DDDDDDDDDldRdrUluuuuuuuulldlddddrdRdrUUUruulDDDDDuuuuuuurrdrddddldLLuuuuuulldlddddrdRdrUUUUUUddddddlddrruLdlU
+  67 [ 7* 8( 3)] OK   0sec   59moves  12pushes uurrdDrdLuuullddRRdrrddllUUUlluurrDrDulullddrRddlUruuullddR
+  68 [10* 7( 3)] OK   0sec  102moves  30pushes luuurrrRdrruLLLLLulDDlddrrrUUddllluururRRRdLullldlddrrruUruLdddllluurDuuRRdrruLLLulDDurrrrdrruLLLLLulD
+  69 [11* 8( 3)] OK   0sec  142moves  39pushes urrrurrrDrUdrddllUUruLLLulDrdLLrrddllluUUdrrurrrrdrdLdlUUruLLLulDrdLLrrddllluluurDrrurrruurDDDrdLdlUUruLLLulDrdddlllluurrRllDldRRluuuluurDDldR
+  70 [ 8*10( 4)] OK   0sec   78moves  26pushes rdrrrddlUruLLLdRulullddRDDldRurDuluuluurDDDDDuuuurrdLulDDDldRuuuurrrrdLLLulDDD
+  71 [13* 9( 2)] OK   0sec  162moves  25pushes urDDuulllddddddrrrrrrrrrruuuuulllddllldlluRRRRdrUUdlllluuulllddddddrrrrrrrrrruuuuullulldRRlddlllluuullldRRurDDullldddddrrrrrrrrrruuuuuLLulldRRRllddllldlluRRRRdrUU
+  72 [10*11( 3)] OK   1sec  117moves  40pushes llLDDDrrddlULLdlluurDDldRuurruuulluRRddddrruLdlUUUluurDDDDrdLLdlluurDDurruuuuRRdrruLLLLulDldRurDDDrdLLdlluurDldRlddrU
+  73 [ 8*10( 3)] OK   1sec  106moves  25pushes uulllluurDDDurrrddddlllluuRuurruLrdrruLLdllluurDldRRRurDDDDuuulllddlddrrrdrruLLLLdlUUdrrrruuuuulLdlluurDDD
+  74 [11* 8( 4)] OK   1sec  133moves  34pushes lulDDDRRlluurrDRRRurrddlUruLdllllullddrddrruUddlluuluurrdRRRRurDllluRRdllldddlluuRlddrruUluRRRurDllldlllldRurrrddllUluRRlddrruUluRRRR
+  75 [10* 7( 4)] OK   0sec  100moves  34pushes ddlluLuLLrrRllldRurrddlUruLLdlUUluRRRlldlldRRdrruLdlUUluRRlddrrrddrruuLLLLdlUUluRddrrrddrUruLLLLdlUU
+  76 [10*11( 3)] OK   0sec  201moves  56pushes rddrddrrrrUUlDrdLLLdlUUluuuuurrddddLdlUUUUluRddddrddrrruuuuurrdLulDDDDrdLLLdlUUluuuuuurrdddddLdlUUUddrddrrruurUluurrdLulDDDDrdLLLdlUUluuuluururrdddddLdlUluuuurRurDDDuulllddrUluRRurDDullddlddrUUUluRRurD
+  77 [11* 7( 4)] OK   0sec  207moves  55pushes ddddrrurrruLrdrruLdllllLdlUUUrurrrrrDDrdLLLLLrruRdllldlluuururrrrrdDrdLLuruullllldldddrruuRRRlldldlluuururrrrrdDuullllldlluRRRRRllldldddrruLdlUUUluRRRRlldlddrrurrrdLLLLdlUUUluRRRldlddrrurrrrrdLLLLLLdlUUUluRR
+  78 [11* 8( 5)] OK   0sec  151moves  33pushes uUrRuurrdDDuuullddllddrrrRRRlluuuullddRluurrdDDullllddrrrRRluulluRurDDDullllddrrrdrruLLruuuulllDrrrddddllluluuRRRurDDullllddrdrruRdllluRlluuluRRRRurDDD
+  79 [10* 6( 3)] OK   0sec   86moves  22pushes lLLdlluRRRRRdrUllllluurrrDulllddrrRdrruLLLLrruullldDldRurrrrrruulDrdLLLuulllddrRlluurD
+  80 [10*11( 4)] OK   1sec  145moves  44pushes lddrrruuLrddlUUUUUdllluUluurDDurrdRRRurDDulllddddddlluuRlddrruUUUUdlllUUluurDDurrdRRRdrUdlddrUluullddddlldRdrUUUUUdlllUUluurDDurrdRRRllddlllUUluR
+  81 [ 6* 9( 3)] OK   1sec   46moves  12pushes luuurrdLDldddrruLUUUruulldDrddlluRdrUdddlUUluR
+  82 [ 8* 8( 3)] OK   1sec   54moves  16pushes drrruUlUdrruLuLLulldRRlDDlddrUdrrruuuuLLulDrrrddlUruLL
+  83 [ 8*10( 4)] OK   0sec  189moves  47pushes urruuuuLullDDDDDrrruulUrdddllluuuRRdrdddlldlUUrrruululluurrDrDDDDrdLLullUUUrRurDDDDrdLuuuuululDrrddddllluuuRRurDDDuullldddrrRlllddrUluuuurrrddddLuruuuulullldRRurDldRurDDDDldRuuuulllddddRluR
+  84 [12*10( 3)] OK   0sec  259moves  76pushes uRlddRluurDrruLdDDuuuuullllddddddrrrRRRdrruLLLLLLLdlUUUUUddddrrrruuulldRurDDuuuuulllllddrddddrrrRRRdrruLLLLLLrruuulluRdrdddlldlluuuuuluurrrrrdDDDDuuuuulllllddrdddddrrurRRRdrruLLLLuuuuuulllllddrUluRRRlldddddddrruLdlUUUUUUluRRlddddddrrRRRRdrruLLLLLLLdlUUUUUUluR
+  85 [11*11( 3)] OK   0sec  157moves  51pushes luuuurrurrdRullldlluRdrRurrdLLLLulDDDDldRRlddrrrruuuulldDlluuuurrrurrrrdLLLLLLulDDDDldRRRRlllddrrrruUUruLddllDullddrRuulluuuuurRRRRdrruulDrdLLLLLLulDDDDldRRR
+  86 [ 9* 8( 4)] OK   0sec  131moves  29pushes drrrUUlDrdLLdlluurDldRurrurrruululDDurrddlLdllluuRRllddrrruUlDrdLLruulldDrrurrruululDDurrddlLulDrdLLruuluRdrdrruululDDurrddlLulDrdL
+  87 [ 9*10( 4)] OK   0sec  165moves  55pushes luRluurDllluRUUluRRRRdrruulDrdLLLullddddrruLdlUUUluRRRRdrruulDrdLLullldddrdddrUdrruLLdlUluurrDullddrRuLdlUUUUluRRRRdrruulDrdLulllldddrrdddrruLLdlUUruLdlUUUluRRRRRurD
+  88 [11*12( 3)] OK   1sec  235moves  63pushes rrruulDrdLLdlluRRRuuruuuuurrdddddddldlUUUddrruuuuuuulldddlDDDrdLLdlluRRRuuuuruuurrdddddddldlUluurUUddlddrUUddrruuuuuuulldlDDDDDrdLLdlluRRRuuuuuuurrrdddddddldlUluuuurUUluRRurDDDDDDuuuuulldddlddrUUUUluRRurDDDDuuulldddddlddrUUUUUUluRRurDD
+  89 [10* 9( 4)] OK   1sec  171moves  39pushes ddddrUluuuurrddLruulldDDDrdLdlluuuuuRldddddrruuuurruullDDDDuuulllulldRRRRldddddrrruuluurruullDDulldddddrrruulDLdlUUdrruUUrruullDDDDrdLLdlUrrrdLLururUluuurrddLruulldDDDrdLL
+  90 [10* 7( 4)] OK   1sec   78moves  20pushes rrrdLdDrdLLuruuulldRurDDDrdLullLrrruuulllldRRRurDDulllddrrRdrruLLuullldddlluRR
+  91 [11* 5( 4)] OK   0sec   50moves  14pushes rrdrrruulDrdLLruLLLullllddrrUdlluurRRldRRlullldRRR
+  92 [15*10( 3)] OK   0sec  148moves  48pushes uuullllLLrrddllULURRRRRRRuurrddLruulldDDDuulllllldlLdlluRRRurrrddllUluRRRRRRRuurrddLrddlluUddrddlUUrruulllllllllUluurDDDrdLLdlluRRRurrrddllUluRRRRRR
+  93 [11*11( 8)] OK   0sec  155moves  52pushes dLddlluuRRuruLuullddRRddlldRdrUUUUlluurrDDDrrULdlUlluurrDDrrrUdllluulDldRRRRRurrdLLLLrdDrrddllUUUluRRuruulldDrdLddrrdLdlUUUUruruulldDDDuurrrdLLulDuuurDDrdL
+  94 [ 9* 8( 3)] OK   0sec   91moves  33pushes rdRRurDDDuulllulldRDuRRRurrdLLLrrddllldlluRuuRRRurrdLddrddlUruLLruuLLLulldRRRRurDDDrddlUruL
+  95 [ 8* 8( 8)] OK   0sec   79moves  16pushes rrDDuRurrdddddllUdlluRRllluuRDldRuuurrdLullddrUdddrruLrdrruuuLLrrdddlluUddrruuL
+  96 [11*11( 3)] OK   0sec   94moves  39pushes RRdrruLLLrrdddLLdlluRRluuUUUruLdddLLulldRRRRRRdrruLLLrrdddLLdlluRRRlluuUUUruulDDDDuuuulldRurDD
+  97 [14*10( 5)] OK   1sec  180moves  41pushes urrRRllllddrRlluurrrrdddddllluUluuurrruurDrRRRRRllllllldllldddrddrruruuuUluRRRRRRllldLulldllldddrddrruruuuUluRRRRRlldlllllldddrruRldlddrruruUUUluRRRRldllllllddRRRldlddrruruUUUluRRR
+  98 [16*10( 5)] OK   1sec  291moves 112pushes dlllluuuullLLLuLulldRDRRRRRRurDDDDldRRRdrUllluuuullllllluurDldRRRRRRurDDDDldRRRRdrUlllluuuullllllDDrddlUUUUluurDldRRRRRRurDDDDldRRRlluuuulllllldddlluRdrUUUluurDldRRRRRRurDDDDldRuuuullllllddlUruulldRRRRRRRurDDDlddrUUUUdddddrruLdlUUUUdddrrdrruLLLdlUUUddrrrrruulDrdLLLLdlUUdrruRdrruulDrdLLLLdlU
+  99 [22*10( 4)] OK   1sec  393moves 137pushes rrdrrrrrddrrrrrrrrrruulDrdLLLLLLLLLdlUUUruulDrdLLLLLLulllddrrUruLLulDrrrdrrrrrddrrrrrruRRdrruulDrdLLLLLLLLLdlUUUruulDrdLLLLLLullllddrrrUruLLrrdrrrrrddrrrrUUUluRRdrruruulldDrdLLulDDDldRRRurrdLLLLLLLdlUUUruulDrdLLLLLLuulllldddrrrUrrrrrrddrrrurRRRRdrruulDrdLLLLLLLLLdlUUUruulDrdLLLLLLuulldRullldddrrrUdllluuurrrrDulllldddrrruRRRRRRllllluulldRurDldRRRRRlllluulllldRRRurDldRRRRlllldllUluRRRurDldRRR
+ 100 [ 8* 8( 4)] OK   0sec  183moves  52pushes lddrDuluurDrrrDldddrruuLrddlluUrrdLuuullllddrUluRRRurDDDuulllddlddrUUluurrrrddlUruLLLulDDDuurrrrddrddllUUrrdLuuullllddrUluRRRurDDDlUruLLLulDDurrrrddrddllUUUruLLLulDrrrrddrdLdlUUUruLLL
+ 101 [13*13( 5)] OK   0sec   79moves  15pushes ruulllldDllddrrUrrUUdrruuuulLuullddRddRRlddrrrruUrruullDllDDullddddrRddrruuLuuL
+ 102 [11* 8( 4)] OK   0sec  170moves  44pushes rurrurrrddddLruulDuruulDLLLdllluurrDrdLLdlUrrurrrrrddlUruLLLLdlllluurrrDrdLLrurrrrrddddlUUUruLLLLddlllluuurrrDrddlluLUluRdddlUUrdrdrruLLdlUUdrrurrrrddddlluRdrUUUruLLLLdlU
+ 103 [ 8* 8( 4)] OK   0sec   53moves  12pushes dllddlluRdrUllluurrDDuRluuurrdLulDDllddrrruUUdddlUruL
+ 104 [ 9* 9( 3)] OK   0sec   99moves  29pushes ulLLLDlluRRRRurrddddllllUUddrrurruuulldlLrrDDuulldddrRurDuruuLulDDDrdLddrUluuuulldlluRRRRurrdLulDDD
+ 105 [11*11( 8)] OK   0sec   85moves  26pushes uulLulldRRRdrruLddllUrrrdddRdrruLLLuurDuluuRurrdLLDlddlldRlLdlluRRUruulDDrrrrUUUruulD
+ 106 [10* 9( 5)] OK   1sec  339moves  70pushes urrrrrdLLLulldddrrrrUruLddDrrddllUUUUdllldRRulllldRRuluuurrdLulDDuurrrrrddldllldlluRRRlluuurrrrrddldDlLrruuruulDLLulldddrrdLrrrrrddllUdrruulLLruUruLulllldddrdRRRddrruuLrddlluUUUddllullldRRRRlulluuurrrrrddldDuuruullldLulDDuurrrrrddlddllllluRRluuurrrrDDuLulldlddrdrrrUUruulldLLulDDuurrrrrddlddllllluRuuurrrrrdLLLLulDDurrrrdddrrddllUUUUruulDD
+ 107 [ 8* 8(11)] OK   1sec   42moves  10pushes uuuLDrddllllluuRRRluRdllluuurrDDrdLuuulldR
+ 108 [15* 8( 4)] OK   1sec  252moves  70pushes rrrrdrruRdrrUruuLullDDDuuurrdrddldlLLLLLLulllddrrUdlluurRRdrrrrrrruLrruulullddDrdLLLLLLulllddrrUruLLrddlluUUluRddrrrdrrrruruuurrdLulDDDrdLLLLLLulllddrrUruLLrddlluUUdrrrdrrrrurrrUruLLulDDDrdLLLLLLulllddrrUruLLrddlluluurDrrrdrruLLLLLulDuuurDlddrrruuLLulD
+ 109 [ 9*13( 5)] OK   1sec  261moves  66pushes ruurrddLLrrdddddllDlUrrrdddllUUluRRldddrruuUUUUUUlluulldddddrDululldRdRdRRRllluluuruuuurrddrrddddDDulllluUUUUdddddrruLdlUruLdlUrrdrdrruuuuulluullDDDDDldRurDldRRRlululuuuuurrddrrddddDuuuuulluurrDDDDDuuuuullllddRRRluurrdDDDuulllldddlluRdrUUUrruullDDDDDldRurDldRRR
+ 110 [ 9* 9( 4)] OK   0sec   65moves  14pushes uuuulluurDldddlluRdrUUddrrddlUruLruurrdLulDDlddrUluLulldRuruRuulD
+ 111 [ 9*12( 6)] OK   0sec  218moves  77pushes DuluurDRllddrRUrUUUUruLLLLrrrdddddldlluurRdrrdLLurUUUUruLLLrrddddllldRRdrUUUUUruLdddddrdddllUUUluRdrUUUruLLLuulllddrRRRRdrUddlddllldRurrrdddlluUUluRdrUUUruLLLuulllddrRRRRdddddlddlUUUluRRdrUUUUlluulDullddrRRRluullDldRRR
+ 112 [10*13( 5)] OK   0sec  279moves  98pushes rrruuuuruuLLLDllluururrDulldRDRRRurDDDrdLulDDDDrdLLuruuuuruullldLuuurDldRRRurDDDrdLulDDDDrddlUruLLLulDrrruuuuruuulLdlluurDldRRRurDDDrdLulDDDDrdLuuuuuruullldlddrUUluRRRurDDDrdLulDDDDrddlUruLuuuuruuullllllddRRdrUluRRRurDDDrdLulDDDDrddlUUUUUdddLLulldRRRlllddrrUdlluurRddlUluRdrRRdrU
+ 113 [14*13( 4)] OK   0sec  188moves  51pushes rRRurDlddrRDulluurrDLdlUruLLLdlUruLLLrruullldlddrUrrrrdrrrdddrrUruLLLdlUruLLLdlUUUdlllluurrururrddLddrdrrrrdrdLdlUUruLLLLdlUUrdrrrdddddrUUUruLLdlUruLLLulDulllluurDldRuurururrddlDuruulldldR
+ 114 [11* 9( 6)] OK   0sec  285moves  60pushes dddLurrrdLurrrdLullluuruLdddlddllUUUURRllluurrrDrDDuululllddrddddrruuRRRRllllddlluuuurRuullDldRddddrruLdlUUUUdddrrurrdLLurrrrdLLullddlluuuuluurrrdrDDuululllddrddddrruuRRRlllddlluuuuRRurDDulllddddrruuRRlldLrurrdLLdllUUUdddrruuruuululllddRRRurDDulllddddrruuRdldlluRdrUruuuulullDldRRRurDD
+ 115 [12* 8( 5)] OK   0sec  161moves  29pushes dllUUUluRRRdrrruullDurrddlLulllddddrrrrUUddlllluuuurrrdRRRddLruulllulllddddrrrrUUdrruuulullddRdddlluLdlUUUluRRRllddrdrdrrurruuulullDurrdrrrdLullulldlllddrdrRdrUU
+ 116 [10* 7( 5)] OK   1sec   92moves  18pushes drrrdrruUruulldRlllDurrrdddlluUluRdddrruuLrddlluUlLdlluRRRRRlddrruUlllldRurrrddllUdrruulLdlU
+ 117 [11*10( 5)] OK   1sec  270moves  65pushes llllldddllddrRRllluuurrrrrdDuullldllddrrruRUruLLLulDrdLulDurrrrddlddrUUUruLLLdlluRdrUUluRRRRRurDlllllddrrrdrdLulDlddrUUUruLLLdlluRdrUluurrrrrrrddddLLLulDlddrUUUruLLLrrrdrdrruuuullllllldDldRurrrdddllllUdrrrurrrdLullddrUUUruLLLrrrdrdrruuuullllllldDuurrrrrrrddlUruLLLLLLulD
+ 118 [10*10( 4)] OK   1sec  196moves  50pushes rrruuuulululldRdRlDDDuuuuurDrDLrrddlUruLrddddlldlluRRRRdrUUruLdlUluuullDDDDuuuurrdddrddlldlluRRRRdrUluurrdLulluuLulDDDDuuurrddrrddllldlluRRRRdrUUdlllluuuuulldRurDDDDuuurrddrDrddlUruruLddllldlluRRR
+ 119 [ 9*10( 3)] OK   1sec  149moves  18pushes drddrruruuuulullldDDuuurrrdrddddldlluuruuLrddlddrruruuuulullldDrDDDuuuluurrrdrddddldlLLruuuullddRluurrdDDuuuluurrrdrddddldldlluRdllluRdrruuulluRurDDD
+ 120 [11*11( 4)] OK   0sec  253moves  66pushes lddldRuuuluuRRRRRRurDDDrdLLLrruuulllllllddrUluRRRRRRurDDulllllldddddlddrUUUUUluurrrrrrrdrddllldlldLrurrurrruululllllllddrddDrrurruulDrrrruululllllllddrdddrruRurrrruulDrdLLLulDrrruuulllllllddrUluRRRRRRurDDDrdLLLrruuulllllldddddlddrUUUUUUluRRRRRRurDDDrdLL
+ 121 [11*11( 5)] OK   0sec  149moves  49pushes lluuUruUlldRddddrrrRlllluuuuurrruulllDurrrddllUlDDDrUUddlDDldRRRRdrrULLLLdlUUUUruulldRddddrrrrrdrruLLLLLLdlUUUUUluRdddddrrrrrrruullDurrddlLLLLLdlUUUU
+ 122 [11*12( 5)] OK   0sec  261moves  90pushes lluuRDDDDldRRRRRRurrddlUruLLLLLdlluuuuuluuurrDrrdddlULrruullDuullddRDDDDDldRRRRRRurrddlUruLLLdlllluuuuuuluurrdrrddlLrruullullddrDDDDDldRRRRRRurrddlUruLdlllllluuuuuuluurrdDurrddlLulDDDDDldRRRRRRRurDllluRRdlllllluuuuuururDrdLLulDDDDDldRRRRRRurDlllluRRRdllllluRRRR
+ 123 [15*11( 5)] OK   0sec  362moves 103pushes ddlDDuuruulDuruulDulldRRurDDDlUrdrdddlluURurDDullddrRRRRuurrddLdlUUUluRurDldddllluuuluuulldRurDDDrdddlluuRurDDullddrRRRRuuurrdddLdlUUUluurrdLulDrdddllluullUUruulldRurDDDldRurDDullddrRRRRuuurrdddLdlUUUddrruuuullldRdddllluuuluuullllldRRRRurDDDldRurDDullddrRRRRuuuurrddddLdlUUUUdddrruuuulLdRldddrruuUruLddddllllllddlUUUUUUruulldRurDDDldRurDDullddrRRRRuuurrdddLdlUUU
+ 124 [14* 9( 3)] OK   0sec  303moves  43pushes urrDDuulldRullldRdddddrrrrrrrrrruuuuulllddllldlluRRRRdrruLLLrruurrrdddddlllllllllluuuuuurrdLurrrdLddRRRdrUUdlllluuulldRullldRdddddrrrrrrrrrruuuuuulllldRRurrddddddlllllllllluuuuuurrrDDuulllddddddrrrrrrrrrruuuuuulldlddllldlluRRRRdrUUdlllluuullldRRurDDullldddddrrrrrrrrrruuuuuulldRullldRRlddllldlluRRRRdrUU
+ 125 [13* 8( 4)] OK   1sec  141moves  38pushes ululDDDuurrddLrrddllULLLLLullddrUrrrrrrdrruuluulldDuurrddrddlluLLLLLLdlluurDrrrrrruuurrddLruulldDrdLLLLLLLulDrrruLrdrruRdrruruulldDrdLLLLLulD
+ 126 [12* 7( 7)] OK   1sec  134moves  25pushes ddlllluUddrrrruuulllLLLDDllddrrUUURurrrrrdddlllluUddrrrruuulllLdddrruUddrruuulLdRlddrruUruLdddlllluuRlddrruUlllldlluRRRRddrruuLrddlluU
+ 127 [10* 9( 4)] OK   1sec  136moves  32pushes uRRRdrruLLLLulDrrrruulluurDrdddllluluuRRdRluurDrDDuullllddrdrrdrruLLLLrrruuurrdLulllllddrdrrruUddlllulldRRRRdrUlllllddrUluRRRRlluluurrdR
+ 128 [11* 8( 4)] OK   1sec  100moves  27pushes rrurruulllulldRRlldlluRRurrddLLrDululldRRuurrdLLrrRRurrdLLrddlldlLuUruRRllulldRRdldddlluRdrUUUruulDD
+ 129 [11* 8( 5)] OK   0sec  134moves  28pushes rdRRurDlllulldRRRRlllldlluRRurrddLLrDururrddldlLuululldRRuurrdLLrrrrddldlluUrurrurrddLruulldlldlddrrurUdldlluuluRRdldddlluRdrUUUruulDD
+ 130 [12* 7( 4)] OK   0sec  110moves  38pushes lulluurrDRRRRRurDrdLLulDullllulldRRRRRRdrruulDllllDLddrUUluRRRRRurrddlUlldRullllllldRRdrUluRRRRdrUrrdddlllUluR
+ 131 [ 7*11( 4)] OK   0sec   80moves  31pushes ddldRDRddlUUUUUUluRurDldddRDrruLLdlUUUluurrdLulDrddddddrUUruLdlUUUddrrrddLLdlUUU
+ 132 [10* 8( 4)] OK   0sec  163moves  39pushes DrrDDllUdrruulLulDrrrddrruLrdrruLLdlllluurrDullddrRRRuLdllluurrDullddrRRlllddrrUUlluurrDrdLLrddlluUUdrruulLrrdrrrrddlUruLLLdllluurrDrdLLrddlluUUdrrurrrdLLLLrddlluU
+ 133 [10* 8( 5)] OK   0sec  155moves  41pushes uurrrrrdddLLulLrrddllULUUddrdrrurruuullulllldRRldddrdrruulLdlUUdrrrdrruuullulldRRulllldRRlddrddrUruLLdlUUUluRRRldlddrrrdrruLLLLdlUUUluRdddlldRRRdrUruLLdlUU
+ 134 [12*10( 4)] OK   1sec  274moves  82pushes rurrdLLrrrruUUUruulDDDDDrdLLLuuuluuRRlldllLulldRRRRdrrdddrruuuuruulDlllDDldRdldLdlUUUUdddrruuuulLulldRRRRdrddrdrruuuUruulDlllDldRddrdLLLdlUUUUdddrruuuulLulldRRRRdrddrdrruuuUruulDlllDDDlddrruLdlUUruuurrrDDDDrdLLLLLLdlUUUUdddrruuruullLulldRRRRllddddrrrrrruuuuulllDDDlddrruLdlU
+ 135 [11* 7( 4)] OK   1sec  155moves  38pushes dlddRRuuluulllldddrRurrrddllUluRRRRRurDDulllluullDDuulldddrRurrrddllUluRRRRRdrUlllluulllldRurDDullddrRurrrddllUluRddrruurrddLLuuLuullddRRRRlddrruUllllddRRR
+ 136 [ 9* 8( 4)] OK   1sec  152moves  25pushes lldllluRdrrurrrddLLrruullldlluuurrrrDulllldddrruLdllddrrrUrrruuLuulllldDrdLulDuruurrrrddLLLrrruulllldDldRurrrrrddlllUdrrruullLLLrrddrrUruLLLLrrruulllldD
+ 137 [13*10( 4)] OK   1sec  191moves  52pushes uuurRlldddrrUULulDDurrddlLLLdlUruLLrrdrrrrurruLLLulDDurrddlLLLdlUruLrdrruuururDldRdrruLLLulDDurrddlLLrdddlluuluurDrruurrrruLLulDrdLulDDurrddlLLLulDrrrdddllllluuuluurDDDuuRRdrrrdddlllllUUUluRR
+ 138 [12*11( 5)] OK   0sec  237moves  64pushes rrrdddrRddrruUruLullDLdlUUUruLdlUrdddrrurrdLLLdlUUUruLLdllluurrDDrrddrrrrdddlluUddrruuulLLdlUUUruLLdllluurrDullddrRurrdddrrdddlUUruLdlUUUruLdLLuullddRRRRuLdllluurrDrdLrrddrrrrdLLdlUruLdlUUUluRlluurDDldRuulllddddrrUUUdddlluuuurRurDlllddRR
+ 139 [16*12( 6)] OK   0sec  374moves 114pushes rDDDrrrruRRllddrrULdlUlllluurrrDulllddrrRllddlUUUdrrruullLdlUUUUruLLLulDldRRurrdddrdddddlluRdrUUUdrrruullLdlUUUUruLLLulDDldRuurrrdddrdrrrddRdrruLLLLLdlUUdrrruullLdlUUUUruLLLulDDurrrdddrdrrrddrruLdlllluurrrDrdLLLdlUUdrrruullLdlUUUUruLLLdlluRdrRRddrdrrrdrrdrrruulDrdLLLLLLLdlUUdrrruullLdlUUUUluRdllluRdrrddrdrrrdrrRdrruulDrdLLLLLLLdlUUdrrruullLdlUUUUllllddrrUdlluurRRlddlUluRR
+ 140 [14* 9( 4)] OK   0sec  340moves  82pushes rddrRuRuRuRurrdLdLdLdLLLLulldRuuulllddddrdrrruUUUluurrdLulDDrddrrrrururuulDlDlDururrdLdLdLLLLuullddRluuullddddrdrrruUUUluurrdLulDrdddrrrruruulDlDurrdLdLLLLuuulldddRluuullddddrdrrruUUUddlluuururrdLdddrrrruulDrdLLLLddllluluuuurrdddRluuullddddrdrrruUlluuuRurrdLLLLulDDDDuuurrdddrrUUddlluuururrdLLLLulDDDuurrrrdLrddlluUruLLulDDurrdddrUUruLLLulD
+ 141 [10* 9( 6)] OK   0sec  153moves  54pushes luurrrddrruuLLLLrrrrdLulllUUluurDrrRDDDrddlUUUUUdddlllLddlluuRRRRRlluUluurDDurrrddDrddlUUUUddlllUUluRRldddrrrddlUruLLLLddlluuRRRRRdrUUdllllddlUluRRRRRdrU
+ 142 [ 9* 9( 4)] OK   0sec   84moves  22pushes rruLdlddrUluRllldRurDururrdLLdlluURRluulDDrrddlUUdLuuurDDrdrruLLddlluRdllluRdrrrddlU
+ 143 [ 9*15( 6)] OK   0sec  236moves  69pushes ldlluRuurRlldddrdrruulUUUdddLruulldDldRurrrdrruLLLLruulldDuurruUUUllluurDuluurDrrdDDDDDDDullddrRRdrruLuuLLddRluurrdDrdLuuulluuuuuuullDlddRRlluuurrrddDDDDDrrddllUUUUUUUUruLLrdddddddddlluuRlddrruUUUUUllluurDuluurDrrdDDDDDDDullddrRRluurrdD
+ 144 [12*12(16)] OK   0sec  308moves  74pushes luuluururuulDDrrrdrdrruLLdddldlddrUUllluullldRRuuuluuRRdrrrurrDDuulldlllullddrUrrrrurrdLLLLLuurDldRRRurrddldddrddLruuluuuruulldRddddrddlUUUUUddddlllldllUdrrurrrrdLullldlluRRRRRdrruulDllllluulDuruuluuRRdrrrurDDDDDrdLLLLLdlUUUUddddlUUluRdrdrrrrddlUruLLrrrrdLLdlUruruuuurrdLulDDuuuurDDrdLuullllluurDldRRlullldRR
+ 145 [11*11(12)] OK   1sec  293moves  74pushes rdDDllddrrUdlluurUdlddrruRldlluururrDulldlddrruUruLrdrrddlUruLLLddlluuRRlldLrurruuulldDDulDrrruuLulDrrdddRluurDllUruulldRurDlddlluRdrrddllUUlllddrUluRdRUrrrrrrddlUruLLLLLrrddlDRddlluRdrUluuruulURuulDrddddllLulldRurDrrruurrddLLLLLulldRRRDrddlUUrdrUUrruullDurrdLullUruulldRurDDldlLdlluRRRUruulDD
+ 146 [ 9* 9(12)] OK   1sec  159moves  28pushes ulUluRdllddRRdrUruLdlllddrdrrrruruuLLulDrdLuurRurDldlllllddrdrrUUddlluluurrRurDldddrruLdllluluurrrdDuuurruulDLddllluurRRRlddlllddrUluuurrrddlLrrrrDullddLruullU
+ 147 [12*10( 3)] OK   0sec  184moves  54pushes lllllldddRRuLdlUUluRRRRRRdrrruullDldRullllllddrrrDrddldlluUUruLdlUUluRRRRRRdrdrruuullDllllllddrrrdrddlUruLLLdlUUUluRRRRRdrdrrruuulldLLLLLLrrrrrddrUdrruLLdlUrrruullDurrdddllluRRdrUlluLL
+ 148 [15* 7( 4)] OK   0sec  236moves  55pushes lullllddrdrdrrrrUUddllllululuurrrrdrRurrdLLLLdlUrrrdddrruLdlUUddllllululuurrdrrrRurrdLLdddllllululuurrdrruLLrrdRRurrdLLLLulDrrrddrrdrruLLLdlUUddllllululuuRRdrruLLrrdrRurrdLLLLulldRurDrrddrrrrdrruLLLLLdlUUddllllululuuRRdrruLrdrRurrdLLLLL
+ 149 [10*12( 4)] OK   0sec   94moves  35pushes RurDDDlddrdDldRuuuluurDRRRRlllluuurrdLulDDldRRRRlllDDDlddrUUUUluRRRddddLruuuulldddlddrUUUUluRR
+ 150 [15* 8( 5)] OK   0sec  197moves  53pushes lldlllUUruLrdrDullddrRdrUluRRRRurrddlUruLLdlllluluurDDDullddrRdrUluRRRRurrddlUlllldllllluRdrrruullDldRRRdrUluRRRRRdrUlllluRdlldllllllluRRRdrrruullDurrddlLLLuluurRRdrruulDlddlllldRRRRRluuurrddrddlUU
+ 151 [12*10( 4)] OK   0sec  149moves  52pushes lullUdrruuuLrdddlluRdrUUUluurDDDDDldRRRRurrddlUruLdllllldlUlluuuruRRurDDDDldRRRRRurDllluRRdlllluullDurruullldldddrRRRRRRurDlllluullUluRRurDDDDldRRRRR
+ 152 [15* 9( 4)] OK   1sec  263moves  45pushes lluuUUrrddrrrrrdrdLLLLLLuurruurrrrdrdrddrruuululululllDurrrdrdrdrdddllLLululllllddrrrrRRRRllululllllulldddRRRRlluurruuuullllDDDDurrdrrrrrdrdrruulululLLrrrdrdrddllulullllluulluurrrrdDDuuullllddrrddrRRlllddllUUUUrrddddrrRRRRuluLLLLrrrrddllllllluuurrDDurrrrrddllllLL
+ 153 [13*10(10)] OK  10sec 1033moves 372pushes lDDDDDDrdLuuurDuluurDuluurDrrddrUdlddrUdlddrUrruurUluuurrddLruulldDDrdDlddrUUUUlDrddlllluurDldRRRdrUUUddllluuluurDDuuluurDDlddddrrrruuluuuurrddLDldDrdLLLdlUUUddrrruuurDDuuuruulDlDDrddlUdddrUluuruUruLdddlddrUUUUruulDDDulDuruulDrddlDDrddlUruUddlllluurDulUUdddddrUrrruuluUddrUUddddlllluurDldRRRdrUUUddllluuluurDlddrdrrruulDuuurDlddrddlUlluluuuruulDrddlddrdrrruUddllluluurDDuuuullllddrUluRRRurDDDuulllddlddrUUddlddrUUdllldRuruuuuurrrrddlUruLLLulDDDDDrdLLdlUUUUUUdddddrruuuuurrrddddrUdlddrUrrruulDrdLLLdlUUUUUruLLLulDDDDDrdLLdlUUUUUddddrruuuuurrrdddddrrruuuurruullDDDDDrdLLLdlUUUUUruLLLulDDDDDrdLLdlUUUUdddrruuuuurrrdddddrrruurUluuurrddLruulldDDDDrdLLLdlUUUUUruLLLulDDDDDrdLLdlUUUddrruuuuurrrdddrDldRRRdrUUUUluuurrddLruulldDDDDrdLLLdlUUUUUruLLLulDDDDDrdLLdlUUdrruuuuurrrrdDDDldRRRdrUUUUluuurrddLruulldDDDDrdLLLdlUUUUUruLLLulDDDDDrdLLdlUrrrdLLuruuuuurrrrdddddrruuuurruLulDDDDDrdLLLdlUUUUUruLLLulDDDDDDrdLuuuurUluRRRurDDDDDldRRRdrUUUUUruLulDDDDDrdLLLdlUUUUUruLLLulDDDDDrdLLrurUUUluRRRurDDDDDldRRRdrUUUUUruLulDDDDDrdLLLdlUUUUUruLLLulDDDDDrdL
+
 

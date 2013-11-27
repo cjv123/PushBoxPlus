@@ -7,11 +7,12 @@
 #define KEY_DOWN(vk_code) (GetAsyncKeyState(vk_code) & 0x8000 ? 1 : 0)  
 #define KEY_UP(vk_code) (GetAsyncKeyState(vk_code) & 0x8000 ? 0 : 1)  
 #endif
+#include "GameData.h"
 
 static int pusher_orderz = 100;
 static int box_orderz = 99;
 
-StateGame::StateGame() : mIsmove(false),mMapLayer(NULL),mNowLevel(1)
+StateGame::StateGame() : mIsmove(false),mMapLayer(NULL)
 {
 
 }
@@ -54,7 +55,8 @@ void StateGame::initBackground()
 
 void StateGame::initMap()
 {
-	MapInfo* mapinfo = MapData::getInstance()->getMapLvDatas().at(mNowLevel-1);
+	
+	MapInfo* mapinfo = MapData::getInstance()->getMapLvDatas().at(GameData::getInstance()->mCurLevel);
 	mMapData = new MapInfo(*mapinfo);
 
 	float mapw = mapinfo->getMapSize().width*MapData::tileW;
@@ -353,7 +355,7 @@ bool StateGame::checkPassLv()
 
 void StateGame::searchRoad()
 {
-	string searchData = MapSearcher::getInstance()->getAnswerdata().at(mNowLevel-1);
+	string searchData = MapSearcher::getInstance()->getAnswerdata().at(GameData::getInstance()->mCurLevel);
 	
 	CCArray* array = CCArray::create();
 	for (int i=0;i<(int)searchData.size();i++)

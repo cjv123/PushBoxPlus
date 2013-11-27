@@ -67,6 +67,15 @@
     <ClInclude Include="..\Classes\Config.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\GameData.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\StateLvInfo.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SpriteButton.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -94,6 +103,12 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\GiftListView.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\StateLvInfo.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SpriteButton.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

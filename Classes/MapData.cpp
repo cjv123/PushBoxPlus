@@ -1,4 +1,5 @@
 #include "MapData.h"
+#include "PusherSprite.h"
 
 MapInfo::MapInfo()
 {
@@ -208,6 +209,14 @@ CCLayer* MapData::makeMapView(int mapindex)
 				mapLayer->addChild(wall);
 				wall->setAnchorPoint(ccp(0.0f,0.0f));
 				wall->setPosition(ccp(x,y));
+			}
+			else if (mapdata[i][j]=='@')
+			{
+				CCSprite* pusher = CCSprite::createWithTexture(
+					CCTextureCache::sharedTextureCache()->textureForKey("vx_chara01_b.png"),CCRectMake(PusherSprite::w,0,PusherSprite::w,PusherSprite::h));
+				pusher->setAnchorPoint(ccp(0,0));
+				mapLayer->addChild(pusher);
+				pusher->setPosition(ccp(x,y));
 			}
 			else if (mapdata[i][j]==' ')
 			{

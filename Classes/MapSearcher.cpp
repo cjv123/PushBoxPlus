@@ -16,7 +16,7 @@ void MapSearcher::initSearcher( const char* filename )
 	unsigned long len=0;
 	unsigned char* filedata = CCFileUtils::sharedFileUtils()->getFileData(filename,"r",&len);
 	char* startpos = (char*)filedata;
-	char linetmp[1024]={0};
+	char linetmp[1024*2]={0};
 	while (1)
 	{
 		memset(linetmp,sizeof(linetmp),0);

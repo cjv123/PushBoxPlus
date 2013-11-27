@@ -3,6 +3,9 @@
 #include "MapSearcher.h"
 
 #include "cocos-ext.h"
+#include "GameData.h"
+#include "StateGame.h"
+#include "StateLvInfo.h"
 using namespace cocos2d::extension;
 
 StateSelectLv::StateSelectLv() : mListView(NULL)
@@ -49,7 +52,7 @@ bool StateSelectLv::init()
 			mListView->setApater(this);
 			addChild(mListView);
 		}
-		
+		item->setTag(i);
 		mListView->addItem(item);
 	}
 
@@ -60,7 +63,8 @@ bool StateSelectLv::init()
 
 void StateSelectLv::onSelItem( GiftItem* item )
 {
-	
+	int index = item->getTag();
+	CCDirector::sharedDirector()->pushScene(StateLvInfo::scene(index));
 }
 
 

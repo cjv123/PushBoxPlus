@@ -6,15 +6,16 @@ class GameData
 public:
 	static GameData* getInstance()
 	{
-		static GameData& instance;
-		return & instance;
+		static GameData instance;
+		return &instance;
 	};
 
+	int mCurLevel;
 
 private:
 	GameData()
 	{
-		
+		mCurLevel = 1;
 	};
 };
 

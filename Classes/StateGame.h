@@ -41,7 +41,6 @@ private:
 	void searchRoad();
 	void onSearchCallback(CCNode* pObj,void* par);
 
-	int mNowLevel;
 
 	CCLayer* mMapLayer;
 	PusherSprite* mPusher;

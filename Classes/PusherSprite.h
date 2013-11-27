@@ -21,6 +21,9 @@ public:
 	void playDownMoveAnim();
 
 	virtual void update( float delta );
+
+	static float w;
+	static float h;
 private:
 	StateGame::direct mFaceDir;
 	CCTexture2D* mTexture;

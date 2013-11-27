@@ -1,7 +1,7 @@
 #include "PusherSprite.h"
 
-static float w = 32.0f;
-static float h = 48.0f;
+float PusherSprite::w = 32.0f;
+float PusherSprite::h = 48.0f;
 
 PusherSprite::PusherSprite()
 {

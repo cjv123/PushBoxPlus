@@ -3,6 +3,7 @@
 #include "MapSearcher.h"
 #include "StateSelectLv.h"
 #include "StateGame.h"
+#include "GameData.h"
 
 
 StateHome::StateHome()
@@ -30,10 +31,12 @@ bool StateHome::init()
 
 	MapData::getInstance()->initMap("map.mp");
 	MapSearcher::getInstance()->initSearcher("mapanwser.txt");
+	GameData::getInstance();
 
-	CCTexture2D* textureWall = CCTextureCache::sharedTextureCache()->addImage("wall.png");
-	CCTexture2D* textureBox = CCTextureCache::sharedTextureCache()->addImage("box.png");
-	CCTexture2D* textureFloor = CCTextureCache::sharedTextureCache()->addImage("floor.png");
+	CCTextureCache::sharedTextureCache()->addImage("wall.png");
+	CCTextureCache::sharedTextureCache()->addImage("box.png");
+	CCTextureCache::sharedTextureCache()->addImage("floor.png");
+	CCTextureCache::sharedTextureCache()->addImage("vx_chara01_b.png");
 
 	return true;
 }
