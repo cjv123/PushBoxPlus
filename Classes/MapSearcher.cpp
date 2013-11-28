@@ -19,7 +19,7 @@ void MapSearcher::initSearcher( const char* filename )
 	char linetmp[1024*2]={0};
 	while (1)
 	{
-		memset(linetmp,sizeof(linetmp),0);
+		memset(linetmp,0,sizeof(linetmp));
 		startpos = MapData::readLine(startpos,linetmp);
 		if (startpos == 0)
 			break;
