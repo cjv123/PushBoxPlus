@@ -32,7 +32,7 @@ bool StateSelectLv::init()
 	{
 		return false;
 	}
-
+	
 	int mapcount = MapData::getInstance()->getMapLvDatas().size();
 	for (int i=0;i<mapcount;i++)
 	{
