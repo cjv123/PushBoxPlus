@@ -3,6 +3,8 @@
 
 #include <cocos2d.h>
 using namespace cocos2d;
+#include "cocos-ext.h"
+using namespace cocos2d::extension;
 
 class StateHome : public CCLayer
 {
@@ -19,6 +21,8 @@ public:
 	virtual void onEnter();
 
 private:
+
+	void onButtonClick(CCObject* pObj);
 	
 };
 

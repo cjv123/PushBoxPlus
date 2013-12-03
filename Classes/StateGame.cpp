@@ -70,6 +70,10 @@ void StateGame::initMap()
 	mMapLayer->setContentSize(CCSizeMake(mapw,maph));
 	mMapLayer->setPosition(ccp(mapx,mapy));
 	addChild(mMapLayer);
+	float scale = min((getContentSize().width-20) / mapw,getContentSize().height/2/maph);
+	if (scale>2)
+		scale = 2;
+	mMapLayer->setScale(scale);
 
 	vector<string>& mapdata = mapinfo->getMapData();
 	for (int i=0;i<(int)mapdata.size();i++)
