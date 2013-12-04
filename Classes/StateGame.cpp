@@ -73,7 +73,7 @@ void StateGame::initMap()
 	float scale = min((getContentSize().width-20) / mapw,getContentSize().height/2/maph);
 	if (scale>2)
 		scale = 2;
-	mMapLayer->setScale(scale);
+	//mMapLayer->setScale(scale);
 
 	vector<string>& mapdata = mapinfo->getMapData();
 	for (int i=0;i<(int)mapdata.size();i++)
@@ -168,6 +168,19 @@ void StateGame::initMenu()
 	menu->setPosition(ccp(0,0));
 }
 
+void StateGame::initCloud(float delay)
+{
+	mCloud = CCSprite::create("cloud.png");
+	addChild(mCloud);
+	mCloud->setPosition(ccp(0,-100));
+	mCloud->setScale(3);
+	mCloud->setOpacity(20);
+	mCloud->getTexture()->setAliasTexParameters();
+	float x = CCRANDOM_0_1()*(getContentSize().width-mCloud->boundingBox().size.width/2) + mCloud->boundingBox().size.width/2;
+	mCloud->setPosition(ccp( x,0));
+	CCSequence* seq = CCSequence::create(CCMoveTo::create(30.0f,ccp(mCloud->getPositionX(),getContentSize().height+100)),CCRemoveSelf::create(true),NULL);
+	mCloud->runAction(seq);
+}
 
 bool StateGame::init()
 {
@@ -181,6 +194,9 @@ bool StateGame::init()
 	initBackground();
 	initMap();
 	initMenu();
+	
+	initCloud(0);
+	schedule(schedule_selector(StateGame::initCloud),10.0f);
 
 	searchRoad();
 
@@ -211,6 +227,8 @@ void StateGame::update( float delta )
 	}
 	
 #endif
+	
+	
 }
 
 
@@ -411,6 +429,8 @@ void StateGame::onButtonClick( CCObject* pObj )
 {
 	CCDirector::sharedDirector()->popScene();
 }
+
+
 
 
 

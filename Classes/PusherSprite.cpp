@@ -5,7 +5,7 @@ float PusherSprite::h = 48.0f;
 
 PusherSprite::PusherSprite()
 {
-
+	mFaceDir = StateGame::dir_down;
 }
 
 PusherSprite::~PusherSprite()

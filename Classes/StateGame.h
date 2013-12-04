@@ -29,6 +29,7 @@ private:
 	void initMap();
 	void initBackground();
 	void initMenu();
+	void initCloud(float delay);
 
 	void onMoveAnimComplete();
 
@@ -45,10 +46,10 @@ private:
 	void onButtonClick(CCObject* pObj);
 
 
-
 	CCLayer* mMapLayer;
 	PusherSprite* mPusher;
 	CCPoint mPusherMapPos;
+	CCSprite* mCloud;
 	
 	vector<CCSprite*> mWalls;
 	vector<CCSprite*> mBoxs;
@@ -56,6 +57,7 @@ private:
 	bool mIsmove;
 
 	MapInfo* mMapData;
+
 };
 
 #endif

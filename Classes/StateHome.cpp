@@ -33,10 +33,10 @@ bool StateHome::init()
 	MapSearcher::getInstance()->initSearcher("mapanwser.txt");
 	GameData::getInstance();
 
-	CCTextureCache::sharedTextureCache()->addImage("wall.png");
-	CCTextureCache::sharedTextureCache()->addImage("box.png");
-	CCTextureCache::sharedTextureCache()->addImage("floor.png");
-	CCTextureCache::sharedTextureCache()->addImage("vx_chara01_b.png");
+	CCTextureCache::sharedTextureCache()->addImage("wall.png")->setAliasTexParameters();
+	CCTextureCache::sharedTextureCache()->addImage("box.png")->setAliasTexParameters();
+	CCTextureCache::sharedTextureCache()->addImage("floor.png")->setAliasTexParameters();
+	CCTextureCache::sharedTextureCache()->addImage("vx_chara01_b.png")->setAliasTexParameters();
 
 	UILayer* ul =UILayer::create();
 	UIWidget* uiwidget = GUIReader::shareReader()->widgetFromJsonFile("SceneHomeUIEdit_1.json");
