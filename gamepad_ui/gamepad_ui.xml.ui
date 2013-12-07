@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<UIProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <filePath>D:\c++\cocos2d-x-2.2.1\PushBoxPlus\gamepad_ui\gamepad_ui.xml.ui</filePath>
+  <Version>1.1.0.0</Version>
+  <Name>gamepad_ui</Name>
+  <ProjectDir>D:\c++\cocos2d-x-2.2.1\PushBoxPlus\gamepad_ui</ProjectDir>
+  <JsonFileName>gamepad_ui.json</JsonFileName>
+  <Resources>D:\c++\cocos2d-x-2.2.1\PushBoxPlus\gamepad_ui\Resources</Resources>
+  <JsonFolder>D:\c++\cocos2d-x-2.2.1\PushBoxPlus\gamepad_ui\Json</JsonFolder>
+  <JsonList>
+    <string>gamepad_ui_1.json</string>
+  </JsonList>
+  <imageFileList />
+  <JsonSuffix>.json</JsonSuffix>
+  <CurrentUIJson>gamepad_ui_1.json</CurrentUIJson>
+  <CanvasSize>
+    <Width>640</Width>
+    <Height>1136</Height>
+  </CanvasSize>
+</UIProject>

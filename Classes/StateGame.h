@@ -28,8 +28,8 @@ public:
 private:
 	void initMap();
 	void initBackground();
-	void initMenu();
 	void initCloud(float delay);
+	void initUi();
 
 	void onMoveAnimComplete();
 

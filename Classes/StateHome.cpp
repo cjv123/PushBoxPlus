@@ -45,13 +45,12 @@ bool StateHome::init()
 	UIButton* startButton = (UIButton*)uiwidget->getChildByName("Start_Button");
 	startButton->addReleaseEvent(this,coco_releaseselector(StateHome::onButtonClick));
 	startButton->setTouchEnable(true);
-	CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(ul,ul->getTouchPriority(),false);
 	return true;
 }
 
 void StateHome::onEnter()
 {
-	
+	CCLayer::onEnter();
 }
 
 void StateHome::onButtonClick( CCObject* pObj)

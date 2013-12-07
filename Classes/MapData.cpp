@@ -74,7 +74,7 @@ void MapData::initMap( const char* mapfilename )
 	unsigned char* filedata = CCFileUtils::sharedFileUtils()->getFileData(mapfilename,"r",&len);
 	
 	int lv =0;
-	char linetmp[1024]={0};
+	char linetmp[1024*3]={0};
 	string mapdatatmp;
 	int i = 0;
 	bool start=false;
@@ -114,7 +114,7 @@ void MapData::initMap( const char* mapfilename )
 char* MapData::readLine(char* source,char* des )
 {
 	int offset = 2;
-	char* pos = strchr(source,'\r');
+	char* pos = strstr(source,"\r\n");
 	if (pos == 0)
 	{
 		offset = 1;
@@ -122,6 +122,7 @@ char* MapData::readLine(char* source,char* des )
 		if (pos ==0)
 			return 0;
 	}
+	int copylen = pos - source;
 	strncpy(des,source,pos - source);
 
 	char* nextlinepos = pos + offset;

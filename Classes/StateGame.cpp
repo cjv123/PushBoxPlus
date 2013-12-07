@@ -14,6 +14,14 @@
 static int pusher_orderz = 100;
 static int box_orderz = 99;
 
+static int button_up_tag = 201;
+static int button_down_tag = 202;
+static int button_left_tag = 203;
+static int button_right_tag = 204;
+
+static int button_back_tag = 205;
+
+
 StateGame::StateGame() : mIsmove(false),mMapLayer(NULL)
 {
 
@@ -73,7 +81,7 @@ void StateGame::initMap()
 	float scale = min((getContentSize().width-20) / mapw,getContentSize().height/2/maph);
 	if (scale>2)
 		scale = 2;
-	//mMapLayer->setScale(scale);
+	mMapLayer->setScale(scale);
 
 	vector<string>& mapdata = mapinfo->getMapData();
 	for (int i=0;i<(int)mapdata.size();i++)
@@ -153,28 +161,13 @@ void StateGame::initMap()
 	}
 }
 
-
-void StateGame::initMenu()
-{
-	SpriteButton* backbutton = SpriteButton::createWithName("lv9scale.png",this,menu_selector(StateGame::onButtonClick),Scale9SpriteCapDefine);
-	backbutton->setCapMode(Scale9SpriteCapDefine,CCRectMake(4,4,2,2));
-	backbutton->setBgImageSize(CCSizeMake(100,70));
-	backbutton->setTitle("back");
-	backbutton->setPosition(ccp(getContentSize().width/2,100));
-	backbutton->setTag(1);
-	
-	CCMenu* menu = CCMenu::create(backbutton,NULL);
-	addChild(menu);
-	menu->setPosition(ccp(0,0));
-}
-
 void StateGame::initCloud(float delay)
 {
 	mCloud = CCSprite::create("cloud.png");
 	addChild(mCloud);
 	mCloud->setPosition(ccp(0,-100));
 	mCloud->setScale(3);
-	mCloud->setOpacity(20);
+	mCloud->setOpacity(40);
 	mCloud->getTexture()->setAliasTexParameters();
 	float x = CCRANDOM_0_1()*(getContentSize().width-mCloud->boundingBox().size.width/2) + mCloud->boundingBox().size.width/2;
 	mCloud->setPosition(ccp( x,0));
@@ -193,12 +186,12 @@ bool StateGame::init()
 
 	initBackground();
 	initMap();
-	initMenu();
 	
 	initCloud(0);
+	initUi();
 	schedule(schedule_selector(StateGame::initCloud),10.0f);
 
-	searchRoad();
+	//searchRoad();
 
 	return true;
 }
@@ -227,7 +220,7 @@ void StateGame::update( float delta )
 	}
 	
 #endif
-	
+	CCLayer::update(delta);
 	
 }
 
@@ -427,7 +420,53 @@ void StateGame::onSearchCallback( CCNode* pObj,void* par )
 
 void StateGame::onButtonClick( CCObject* pObj )
 {
-	CCDirector::sharedDirector()->popScene();
+	int buttontag = ((UIButton*)pObj)->getTag();
+	if (buttontag == button_up_tag)
+	{
+		move(dir_up);
+	}
+	else if (buttontag == button_down_tag)
+	{
+		move(dir_down);
+	}
+	else if (buttontag == button_left_tag)
+	{
+		move(dir_left);
+	}
+	else if (buttontag == button_right_tag)
+	{
+		move(dir_right);
+	}
+	else if (buttontag == button_back_tag)
+	{
+		CCDirector::sharedDirector()->popScene();
+	}
+}
+
+void StateGame::initUi()
+{
+	UILayer* ul =UILayer::create();
+	UIWidget* uiwidget = GUIReader::shareReader()->widgetFromJsonFile("gamepad_ui_1.json");
+	ul->addWidget(uiwidget);
+	addChild(ul);
+	uiwidget->setTouchEnable(true,true);
+	
+	UIButton* upbutton = (UIButton*)uiwidget->getChildByName("pad_button_up");
+	upbutton->addReleaseEvent(this,coco_releaseselector(StateGame::onButtonClick));
+	upbutton->setTag(button_up_tag);
+	UIButton* downbutton = (UIButton*)uiwidget->getChildByName("pad_button_down");
+	downbutton->addReleaseEvent(this,coco_releaseselector(StateGame::onButtonClick));
+	downbutton->setTag(button_down_tag);
+	UIButton* leftbutton = (UIButton*)uiwidget->getChildByName("pad_button_left");
+	leftbutton->addReleaseEvent(this,coco_releaseselector(StateGame::onButtonClick));
+	leftbutton->setTag(button_left_tag);
+	UIButton* rightbutton = (UIButton*)uiwidget->getChildByName("pad_button_right");
+	rightbutton->addReleaseEvent(this,coco_releaseselector(StateGame::onButtonClick));
+	rightbutton->setTag(button_right_tag);
+
+	UIButton* backbutton = (UIButton*)uiwidget->getChildByName("button_back");
+	backbutton->addReleaseEvent(this,coco_releaseselector(StateGame::onButtonClick));
+	backbutton->setTag(button_back_tag);
 }
 
 
