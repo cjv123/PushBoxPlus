@@ -467,6 +467,7 @@ void StateGame::initUi()
 	UIButton* backbutton = (UIButton*)uiwidget->getChildByName("button_back");
 	backbutton->addReleaseEvent(this,coco_releaseselector(StateGame::onButtonClick));
 	backbutton->setTag(button_back_tag);
+
 }
 
 
