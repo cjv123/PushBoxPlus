@@ -352,7 +352,6 @@ bool StateGame::move( int direct )
 
 void StateGame::onMoveAnimComplete(CCNode* target)
 {
-	mIsmove = false;
 	int tag = target->getTag();
 	if (tag == box_tag)
 	{
@@ -361,6 +360,10 @@ void StateGame::onMoveAnimComplete(CCNode* target)
 		{
 			CCLOG("pass level!");
 		}
+	}
+	else if (tag == pusher_tag)
+	{
+		mIsmove = false;
 	}
 }
 
