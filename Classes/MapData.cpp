@@ -194,6 +194,7 @@ CCLayer* MapData::makeMapView(int mapindex)
 				mapLayer->addChild(box);
 				box->setAnchorPoint(ccp(0.0f,0.0f));
 				box->setPosition(ccp(x,y));
+				box->setOpacity(100);
 			}
 			else if (mapdata[i][j]=='$')
 			{

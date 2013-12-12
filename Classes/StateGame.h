@@ -4,6 +4,9 @@
 #include <cocos2d.h>
 #include "MapData.h"
 using namespace cocos2d;
+#include "cocos-ext.h"
+#include "GamePad.h"
+using namespace cocos2d::extension;
 
 class PusherSprite;
 
@@ -30,8 +33,9 @@ private:
 	void initBackground();
 	void initCloud(float delay);
 	void initUi();
+	void flagBoxState();
 
-	void onMoveAnimComplete();
+	void onMoveAnimComplete(CCNode* target);
 
 	bool move(int direct);
 	void playMoveAnim(const CCPoint& nextp,CCNode* target);
@@ -43,6 +47,7 @@ private:
 	void searchRoad();
 	void onSearchCallback(CCNode* pObj,void* par);
 
+	void onDirectButtonPushDown(CCObject* pObj,TouchEventType eventType);
 	void onButtonClick(CCObject* pObj);
 
 
@@ -57,6 +62,8 @@ private:
 	bool mIsmove;
 
 	MapInfo* mMapData;
+
+	GamePad* mGamePad;
 
 };
 

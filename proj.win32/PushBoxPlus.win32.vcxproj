@@ -134,6 +134,7 @@
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\Config.h" />
     <ClInclude Include="..\Classes\GameData.h" />
+    <ClInclude Include="..\Classes\GamePad.h" />
     <ClInclude Include="..\Classes\GiftListView.h" />
     <ClInclude Include="..\Classes\MapData.h" />
     <ClInclude Include="..\Classes\MapSearcher.h" />
@@ -148,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
+    <ClCompile Include="..\Classes\GamePad.cpp" />
     <ClCompile Include="..\Classes\GiftListView.cpp" />
     <ClCompile Include="..\Classes\MapData.cpp" />
     <ClCompile Include="..\Classes\MapSearcher.cpp" />

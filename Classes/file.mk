@@ -4,6 +4,7 @@
 
 MY_SRC_FILES :=\
   ../../Classes/AppDelegate.cpp\
+  ../../Classes/GamePad.cpp\
   ../../Classes/GiftListView.cpp\
   ../../Classes/MapData.cpp\
   ../../Classes/MapSearcher.cpp\

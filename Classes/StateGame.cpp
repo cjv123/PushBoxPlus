@@ -2,27 +2,30 @@
 #include "PusherSprite.h"
 #include "MapSearcher.h"
 
-#ifdef WIN32
-#include <windows.h>  
-#define KEY_DOWN(vk_code) (GetAsyncKeyState(vk_code) & 0x8000 ? 1 : 0)  
-#define KEY_UP(vk_code) (GetAsyncKeyState(vk_code) & 0x8000 ? 0 : 1)  
-#endif
 #include "GameData.h"
 #include "SpriteButton.h"
 #include "StateSelectLv.h"
 
+/*
+	Wall	 #	 0x23
+	Player	 @	 0x40
+	Player on goal square	 +	 0x2b
+	Box	 $	 0x24
+	Box on goal square	 *	 0x2a
+	Goal square	 .	 0x2e
+	Floor	 (Space)	 0x20
+*/
+
+
 static int pusher_orderz = 100;
 static int box_orderz = 99;
-
-static int button_up_tag = 201;
-static int button_down_tag = 202;
-static int button_left_tag = 203;
-static int button_right_tag = 204;
-
-static int button_back_tag = 205;
+static int cloud_orderz = 200;
+static int ui_orderz = 201;
+static int box_tag = 1000;
+static int pusher_tag = 1001;
 
 
-StateGame::StateGame() : mIsmove(false),mMapLayer(NULL)
+StateGame::StateGame() : mIsmove(false),mMapLayer(NULL),mGamePad(NULL)
 {
 
 }
@@ -112,6 +115,7 @@ void StateGame::initMap()
 				mMapLayer->addChild(mPusher,pusher_orderz);
 				mPusher->setPosition(ccp(x,y));
 				mPusherMapPos = ccp(i,j);
+				mPusher->setTag(pusher_tag);
 			}
 			else if (mapdata[i][j]=='*')
 			{
@@ -127,6 +131,7 @@ void StateGame::initMap()
 				mBoxs.push_back(box);
 				box->setAnchorPoint(ccp(0.0f,0.0f));
 				box->setPosition(ccp(x,y));
+				box->setTag(box_tag);
 			}
 			else if (mapdata[i][j]=='$')
 			{
@@ -136,6 +141,7 @@ void StateGame::initMap()
 				mBoxs.push_back(box);
 				box->setAnchorPoint(ccp(0.0f,0.0f));
 				box->setPosition(ccp(x,y));
+				box->setTag(box_tag);
 			}
 			else if (mapdata[i][j]=='#')
 			{
@@ -153,20 +159,23 @@ void StateGame::initMap()
 				mMapLayer->addChild(mPusher,pusher_orderz);
 				mPusher->setPosition(ccp(x,y));
 				mPusherMapPos = ccp(i,j);
+				mPusher->setTag(pusher_tag);
 			}
 			else if (mapdata[i][j]==' ')
 			{
 			}
 		}
 	}
+
+	flagBoxState();
 }
 
 void StateGame::initCloud(float delay)
 {
 	mCloud = CCSprite::create("cloud.png");
-	addChild(mCloud);
+	addChild(mCloud,cloud_orderz);
 	mCloud->setPosition(ccp(0,-100));
-	mCloud->setScale(3);
+	mCloud->setScale(4);
 	mCloud->setOpacity(40);
 	mCloud->getTexture()->setAliasTexParameters();
 	float x = CCRANDOM_0_1()*(getContentSize().width-mCloud->boundingBox().size.width/2) + mCloud->boundingBox().size.width/2;
@@ -198,30 +207,27 @@ bool StateGame::init()
 
 void StateGame::update( float delta )
 {
-#ifdef WIN32
 	if(!mIsmove)
 	{
-		if (KEY_DOWN(VK_UP))
+		if (mGamePad->isPress(GamePad::Button_Up))
 		{
 			move(dir_up);
 		}
-		else if (KEY_DOWN(VK_DOWN))
+		else if (mGamePad->isPress(GamePad::Button_Down))
 		{
 			move(dir_down);
 		}
-		else if (KEY_DOWN(VK_LEFT))
+		else if (mGamePad->isPress(GamePad::Button_Left))
 		{
 			move(dir_left);
 		}
-		else if (KEY_DOWN(VK_RIGHT))
+		else if (mGamePad->isPress(GamePad::Button_Right))
 		{
 			move(dir_right);
 		}
 	}
-	
-#endif
+
 	CCLayer::update(delta);
-	
 }
 
 
@@ -268,7 +274,7 @@ void StateGame::playMoveAnim( const CCPoint& nextp,CCNode* target )
 	float x = nextp.y*MapData::tileW;
 	float y = mMapData->getMapSize().height*MapData::tileH - nextp.x*MapData::tileH;
 	CCMoveTo* moveanim = CCMoveTo::create(0.2f,ccp(x,y));
-	CCSequence* seq = CCSequence::create(moveanim,CCCallFunc::create(this,callfunc_selector(StateGame::onMoveAnimComplete)),NULL);
+	CCSequence* seq = CCSequence::create(moveanim,CCCallFuncN::create(this,callfuncN_selector(StateGame::onMoveAnimComplete)),NULL);
 	target->runAction(seq);
 	mIsmove = true;
 }
@@ -344,12 +350,17 @@ bool StateGame::move( int direct )
 	return true;
 }
 
-void StateGame::onMoveAnimComplete()
+void StateGame::onMoveAnimComplete(CCNode* target)
 {
 	mIsmove = false;
-	if (checkPassLv())
+	int tag = target->getTag();
+	if (tag == box_tag)
 	{
-		CCLOG("pass level!");
+		flagBoxState();
+		if (checkPassLv())
+		{
+			CCLOG("pass level!");
+		}
 	}
 }
 
@@ -368,6 +379,24 @@ CCSprite* StateGame::getBox( int row,int col )
 
 	return NULL;
 }
+
+
+void StateGame::flagBoxState()
+{
+	float maph = mMapData->getMapSize().height*MapData::tileH;
+
+	for (int i=0;i<(int)mBoxs.size();i++)
+	{
+		int row = (int)((maph - mBoxs[i]->getPositionY())/MapData::tileH);
+		int col = (int)(mBoxs[i]->getPositionX()/MapData::tileW);
+		char sign = mMapData->getMapData().at(row).at(col);
+		if (sign == '*')
+			mBoxs[i]->setOpacity(100);
+		else
+			mBoxs[i]->setOpacity(255);
+	}
+}
+
 
 bool StateGame::checkPassLv()
 {
@@ -420,55 +449,23 @@ void StateGame::onSearchCallback( CCNode* pObj,void* par )
 
 void StateGame::onButtonClick( CCObject* pObj )
 {
-	int buttontag = ((UIButton*)pObj)->getTag();
-	if (buttontag == button_up_tag)
-	{
-		move(dir_up);
-	}
-	else if (buttontag == button_down_tag)
-	{
-		move(dir_down);
-	}
-	else if (buttontag == button_left_tag)
-	{
-		move(dir_left);
-	}
-	else if (buttontag == button_right_tag)
-	{
-		move(dir_right);
-	}
-	else if (buttontag == button_back_tag)
-	{
-		CCDirector::sharedDirector()->popScene();
-	}
+	CCDirector::sharedDirector()->popScene();
 }
 
 void StateGame::initUi()
 {
-	UILayer* ul =UILayer::create();
-	UIWidget* uiwidget = GUIReader::shareReader()->widgetFromJsonFile("gamepad_ui_1.json");
-	ul->addWidget(uiwidget);
-	addChild(ul);
-	uiwidget->setTouchEnable(true,true);
-	
-	UIButton* upbutton = (UIButton*)uiwidget->getChildByName("pad_button_up");
-	upbutton->addReleaseEvent(this,coco_releaseselector(StateGame::onButtonClick));
-	upbutton->setTag(button_up_tag);
-	UIButton* downbutton = (UIButton*)uiwidget->getChildByName("pad_button_down");
-	downbutton->addReleaseEvent(this,coco_releaseselector(StateGame::onButtonClick));
-	downbutton->setTag(button_down_tag);
-	UIButton* leftbutton = (UIButton*)uiwidget->getChildByName("pad_button_left");
-	leftbutton->addReleaseEvent(this,coco_releaseselector(StateGame::onButtonClick));
-	leftbutton->setTag(button_left_tag);
-	UIButton* rightbutton = (UIButton*)uiwidget->getChildByName("pad_button_right");
-	rightbutton->addReleaseEvent(this,coco_releaseselector(StateGame::onButtonClick));
-	rightbutton->setTag(button_right_tag);
+	mGamePad = GamePad::create();
+	addChild(mGamePad,ui_orderz);
 
-	UIButton* backbutton = (UIButton*)uiwidget->getChildByName("button_back");
-	backbutton->addReleaseEvent(this,coco_releaseselector(StateGame::onButtonClick));
-	backbutton->setTag(button_back_tag);
+	SpriteButton* backButton = SpriteButton::createWithName("GUI/button.png",this,menu_selector(StateGame::onButtonClick));
+	backButton->setAnchorPoint(ccp(1,1));
+	backButton->setPosition(ccp(getContentSize().width,getContentSize().height));
 
+	CCMenu* menu = CCMenu::create(backButton,NULL);
+	addChild(menu);
+	menu->setPosition(ccp(0,0));
 }
+
 
 
 
