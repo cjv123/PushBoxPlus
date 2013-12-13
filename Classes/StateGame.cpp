@@ -226,7 +226,6 @@ void StateGame::update( float delta )
 			move(dir_right);
 		}
 	}
-
 	CCLayer::update(delta);
 }
 

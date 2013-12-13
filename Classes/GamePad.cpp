@@ -1,64 +1,36 @@
 #include "GamePad.h"
 
-#ifdef WIN32
-#include <windows.h>  
-#define KEY_DOWN(vk_code) (GetAsyncKeyState(vk_code) & 0x8000 ? 1 : 0)  
-#define KEY_UP(vk_code) (GetAsyncKeyState(vk_code) & 0x8000 ? 0 : 1)  
-#endif
-
 bool GamePad::init()
 {
 	if (!CCLayer::init())
 		return false;
+	setTouchEnabled(true);
 
-	UILayer* ul =UILayer::create();
-	UIWidget* uiwidget = GUIReader::shareReader()->widgetFromJsonFile("gamepad_ui_1.json");
-	ul->addWidget(uiwidget);
-	addChild(ul);
-	uiwidget->setTouchEnable(true,true);
+	mUILayer =UILayer::create();
+	mUIWidget = GUIReader::shareReader()->widgetFromJsonFile("gamepad_ui_1.json");
+	mUILayer->addWidget(mUIWidget);
+	addChild(mUILayer);
+	//mUIWidget->setTouchEnable(true,true);
 
-	UIButton* upbutton = (UIButton*)uiwidget->getChildByName("pad_button_up");
-	upbutton->addTouchEventListener(this,toucheventselector(GamePad::onButtonTouchEvent));
+	UIButton* upbutton = (UIButton*)mUIWidget->getChildByName("pad_button_up");
 	upbutton->setTag(Button_Up);
-	mButtonStatesMap.insert(pair<Button_Name,Button_State_Type>(Button_Up,Button_State_None));
+	mButtonStatesMap.insert(pair<Button_Name,Button_Status_Type>(Button_Up,Button_State_None));
 
-	UIButton* downbutton = (UIButton*)uiwidget->getChildByName("pad_button_down");
-	downbutton->addTouchEventListener(this,toucheventselector(GamePad::onButtonTouchEvent));
+	UIButton* downbutton = (UIButton*)mUIWidget->getChildByName("pad_button_down");
 	downbutton->setTag(Button_Down);
-	mButtonStatesMap.insert(pair<Button_Name,Button_State_Type>(Button_Down,Button_State_None));
+	mButtonStatesMap.insert(pair<Button_Name,Button_Status_Type>(Button_Down,Button_State_None));
 
-	UIButton* leftbutton = (UIButton*)uiwidget->getChildByName("pad_button_left");
-	leftbutton->addTouchEventListener(this,toucheventselector(GamePad::onButtonTouchEvent));
+	UIButton* leftbutton = (UIButton*)mUIWidget->getChildByName("pad_button_left");
 	leftbutton->setTag(Button_Left);
-	mButtonStatesMap.insert(pair<Button_Name,Button_State_Type>(Button_Left,Button_State_None));
+	mButtonStatesMap.insert(pair<Button_Name,Button_Status_Type>(Button_Left,Button_State_None));
 
-	UIButton* rightbutton = (UIButton*)uiwidget->getChildByName("pad_button_right");
-	rightbutton->addTouchEventListener(this,toucheventselector(GamePad::onButtonTouchEvent));
+	UIButton* rightbutton = (UIButton*)mUIWidget->getChildByName("pad_button_right");
 	rightbutton->setTag(Button_Right);
-	mButtonStatesMap.insert(pair<Button_Name,Button_State_Type>(Button_Right,Button_State_None));
+	mButtonStatesMap.insert(pair<Button_Name,Button_Status_Type>(Button_Right,Button_State_None));
 	
 	scheduleUpdate();
 
 	return true;
-}
-
-void GamePad::onButtonTouchEvent( CCObject* pObj,TouchEventType eventType )
-{
-	UIButton* button = (UIButton*)pObj;
-	int tag = button->getTag();
-	Button_Name buttonName = (Button_Name)tag;
-	if (eventType == TOUCH_EVENT_BEGAN)
-	{
-		mButtonStatesMap[buttonName] = Button_State_Down;
-	}
-	else if (eventType == TOUCH_EVENT_MOVED)
-	{
-
-	}
-	else if (eventType == TOUCH_EVENT_ENDED)
-	{
-		mButtonStatesMap[buttonName] = Button_State_Up;
-	}
 }
 
 void GamePad::update( float delta )
@@ -69,43 +41,37 @@ void GamePad::update( float delta )
 		if (it->second == Button_State_Up)
 			it->second = Button_State_None;
 	}
-	/*
-#ifdef WIN32
-	if (KEY_DOWN(VK_UP))
+
+	it = mButtonStatesMap.begin();
+	for (;it!=mButtonStatesMap.end();it++)
 	{
-		mButtonStatesMap[Button_Up]=Button_State_Down;
-	}
-	else if (KEY_DOWN(VK_DOWN))
-	{
-		mButtonStatesMap[Button_Down]=Button_State_Down;
-	}
-	else if (KEY_DOWN(VK_LEFT))
-	{
-		mButtonStatesMap[Button_Left]=Button_State_Down;
-	}
-	else if (KEY_DOWN(VK_RIGHT))
-	{
-		mButtonStatesMap[Button_Right]=Button_State_Down;
+		UIButton* uiButton = (UIButton*)mUIWidget->getChildByTag(it->first);
+		for (int i=0;i<5;i++)
+		{
+			if ((mPoints[i].status == MOUSEDOWN || mPoints[i].status == MOUSEMOVE) && uiButton->hitTest(mPoints[i].point))
+			{
+				uiButton->setFocused(true);
+				it->second = Button_State_Down;
+				break;
+			}
+			else 
+			{
+				uiButton->setFocused(false);
+				it->second = Button_State_Up;
+			}
+		}
 	}
 
-	if (KEY_UP(VK_UP))
+	for (int i=0;i<5;i++)
 	{
-		mButtonStatesMap[Button_Up]=Button_State_Up;
+		if (mPoints[i].status == MOUSEUP)
+		{
+			mPoints[i].status = MOUSENONE;
+			mPoints[i].point = ccp(-1,-1);
+			mPoints[i].id = -1;
+		}
 	}
-	else if (KEY_UP(VK_DOWN))
-	{
-		mButtonStatesMap[Button_Down]=Button_State_Up;
-	}
-	else if (KEY_UP(VK_LEFT))
-	{
-		mButtonStatesMap[Button_Left]=Button_State_Up;
-	}
-	else if (KEY_UP(VK_RIGHT))
-	{
-		mButtonStatesMap[Button_Right]=Button_State_Up;
-	}
-#endif
-	*/
+	
 }
 
 bool GamePad::isPress( Button_Name buttonName )
@@ -134,5 +100,70 @@ bool GamePad::isJustPress( Button_Name buttonName )
 	}
 
 	return false;
+}
+
+void GamePad::ccTouchesBegan( CCSet *pTouches, CCEvent *pEvent )
+{
+	for (CCSetIterator it = pTouches->begin();it!=pTouches->end();it++)
+	{
+		CCTouch* pTouch = (CCTouch*)(*it);
+		CCPoint touchPoint = pTouch->getLocation();
+		for (int i=0;i<5;i++)
+		{
+			if (mPoints[i].status == MOUSENONE)
+			{
+				mPoints[i].point = touchPoint;
+				mPoints[i].id = pTouch->getID();
+				mPoints[i].status = MOUSEDOWN;
+				break;
+			}
+		}
+	}
+}
+
+void GamePad::ccTouchesMoved( CCSet *pTouches, CCEvent *pEvent )
+{
+	for (CCSetIterator it = pTouches->begin();it!=pTouches->end();it++)
+	{
+		CCTouch* pTouch = (CCTouch*)(*it);
+		CCPoint touchPoint = pTouch->getLocation();
+		for (int i=0;i<5;i++)
+		{
+			if (mPoints[i].id == pTouch->getID())
+			{
+				mPoints[i].point = touchPoint;
+				mPoints[i].status = MOUSEMOVE;
+				break;
+			}
+		}
+	}
+}
+
+void GamePad::ccTouchesEnded( CCSet *pTouches, CCEvent *pEvent )
+{
+	for (CCSetIterator it = pTouches->begin();it!=pTouches->end();it++)
+	{
+		CCTouch* pTouch = (CCTouch*)(*it);
+		CCPoint touchPoint = pTouch->getLocation();
+		for (int i=0;i<5;i++)
+		{
+			if (mPoints[i].id == pTouch->getID())
+			{
+				mPoints[i].point = touchPoint;
+				mPoints[i].status = MOUSEUP;
+				break;
+			}
+		}
+	}
+}
+
+void GamePad::ccTouchesCancelled( CCSet *pTouches, CCEvent *pEvent )
+{
+	ccTouchesEnded(pTouches,pEvent);
+}
+
+void GamePad::registerWithTouchDispatcher( void )
+{
+	CCDirector::sharedDirector()->getTouchDispatcher()->addStandardDelegate(this,getTouchPriority());
 }
 
