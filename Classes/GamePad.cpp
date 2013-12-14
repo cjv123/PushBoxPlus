@@ -42,6 +42,7 @@ void GamePad::update( float delta )
 			it->second = Button_State_None;
 	}
 
+	UIButton* pointInButton[5]={0};//每个点只能触发一个按钮，取距离最近一个按钮
 	it = mButtonStatesMap.begin();
 	for (;it!=mButtonStatesMap.end();it++)
 	{
@@ -50,14 +51,30 @@ void GamePad::update( float delta )
 		{
 			if ((mPoints[i].status == MOUSEDOWN || mPoints[i].status == MOUSEMOVE) && uiButton->hitTest(mPoints[i].point))
 			{
-				uiButton->setFocused(true);
-				it->second = Button_State_Down;
+				if (pointInButton[i])
+				{
+					float olddis = mPoints[i].point.getDistance(pointInButton[i]->getPosition());
+					float curdis = mPoints[i].point.getDistance(uiButton->getPosition());
+					if (curdis<olddis)
+					{
+						pointInButton[i]->setFocused(false);
+						mButtonStatesMap[(Button_Name)pointInButton[i]->getTag()] = Button_State_None;
+						pointInButton[i] = uiButton;
+					}
+				}
+				else
+				{
+					uiButton->setFocused(true);
+					it->second = Button_State_Down;
+					pointInButton[i] = uiButton;
+				}
 				break;
 			}
 			else 
 			{
 				uiButton->setFocused(false);
-				it->second = Button_State_Up;
+				if (it->second == Button_State_Down)
+					it->second = Button_State_Up;
 			}
 		}
 	}

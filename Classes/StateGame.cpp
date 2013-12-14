@@ -283,13 +283,13 @@ bool StateGame::move( int direct )
 	if (mIsmove)
 		return false;
 
-	if (direct == dir_up)
+	if (direct == (int)dir_up)
 		mPusher->playUpMoveAnim();
-	else if (direct == dir_down)
+	else if (direct == (int)dir_down)
 		mPusher->playDownMoveAnim();
-	else if (direct == dir_left)
+	else if (direct == (int)dir_left)
 		mPusher->playLeftMoveAnim();
-	else if (direct == dir_right)
+	else if (direct == (int)dir_right)
 		mPusher->playRightMoveAnim();
 
 	CCPoint nextp = getNextPos(direct,mPusherMapPos);
@@ -312,6 +312,7 @@ bool StateGame::move( int direct )
 		else if(nextsign =='.')
 			mMapData->getMapData().at(nextp.x).at(nextp.y) = '+';
 		playMoveAnim(nextp,mPusher);
+		mMoveLog.push_back((Direct)direct);
 		mPusherMapPos = nextp;
 	}
 	else if (nextsign == '$' || nextsign == '*')
@@ -339,9 +340,12 @@ bool StateGame::move( int direct )
 				mMapData->getMapData().at(boxnextp.x).at(boxnextp.y) = '*';
 
 			playMoveAnim(nextp,mPusher);
+			mMoveLog.push_back((Direct)direct);
 			CCSprite* boxsp = getBox(boxp.x,boxp.y);
 			if (boxsp)
+			{
 				playMoveAnim(boxnextp,boxsp);
+			}
 			mPusherMapPos = nextp;
 		}
 	}
@@ -466,6 +470,37 @@ void StateGame::initUi()
 	CCMenu* menu = CCMenu::create(backButton,NULL);
 	addChild(menu);
 	menu->setPosition(ccp(0,0));
+}
+
+void StateGame::packMove()
+{
+	Direct lastMoveDirect = mMoveLog.back();
+	mMoveLog.pop_back();
+	Direct lastPusherMoveDirectReverse = reverseDirect(lastMoveDirect);
+
+
+}
+
+StateGame::Direct StateGame::reverseDirect(Direct d)
+{
+	Direct reverseDirect;
+	switch (d)
+	{
+	case dir_up:
+		reverseDirect = dir_down;
+		break;
+	case dir_down:
+		reverseDirect = dir_up;
+		break;
+	case dir_left:
+		reverseDirect = dir_right;
+		break;
+	case dir_right:
+		reverseDirect = dir_left;
+		break;
+	}
+
+	return reverseDirect;
 }
 
 

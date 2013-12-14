@@ -22,9 +22,9 @@ public:
 
 	virtual void update( float delta );
 	
-	enum direct
+	enum Direct
 	{
-		dir_up=0,dir_down,dir_left,dir_right
+		dir_up=0,dir_down,dir_left,dir_right,dir_none
 	};
 	
 	CREATE_FUNC(StateGame);
@@ -49,7 +49,11 @@ private:
 
 	void onDirectButtonPushDown(CCObject* pObj,TouchEventType eventType);
 	void onButtonClick(CCObject* pObj);
+	void pushMoveLog(Direct d);
+	void packMove();
+	Direct reverseDirect(Direct d);
 
+	vector<Direct> mMoveLog;
 
 	CCLayer* mMapLayer;
 	PusherSprite* mPusher;
