@@ -137,6 +137,7 @@
     <ClInclude Include="..\Classes\GamePad.h" />
     <ClInclude Include="..\Classes\GiftListView.h" />
     <ClInclude Include="..\Classes\MapData.h" />
+    <ClInclude Include="..\Classes\MapDataDriver.h" />
     <ClInclude Include="..\Classes\MapSearcher.h" />
     <ClInclude Include="..\Classes\PusherSprite.h" />
     <ClInclude Include="..\Classes\SpriteButton.h" />
@@ -152,6 +153,7 @@
     <ClCompile Include="..\Classes\GamePad.cpp" />
     <ClCompile Include="..\Classes\GiftListView.cpp" />
     <ClCompile Include="..\Classes\MapData.cpp" />
+    <ClCompile Include="..\Classes\MapDataDriver.cpp" />
     <ClCompile Include="..\Classes\MapSearcher.cpp" />
     <ClCompile Include="..\Classes\PusherSprite.cpp" />
     <ClCompile Include="..\Classes\SpriteButton.cpp" />

@@ -25,7 +25,7 @@ public:
 	static float w;
 	static float h;
 private:
-	StateGame::Direct mFaceDir;
+	char mFaceDir;
 	CCTexture2D* mTexture;
 };
 

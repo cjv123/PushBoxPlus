@@ -6,6 +6,7 @@
 using namespace cocos2d;
 #include "cocos-ext.h"
 #include "GamePad.h"
+#include "MapDataDriver.h"
 using namespace cocos2d::extension;
 
 class PusherSprite;
@@ -22,11 +23,6 @@ public:
 
 	virtual void update( float delta );
 	
-	enum Direct
-	{
-		dir_up=0,dir_down,dir_left,dir_right,dir_none
-	};
-	
 	CREATE_FUNC(StateGame);
 private:
 	void initMap();
@@ -37,9 +33,9 @@ private:
 
 	void onMoveAnimComplete(CCNode* target);
 
-	bool move(int direct);
+	bool move(char direct);
+	void playMove();
 	void playMoveAnim(const CCPoint& nextp,CCNode* target);
-	CCPoint getNextPos(int direct,const CCPoint& nowpoint);
 	CCSprite* getBox(int row,int col);
 
 	bool checkPassLv();
@@ -49,11 +45,9 @@ private:
 
 	void onDirectButtonPushDown(CCObject* pObj,TouchEventType eventType);
 	void onButtonClick(CCObject* pObj);
-	void pushMoveLog(Direct d);
-	void packMove();
-	Direct reverseDirect(Direct d);
 
-	vector<Direct> mMoveLog;
+	void backMove();
+
 
 	CCLayer* mMapLayer;
 	PusherSprite* mPusher;
@@ -65,7 +59,7 @@ private:
 
 	bool mIsmove;
 
-	MapInfo* mMapData;
+	MapDataDriver mMapDataDriver;
 
 	GamePad* mGamePad;
 

@@ -68,9 +68,9 @@ void StateGame::initBackground()
 
 void StateGame::initMap()
 {
-	
 	MapInfo* mapinfo = MapData::getInstance()->getMapLvDatas().at(GameData::getInstance()->mCurLevel);
-	mMapData = new MapInfo(*mapinfo);
+	MapInfo* copyMapData = new MapInfo(*mapinfo);
+	mMapDataDriver.initDriver(copyMapData);
 
 	float mapw = mapinfo->getMapSize().width*MapData::tileW;
 	float maph = mapinfo->getMapSize().height*MapData::tileH;
@@ -114,7 +114,6 @@ void StateGame::initMap()
 				mPusher->setAnchorPoint(ccp(0,0));
 				mMapLayer->addChild(mPusher,pusher_orderz);
 				mPusher->setPosition(ccp(x,y));
-				mPusherMapPos = ccp(i,j);
 				mPusher->setTag(pusher_tag);
 			}
 			else if (mapdata[i][j]=='*')
@@ -158,7 +157,6 @@ void StateGame::initMap()
 				mPusher->setAnchorPoint(ccp(0,0));
 				mMapLayer->addChild(mPusher,pusher_orderz);
 				mPusher->setPosition(ccp(x,y));
-				mPusherMapPos = ccp(i,j);
 				mPusher->setTag(pusher_tag);
 			}
 			else if (mapdata[i][j]==' ')
@@ -211,146 +209,113 @@ void StateGame::update( float delta )
 	{
 		if (mGamePad->isPress(GamePad::Button_Up))
 		{
-			move(dir_up);
+			move('u');
 		}
 		else if (mGamePad->isPress(GamePad::Button_Down))
 		{
-			move(dir_down);
+			move('d');
 		}
 		else if (mGamePad->isPress(GamePad::Button_Left))
 		{
-			move(dir_left);
+			move('l');
 		}
 		else if (mGamePad->isPress(GamePad::Button_Right))
 		{
-			move(dir_right);
+			move('r');
 		}
 	}
 	CCLayer::update(delta);
 }
 
 
-CCPoint StateGame::getNextPos( int direct,const CCPoint& nowpoint )
-{
-	CCPoint nextp;
-	if (direct == dir_up)
-	{
-		int nextrow = nowpoint.x-1;
-		if (nextrow<0)
-			return nextp;
-		nextp = ccp(nextrow,nowpoint.y);
-
-	}
-	else if (direct == dir_down)
-	{
-		int nextrow = nowpoint.x+1;
-		if (nextrow>mMapData->getMapSize().height - 1)
-			return nextp;
-		nextp = ccp(nextrow,nowpoint.y);
-
-	}
-	else if (direct == dir_left)
-	{
-		int nextcol = nowpoint.y-1;
-		if (nextcol<0)
-			return nextp;
-		nextp = ccp(nowpoint.x,nextcol);
-	}
-	else if (direct == dir_right)
-	{
-		int nextcol = nowpoint.y+1;
-		if (nextcol>mMapData->getMapSize().width - 1)
-			return nextp;
-		nextp = ccp(nowpoint.x,nextcol);
-	}
-
-	return nextp;
-}
-
-
 void StateGame::playMoveAnim( const CCPoint& nextp,CCNode* target )
 {
-	float x = nextp.y*MapData::tileW;
-	float y = mMapData->getMapSize().height*MapData::tileH - nextp.x*MapData::tileH;
+	float x = nextp.x;
+	float y = nextp.y;
 	CCMoveTo* moveanim = CCMoveTo::create(0.2f,ccp(x,y));
 	CCSequence* seq = CCSequence::create(moveanim,CCCallFuncN::create(this,callfuncN_selector(StateGame::onMoveAnimComplete)),NULL);
 	target->runAction(seq);
 	mIsmove = true;
 }
 
-bool StateGame::move( int direct )
+
+void StateGame::playMove()
+{
+	MapInfo* mapinfo = mMapDataDriver.getMapData();
+	vector<string>& mapdata = mapinfo->getMapData();
+	float mapw = mapinfo->getMapSize().width*MapData::tileW;
+	float maph = mapinfo->getMapSize().height*MapData::tileH;
+	vector<CCPoint> boxpoints;
+	for (int i=0;i<(int)mapdata.size();i++)
+	{
+		for (int j=0;j<(int)mapdata[i].size();j++)
+		{
+			float x = j*MapData::tileW;
+			float y = maph - i*MapData::tileH;
+			if (mapdata[i][j]=='@' || mapdata[i][j]=='+')
+			{
+				if (!(mPusher->getPositionX() == x && mPusher->getPositionY() == y))
+				{
+					playMoveAnim(ccp(x,y),mPusher);
+				}
+			}
+			else if (mapdata[i][j]=='$' || mapdata[i][j]=='*')
+			{
+				boxpoints.push_back(ccp(x,y));
+			}
+		}
+	}
+
+	CCSprite* moveBox = NULL;
+	for (int i=0;i<(int)mBoxs.size();i++)
+	{
+		bool isfind = false;
+		for (vector<CCPoint>::iterator it=boxpoints.begin();it!=boxpoints.end();)
+		{
+			if (mBoxs[i]->getPositionX() == it->x && mBoxs[i]->getPositionY() == it->y)
+			{
+				it = boxpoints.erase(it);
+				isfind = true;
+				break;
+			}
+			it++;
+		}
+
+		if (!isfind)
+		{
+			moveBox = mBoxs[i];
+		}
+	}
+
+	if (moveBox)
+	{
+		playMoveAnim(boxpoints[0],moveBox);
+	}
+}
+
+
+bool StateGame::move( char direct )
 {
 	if (mIsmove)
 		return false;
 
-	if (direct == (int)dir_up)
+	if (direct == 'u')
 		mPusher->playUpMoveAnim();
-	else if (direct == (int)dir_down)
+	else if (direct == 'd')
 		mPusher->playDownMoveAnim();
-	else if (direct == (int)dir_left)
+	else if (direct == 'l')
 		mPusher->playLeftMoveAnim();
-	else if (direct == (int)dir_right)
+	else if (direct == 'r')
 		mPusher->playRightMoveAnim();
 
-	CCPoint nextp = getNextPos(direct,mPusherMapPos);
-	if (nextp.x ==0 && nextp.y ==0)
+	if (mMapDataDriver.move(direct))
 	{
-		return false;
-	}
+		playMove();
 
-	char nextsign = mMapData->getMapData().at(nextp.x).at(nextp.y);
-	if (nextsign == ' ' || nextsign=='.')
-	{
-		char standSign = mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y);
-		if (standSign=='@')
-			mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y) = ' ';
-		else if (standSign =='+')
-			mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y) = '.';
-		
-		if (nextsign==' ')
-			mMapData->getMapData().at(nextp.x).at(nextp.y) = '@';
-		else if(nextsign =='.')
-			mMapData->getMapData().at(nextp.x).at(nextp.y) = '+';
-		playMoveAnim(nextp,mPusher);
-		mMoveLog.push_back((Direct)direct);
-		mPusherMapPos = nextp;
-	}
-	else if (nextsign == '$' || nextsign == '*')
-	{
-		CCPoint& boxp = nextp;
-		CCPoint boxnextp = getNextPos(direct,boxp);
-		char boxnextsign = mMapData->getMapData().at(boxnextp.x).at(boxnextp.y);
-		if (boxnextsign==' ' || boxnextsign =='.')
-		{
-			char standSign = mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y);
-
-			if (standSign=='@')
-				mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y) = ' ';
-			else if (standSign =='+')
-				mMapData->getMapData().at(mPusherMapPos.x).at(mPusherMapPos.y) = '.';
-
-			if (nextsign=='$')
-				mMapData->getMapData().at(boxp.x).at(boxp.y) = '@';
-			else if(nextsign=='*')
-				mMapData->getMapData().at(boxp.x).at(boxp.y) = '+';
-
-			if (boxnextsign == ' ')
-				mMapData->getMapData().at(boxnextp.x).at(boxnextp.y) = '$';
-			else if (boxnextsign == '.')
-				mMapData->getMapData().at(boxnextp.x).at(boxnextp.y) = '*';
-
-			playMoveAnim(nextp,mPusher);
-			mMoveLog.push_back((Direct)direct);
-			CCSprite* boxsp = getBox(boxp.x,boxp.y);
-			if (boxsp)
-			{
-				playMoveAnim(boxnextp,boxsp);
-			}
-			mPusherMapPos = nextp;
-		}
+		return true;
 	}
 	
-	return true;
+	return false;
 }
 
 void StateGame::onMoveAnimComplete(CCNode* target)
@@ -373,7 +338,7 @@ void StateGame::onMoveAnimComplete(CCNode* target)
 CCSprite* StateGame::getBox( int row,int col )
 {
 	float x = col*MapData::tileW;
-	float y = mMapData->getMapSize().height*MapData::tileH - row*MapData::tileH;
+	float y = mMapDataDriver.getMapData()->getMapSize().height*MapData::tileH - row*MapData::tileH;
 
 	for (int i=0;i<(int)mBoxs.size();i++)
 	{
@@ -389,13 +354,13 @@ CCSprite* StateGame::getBox( int row,int col )
 
 void StateGame::flagBoxState()
 {
-	float maph = mMapData->getMapSize().height*MapData::tileH;
+	float maph = mMapDataDriver.getMapData()->getMapSize().height*MapData::tileH;
 
 	for (int i=0;i<(int)mBoxs.size();i++)
 	{
 		int row = (int)((maph - mBoxs[i]->getPositionY())/MapData::tileH);
 		int col = (int)(mBoxs[i]->getPositionX()/MapData::tileW);
-		char sign = mMapData->getMapData().at(row).at(col);
+		char sign = mMapDataDriver.getMapData()->getMapData().at(row).at(col);
 		if (sign == '*')
 			mBoxs[i]->setOpacity(100);
 		else
@@ -406,11 +371,12 @@ void StateGame::flagBoxState()
 
 bool StateGame::checkPassLv()
 {
-	for (int i=0;i<(int)mMapData->getMapData().size();i++)
+	MapInfo* mapdata =  mMapDataDriver.getMapData();
+	for (int i=0;i<(int)mapdata->getMapData().size();i++)
 	{
-		for (int j=0;j<(int)mMapData->getMapData().at(i).size();j++)
+		for (int j=0;j<(int)mapdata->getMapData().at(i).size();j++)
 		{
-			char sign= mMapData->getMapData().at(i).at(j);
+			char sign= mapdata->getMapData().at(i).at(j);
 			if (sign == '.')
 			{
 				return false;
@@ -428,19 +394,9 @@ void StateGame::searchRoad()
 	CCArray* array = CCArray::create();
 	for (int i=0;i<(int)searchData.size();i++)
 	{
-		int direct = 0;
 		char dirchar = tolower(searchData[i]);
-		if (dirchar == 'u')
-			direct = dir_up;
-		else if(dirchar == 'd')
-			direct = dir_down;
-		else if(dirchar == 'l')
-			direct = dir_left;
-		else if(dirchar == 'r')
-			direct = dir_right;
-
 		array->addObject(CCDelayTime::create(0.3f));
-		CCCallFuncND* callback = CCCallFuncND::create(this,callfuncND_selector(StateGame::onSearchCallback),(void*)direct);
+		CCCallFuncND* callback = CCCallFuncND::create(this,callfuncND_selector(StateGame::onSearchCallback),(void*)dirchar);
 		array->addObject(callback);
 	}
 	CCSequence* seq = CCSequence::create(array);
@@ -449,13 +405,14 @@ void StateGame::searchRoad()
 
 void StateGame::onSearchCallback( CCNode* pObj,void* par )
 {
-	int direct = (int)par;
+	char direct = (char)par;
 	move(direct);
 }
 
 void StateGame::onButtonClick( CCObject* pObj )
 {
-	CCDirector::sharedDirector()->popScene();
+	//CCDirector::sharedDirector()->popScene();
+	backMove();
 }
 
 void StateGame::initUi()
@@ -472,36 +429,13 @@ void StateGame::initUi()
 	menu->setPosition(ccp(0,0));
 }
 
-void StateGame::packMove()
+void StateGame::backMove()
 {
-	Direct lastMoveDirect = mMoveLog.back();
-	mMoveLog.pop_back();
-	Direct lastPusherMoveDirectReverse = reverseDirect(lastMoveDirect);
-
-
+	mMapDataDriver.backPlay();
+	playMove();
 }
 
-StateGame::Direct StateGame::reverseDirect(Direct d)
-{
-	Direct reverseDirect;
-	switch (d)
-	{
-	case dir_up:
-		reverseDirect = dir_down;
-		break;
-	case dir_down:
-		reverseDirect = dir_up;
-		break;
-	case dir_left:
-		reverseDirect = dir_right;
-		break;
-	case dir_right:
-		reverseDirect = dir_left;
-		break;
-	}
 
-	return reverseDirect;
-}
 
 
 

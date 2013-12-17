@@ -5,7 +5,7 @@ float PusherSprite::h = 48.0f;
 
 PusherSprite::PusherSprite()
 {
-	mFaceDir = StateGame::dir_down;
+	mFaceDir = 'd';
 }
 
 PusherSprite::~PusherSprite()
@@ -29,7 +29,7 @@ bool PusherSprite::init( void )
 
 void PusherSprite::playUpMoveAnim()
 {
-	if (mFaceDir == StateGame::dir_up)
+	if (mFaceDir == 'u')
 		return;
 
 	stopAllActions();
@@ -40,12 +40,12 @@ void PusherSprite::playUpMoveAnim()
 	animation->setDelayPerUnit(0.2f);
 	CCAnimate* animate = CCAnimate::create(animation);
 	runAction(CCRepeatForever::create(animate));
-	mFaceDir = StateGame::dir_up;
+	mFaceDir = 'u';
 }
 
 void PusherSprite::playLeftMoveAnim()
 {
-	if (mFaceDir == StateGame::dir_left)
+	if (mFaceDir == 'l')
 		return;
 
 	stopAllActions();
@@ -56,12 +56,12 @@ void PusherSprite::playLeftMoveAnim()
 	animation->setDelayPerUnit(0.2f);
 	CCAnimate* animate = CCAnimate::create(animation);
 	runAction(CCRepeatForever::create(animate));
-	mFaceDir = StateGame::dir_left;
+	mFaceDir = 'l';
 }
 
 void PusherSprite::playRightMoveAnim()
 {
-	if (mFaceDir == StateGame::dir_right)
+	if (mFaceDir == 'r')
 		return;
 
 	stopAllActions();
@@ -72,12 +72,12 @@ void PusherSprite::playRightMoveAnim()
 	animation->setDelayPerUnit(0.2f);
 	CCAnimate* animate = CCAnimate::create(animation);
 	runAction(CCRepeatForever::create(animate));
-	mFaceDir = StateGame::dir_right;
+	mFaceDir = 'r';
 }
 
 void PusherSprite::playDownMoveAnim()
 {
-	if (mFaceDir == StateGame::dir_down)
+	if (mFaceDir == 'd')
 		return;
 
 	stopAllActions();
@@ -88,7 +88,7 @@ void PusherSprite::playDownMoveAnim()
 	animation->setDelayPerUnit(0.2f);
 	CCAnimate* animate = CCAnimate::create(animation);
 	runAction(CCRepeatForever::create(animate));
-	mFaceDir = StateGame::dir_down;
+	mFaceDir = 'd';
 }
 
 void PusherSprite::update( float delta )
