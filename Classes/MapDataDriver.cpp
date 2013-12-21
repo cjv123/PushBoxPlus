@@ -15,6 +15,7 @@ MapDataDriver::~MapDataDriver()
 
 void MapDataDriver::initDriver( MapInfo* mapData )
 {
+	CC_SAFE_DELETE(mMapData);
 	mMapData = mapData;
 
 	vector<string>& mapdata = mMapData->getMapData();
@@ -26,34 +27,88 @@ void MapDataDriver::initDriver( MapInfo* mapData )
 			{
 				mPusherPoint = ccp(i,j);
 			}
+			else if (mapdata[i][j]=='$' || mapdata[i][j]=='*')
+			{
+				mBoxPoints.push_back(ccp(i,j));
+			}
 		}
 	}
 }
 
-bool MapDataDriver::move( char direct )
+bool MapDataDriver::moveBox( char direct,CCPoint point )
 {
-	CCPoint nextp = getNextPosition(direct,mPusherPoint);
+	CCPoint boxnextp = getNextPosition(direct,point);
+	if (boxnextp.x ==0 && boxnextp.y ==0)
+	{
+		return false;
+	}
+	
+	char standSign = mMapData->getMapData().at(point.x).at(point.y);
+	if (standSign=='$')
+		mMapData->getMapData().at(point.x).at(point.y) = ' ';
+	else if (standSign =='*')
+		mMapData->getMapData().at(point.x).at(point.y) = '.';
+
+	char boxnextsign = mMapData->getMapData().at(boxnextp.x).at(boxnextp.y);
+	if (boxnextsign == ' ')
+		mMapData->getMapData().at(boxnextp.x).at(boxnextp.y) = '$';
+	else if (boxnextsign == '.')
+		mMapData->getMapData().at(boxnextp.x).at(boxnextp.y) = '*';
+
+
+	for (int i=0;i<(int)mBoxPoints.size();i++)
+	{
+		if (mBoxPoints[i].x==point.x && mBoxPoints[i].y==point.y)
+		{
+			mBoxPoints[i] = boxnextp;
+			break;
+		}
+	}
+
+	return true;
+}
+
+bool MapDataDriver::movePusher( char direct,CCPoint point )
+{
+	char standSign = mMapData->getMapData().at(point.x).at(point.y);
+	if (standSign=='@')
+		mMapData->getMapData().at(point.x).at(point.y) = ' ';
+	else if (standSign =='+')
+		mMapData->getMapData().at(point.x).at(point.y) = '.';
+
+	CCPoint nextp = getNextPosition(direct,point);
 	if (nextp.x ==0 && nextp.y ==0)
 	{
 		return false;
 	}
 
 	char nextsign = mMapData->getMapData().at(nextp.x).at(nextp.y);
+
+	if (nextsign==' ')
+		mMapData->getMapData().at(nextp.x).at(nextp.y) = '@';
+	else if(nextsign =='.')
+		mMapData->getMapData().at(nextp.x).at(nextp.y) = '+';
+
+	mPusherPoint = nextp;
+	return true;
+}
+
+bool MapDataDriver::move( char direct ,bool writeLog /*=true*/)
+{
+	CCPoint nextp = getNextPosition(direct,mPusherPoint);
+	if (nextp.x ==0 && nextp.y ==0)
+	{
+		return false;
+	}
+	MoveLog moveLog;
+	char nextsign = mMapData->getMapData().at(nextp.x).at(nextp.y);
 	if (nextsign == ' ' || nextsign=='.')
 	{
-		char standSign = mMapData->getMapData().at(mPusherPoint.x).at(mPusherPoint.y);
-		if (standSign=='@')
-			mMapData->getMapData().at(mPusherPoint.x).at(mPusherPoint.y) = ' ';
-		else if (standSign =='+')
-			mMapData->getMapData().at(mPusherPoint.x).at(mPusherPoint.y) = '.';
-
-		if (nextsign==' ')
-			mMapData->getMapData().at(nextp.x).at(nextp.y) = '@';
-		else if(nextsign =='.')
-			mMapData->getMapData().at(nextp.x).at(nextp.y) = '+';
-
-		mMoveLog.push_back(direct);
-		mPusherPoint = nextp;
+		if (!movePusher(direct,mPusherPoint))
+			return false;
+		if (writeLog)
+			moveLog.PushLog(0,direct);
+		
 	}
 	else if (nextsign == '$' || nextsign == '*')
 	{
@@ -62,26 +117,29 @@ bool MapDataDriver::move( char direct )
 		char boxnextsign = mMapData->getMapData().at(boxnextp.x).at(boxnextp.y);
 		if (boxnextsign==' ' || boxnextsign =='.')
 		{
-			char standSign = mMapData->getMapData().at(mPusherPoint.x).at(mPusherPoint.y);
+			if(!moveBox(direct,boxp))
+				return false;
+			if(!movePusher(direct,mPusherPoint))
+				return false;
+			int boxindex=0;
+			for (;boxindex<(int)mBoxPoints.size();boxindex++)
+			{
+				if (mBoxPoints[boxindex].x==boxp.x && mBoxPoints[boxindex].y==boxp.y)
+					break;
+			}
 
-			if (standSign=='@')
-				mMapData->getMapData().at(mPusherPoint.x).at(mPusherPoint.y) = ' ';
-			else if (standSign =='+')
-				mMapData->getMapData().at(mPusherPoint.x).at(mPusherPoint.y) = '.';
-
-			if (nextsign=='$')
-				mMapData->getMapData().at(boxp.x).at(boxp.y) = '@';
-			else if(nextsign=='*')
-				mMapData->getMapData().at(boxp.x).at(boxp.y) = '+';
-
-			if (boxnextsign == ' ')
-				mMapData->getMapData().at(boxnextp.x).at(boxnextp.y) = '$';
-			else if (boxnextsign == '.')
-				mMapData->getMapData().at(boxnextp.x).at(boxnextp.y) = '*';
-
-			mMoveLog.push_back(direct);
+			if (writeLog)
+			{
+				moveLog.PushLog(0,direct);
+				moveLog.PushLog(boxindex,direct);
+			}
 			mPusherPoint = nextp;
 		}
+	}
+
+	if (writeLog && moveLog.mLogCount>0)
+	{
+		mMoveLog.push_back(moveLog);
 	}
 
 	return true;
@@ -132,22 +190,59 @@ MapInfo* MapDataDriver::getMapData()
 
 void MapDataDriver::backPlay()
 {
-	int logSize = mMoveLog.size();
-	if (logSize>0)
+	if (mMoveLog.size()==0)
+		return;
+
+	MoveLog lastMoveLog = mMoveLog.back();
+	mMoveLog.pop_back();
+	
+	for (int i=0;i<lastMoveLog.mLogCount;i++)
 	{
-		CC_SAFE_DELETE(mMapData);
-		MapInfo* mapinfo = MapData::getInstance()->getMapLvDatas().at(GameData::getInstance()->mCurLevel);
-		mMapData = new MapInfo(*mapinfo);
-		mMoveLog.pop_back();
-		logSize = mMoveLog.size();
-		if (logSize>0)
+		int objflag = (int)(lastMoveLog.mLogs[i].objFlag);
+		char direct = reverseDirect(lastMoveLog.mLogs[i].direct);
+		if (objflag==0)
 		{
-			for (int i=0;i<logSize;i++)
-			{
-				move(mMoveLog[i]);
-			}
+			movePusher(direct,mPusherPoint);
+		}
+		else
+		{
+			int boxindex = lastMoveLog.mLogs[i].objFlag - 1;
+			moveBox(direct,mBoxPoints[boxindex]);
 		}
 	}
+}
+
+char MapDataDriver::reverseDirect( char direct )
+{
+	if (direct=='u')
+		return 'd';
+	if (direct =='d')
+		return 'u';
+	if (direct == 'l')
+		return 'r';
+	if (direct == 'r')
+		return 'l';
+
+	return 'd';
+}
+
+
+
+
+
+void MapDataDriver::MoveLog::PushLog(char objFlag,char direct)
+{
+	struct Log log = {objFlag,direct};
+	mLogs[mLogCount] = log;
+	mLogCount++;
+}
+
+MapDataDriver::MoveLog::MoveLog() : mLogCount(0)
+{
 
 }
 
+MapDataDriver::MoveLog::~MoveLog()
+{
+
+}

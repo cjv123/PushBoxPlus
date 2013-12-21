@@ -7,6 +7,7 @@ MY_SRC_FILES :=\
   ../../Classes/GamePad.cpp\
   ../../Classes/GiftListView.cpp\
   ../../Classes/MapData.cpp\
+  ../../Classes/MapDataDriver.cpp\
   ../../Classes/MapSearcher.cpp\
   ../../Classes/PusherSprite.cpp\
   ../../Classes/SpriteButton.cpp\

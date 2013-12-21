@@ -405,7 +405,8 @@ void StateGame::searchRoad()
 
 void StateGame::onSearchCallback( CCNode* pObj,void* par )
 {
-	char direct = (char)par;
+	int tmp = (int)par;
+	char direct = (char)tmp;
 	move(direct);
 }
 
@@ -431,8 +432,11 @@ void StateGame::initUi()
 
 void StateGame::backMove()
 {
-	mMapDataDriver.backPlay();
-	playMove();
+	if(!mIsmove)
+	{
+		mMapDataDriver.backPlay();
+		playMove();
+	}
 }
 
 
