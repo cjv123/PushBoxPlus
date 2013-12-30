@@ -13,11 +13,11 @@ public:
 	~MapDataDriver();
 	void initDriver(MapInfo* mapData);
 	bool move(char direct,bool writeLog = true);// u d l r
-	bool moveBox(char direct,CCPoint point);
+	int moveBox(char direct,CCPoint point);
 	bool movePusher(char direct,CCPoint point);
 	CCPoint getNextPosition(char driect,CCPoint& pusherPoint);
 	MapInfo* getMapData();
-	void backPlay();
+	char backPlay();
 	char reverseDirect(char direct);
 private:
 

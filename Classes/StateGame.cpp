@@ -299,14 +299,7 @@ bool StateGame::move( char direct )
 	if (mIsmove)
 		return false;
 
-	if (direct == 'u')
-		mPusher->playUpMoveAnim();
-	else if (direct == 'd')
-		mPusher->playDownMoveAnim();
-	else if (direct == 'l')
-		mPusher->playLeftMoveAnim();
-	else if (direct == 'r')
-		mPusher->playRightMoveAnim();
+	mPusher->playMoveAnim(direct);
 
 	if (mMapDataDriver.move(direct))
 	{
@@ -383,8 +376,7 @@ bool StateGame::checkPassLv()
 			}
 		}
 	}
-
-	return true;
+		return true;
 }
 
 void StateGame::searchRoad()
@@ -434,7 +426,8 @@ void StateGame::backMove()
 {
 	if(!mIsmove)
 	{
-		mMapDataDriver.backPlay();
+		char pusherdirect = mMapDataDriver.backPlay();
+		mPusher->playMoveAnim(pusherdirect);
 		playMove();
 	}
 }

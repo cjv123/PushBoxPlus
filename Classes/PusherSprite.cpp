@@ -91,9 +91,23 @@ void PusherSprite::playDownMoveAnim()
 	mFaceDir = 'd';
 }
 
+void PusherSprite::playMoveAnim( char direct )
+{
+	if (direct == 'u')
+		playUpMoveAnim();
+	else if (direct == 'd')
+		playDownMoveAnim();
+	else if (direct == 'l')
+		playLeftMoveAnim();
+	else if (direct == 'r')
+		playRightMoveAnim();
+}
+
 void PusherSprite::update( float delta )
 {
 	CCSprite::update(delta);
 }
+
+
 
 

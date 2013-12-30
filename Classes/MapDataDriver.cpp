@@ -35,12 +35,12 @@ void MapDataDriver::initDriver( MapInfo* mapData )
 	}
 }
 
-bool MapDataDriver::moveBox( char direct,CCPoint point )
+int MapDataDriver::moveBox( char direct,CCPoint point )
 {
 	CCPoint boxnextp = getNextPosition(direct,point);
 	if (boxnextp.x ==0 && boxnextp.y ==0)
 	{
-		return false;
+		return -1;
 	}
 	
 	char standSign = mMapData->getMapData().at(point.x).at(point.y);
@@ -55,8 +55,8 @@ bool MapDataDriver::moveBox( char direct,CCPoint point )
 	else if (boxnextsign == '.')
 		mMapData->getMapData().at(boxnextp.x).at(boxnextp.y) = '*';
 
-
-	for (int i=0;i<(int)mBoxPoints.size();i++)
+	int i=0;
+	for (;i<(int)mBoxPoints.size();i++)
 	{
 		if (mBoxPoints[i].x==point.x && mBoxPoints[i].y==point.y)
 		{
@@ -65,7 +65,7 @@ bool MapDataDriver::moveBox( char direct,CCPoint point )
 		}
 	}
 
-	return true;
+	return i;
 }
 
 bool MapDataDriver::movePusher( char direct,CCPoint point )
@@ -117,24 +117,23 @@ bool MapDataDriver::move( char direct ,bool writeLog /*=true*/)
 		char boxnextsign = mMapData->getMapData().at(boxnextp.x).at(boxnextp.y);
 		if (boxnextsign==' ' || boxnextsign =='.')
 		{
-			if(!moveBox(direct,boxp))
+			int moveboxindex = moveBox(direct,boxp);
+			if(moveboxindex==-1)
 				return false;
 			if(!movePusher(direct,mPusherPoint))
 				return false;
-			int boxindex=0;
-			for (;boxindex<(int)mBoxPoints.size();boxindex++)
-			{
-				if (mBoxPoints[boxindex].x==boxp.x && mBoxPoints[boxindex].y==boxp.y)
-					break;
-			}
 
 			if (writeLog)
 			{
 				moveLog.PushLog(0,direct);
-				moveLog.PushLog(boxindex,direct);
+				moveLog.PushLog(moveboxindex+1,direct);
 			}
 			mPusherPoint = nextp;
 		}
+	}
+	else
+	{
+		return false;
 	}
 
 	if (writeLog && moveLog.mLogCount>0)
@@ -188,20 +187,23 @@ MapInfo* MapDataDriver::getMapData()
 	return mMapData;
 }
 
-void MapDataDriver::backPlay()
+char MapDataDriver::backPlay()
 {
 	if (mMoveLog.size()==0)
-		return;
+		return -1;
 
 	MoveLog lastMoveLog = mMoveLog.back();
 	mMoveLog.pop_back();
 	
+	char pusherDirect='d';
+
 	for (int i=0;i<lastMoveLog.mLogCount;i++)
 	{
 		int objflag = (int)(lastMoveLog.mLogs[i].objFlag);
 		char direct = reverseDirect(lastMoveLog.mLogs[i].direct);
 		if (objflag==0)
 		{
+			pusherDirect = lastMoveLog.mLogs[i].direct;
 			movePusher(direct,mPusherPoint);
 		}
 		else
@@ -210,6 +212,8 @@ void MapDataDriver::backPlay()
 			moveBox(direct,mBoxPoints[boxindex]);
 		}
 	}
+
+	return pusherDirect;
 }
 
 char MapDataDriver::reverseDirect( char direct )

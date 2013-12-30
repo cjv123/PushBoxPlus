@@ -19,6 +19,7 @@ public:
 	void playLeftMoveAnim();
 	void playRightMoveAnim();
 	void playDownMoveAnim();
+	void playMoveAnim(char direct);
 
 	virtual void update( float delta );
 
