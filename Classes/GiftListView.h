@@ -54,6 +54,7 @@ public:
 	virtual void visit();
 	virtual void registerWithTouchDispatcher();
 
+	void setPageInterval(int pageInterval );
 
 	void setMarkPosOffset(const CCPoint& offset);
 protected:

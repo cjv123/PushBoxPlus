@@ -327,7 +327,7 @@ void GiftListView::visit()
 	kmGLPushMatrix();
 	glEnable(GL_SCISSOR_TEST);
 	CCSprite* marksp = (CCSprite*)mPageMarkers.objectAtIndex(0);
-	CCPoint lbPoint = this->convertToWorldSpace(ccp(0,-marksp->getContentSize().height*2+mMarkPosOffset.y));
+	CCPoint lbPoint = this->convertToWorldSpace(ccp(0,-marksp->getContentSize().height*2+mMarkPosOffset.y-mItemIntervalV));
 	CCPoint trPoint = this->convertToWorldSpace(ccp(getContentSize().width, getContentSize().height+20 ) );
 	CCEGLView::sharedOpenGLView()->setScissorInPoints(lbPoint.x, lbPoint.y, abs(trPoint.x-lbPoint.x), abs(trPoint.y-lbPoint.y));
 	CCNode::visit();
@@ -544,6 +544,11 @@ void GiftListView::resetPos()
 void GiftListView::setClickEnable( bool enable )
 {
 	mIsClickEnable = enable;
+}
+
+void GiftListView::setPageInterval( int pageInterval )
+{
+	mPageInterval = pageInterval;
 }
 
 

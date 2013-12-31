@@ -11,7 +11,7 @@ using namespace std;
 class GamePad : public CCLayer
 {
 public:
-	enum Button_Name{Button_Up=500,Button_Down,Button_Left,Button_Right,Button_A,Button_B};
+	enum Button_Name{Button_Up=500,Button_Down,Button_Left,Button_Right,Button_Back,Button_Menu};
 	enum Button_Status_Type{Button_State_None=0,Button_State_Down,Button_State_Up};
 	enum Mouse_Status{MOUSENONE,MOUSEDOWN,MOUSEUP,MOUSEMOVE};
 

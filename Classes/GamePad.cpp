@@ -27,8 +27,16 @@ bool GamePad::init()
 	UIButton* rightbutton = (UIButton*)mUIWidget->getChildByName("pad_button_right");
 	rightbutton->setTag(Button_Right);
 	mButtonStatesMap.insert(pair<Button_Name,Button_Status_Type>(Button_Right,Button_State_None));
+
+	UIButton* backbutton = (UIButton*)mUIWidget->getChildByName("pad_button_back");
+	backbutton->setTag(Button_Back);
+	mButtonStatesMap.insert(pair<Button_Name,Button_Status_Type>(Button_Back,Button_State_None));
+
+	UIButton* menubutton = (UIButton*)mUIWidget->getChildByName("pad_button_menu");
+	menubutton->setTag(Button_Menu);
+	mButtonStatesMap.insert(pair<Button_Name,Button_Status_Type>(Button_Menu,Button_State_None));
 	
-	scheduleUpdate();
+	//scheduleUpdate();
 
 	return true;
 }

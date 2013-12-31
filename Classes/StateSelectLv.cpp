@@ -46,9 +46,10 @@ bool StateSelectLv::init()
 
 		if (NULL == mListView)
 		{
-			mListView = 
-				GiftListView::create(5,25,item->getContentSize().width,item->getContentSize().height,8,8);
-			mListView->setMarkPosOffset(ccp(0,-3));
+			mListView = GiftListView::create();
+			mListView->setPageInterval(50);
+			mListView->setListSize(5,25,item->getContentSize().width,item->getContentSize().height,20,20);
+			mListView->setMarkPosOffset(ccp(0,-8));
 			mListView->setApater(this);
 			addChild(mListView);
 		}

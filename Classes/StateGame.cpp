@@ -223,7 +223,12 @@ void StateGame::update( float delta )
 		{
 			move('r');
 		}
+		else if (mGamePad->isJustPress(GamePad::Button_Back))
+		{
+			backMove();
+		}
 	}
+	mGamePad->update(delta);
 	CCLayer::update(delta);
 }
 
@@ -404,8 +409,8 @@ void StateGame::onSearchCallback( CCNode* pObj,void* par )
 
 void StateGame::onButtonClick( CCObject* pObj )
 {
-	//CCDirector::sharedDirector()->popScene();
-	backMove();
+	CCDirector::sharedDirector()->popScene();
+	//backMove();
 }
 
 void StateGame::initUi()
