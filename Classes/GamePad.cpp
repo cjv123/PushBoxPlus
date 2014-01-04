@@ -10,7 +10,7 @@ bool GamePad::init()
 	mUIWidget = GUIReader::shareReader()->widgetFromJsonFile("gamepad_ui_1.json");
 	mUILayer->addWidget(mUIWidget);
 	addChild(mUILayer);
-	//mUIWidget->setTouchEnable(true,true);
+	
 
 	UIButton* upbutton = (UIButton*)mUIWidget->getChildByName("pad_button_up");
 	upbutton->setTag(Button_Up);

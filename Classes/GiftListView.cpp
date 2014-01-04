@@ -328,7 +328,7 @@ void GiftListView::visit()
 	glEnable(GL_SCISSOR_TEST);
 	CCSprite* marksp = (CCSprite*)mPageMarkers.objectAtIndex(0);
 	CCPoint lbPoint = this->convertToWorldSpace(ccp(0,-marksp->getContentSize().height*2+mMarkPosOffset.y-mItemIntervalV));
-	CCPoint trPoint = this->convertToWorldSpace(ccp(getContentSize().width, getContentSize().height+20 ) );
+	CCPoint trPoint = this->convertToWorldSpace(ccp(getContentSize().width, getContentSize().height+20+mItemIntervalH ) );
 	CCEGLView::sharedOpenGLView()->setScissorInPoints(lbPoint.x, lbPoint.y, abs(trPoint.x-lbPoint.x), abs(trPoint.y-lbPoint.y));
 	CCNode::visit();
 	glDisable(GL_SCISSOR_TEST);

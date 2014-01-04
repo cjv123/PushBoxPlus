@@ -33,6 +33,7 @@ bool StateHome::init()
 	MapSearcher::getInstance()->initSearcher("mapanwser.txt");
 	GameData::getInstance();
 
+	CCTextureCache::sharedTextureCache()->addImage("scene_frame.png")->setAliasTexParameters();
 	CCTextureCache::sharedTextureCache()->addImage("wall.png")->setAliasTexParameters();
 	CCTextureCache::sharedTextureCache()->addImage("box.png")->setAliasTexParameters();
 	CCTextureCache::sharedTextureCache()->addImage("floor.png")->setAliasTexParameters();

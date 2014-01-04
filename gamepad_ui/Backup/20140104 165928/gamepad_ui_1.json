@@ -32,7 +32,7 @@
           "colorR": 255,
           "flipX": false,
           "flipY": false,
-          "height": 427,
+          "height": 478,
           "ignoreSize": true,
           "layoutParameter": null,
           "opacity": 255,
@@ -43,7 +43,7 @@
           "scaleX": 2,
           "scaleY": 2,
           "sizePercentX": 0.5,
-          "sizePercentY": 0.38,
+          "sizePercentY": 0.42,
           "sizeType": 0,
           "tag": 11,
           "touchAble": false,
@@ -63,7 +63,7 @@
             "resourceType": 0
           },
           "scale9Enable": false,
-          "scale9Height": 427,
+          "scale9Height": 478,
           "scale9Width": 320
         }
       },
