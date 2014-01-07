@@ -75,7 +75,7 @@ void StateGame::initMap()
 	float mapw = mapinfo->getMapSize().width*MapData::tileW;
 	float maph = mapinfo->getMapSize().height*MapData::tileH;
 	float mapx =CCDirector::sharedDirector()->getWinSize().width/2-mapw/2;
-	float mapy =CCDirector::sharedDirector()->getWinSize().height/2-maph/2;
+	float mapy =CCDirector::sharedDirector()->getWinSize().height/2-maph/2 +100;
 
 	mMapLayer = CCLayer::create();
 	mMapLayer->setContentSize(CCSizeMake(mapw,maph));
