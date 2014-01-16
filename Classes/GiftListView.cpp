@@ -1,6 +1,5 @@
 #include "GiftListView.h"
 #include <cmath>
-#include "Config.h"
 
 void GiftListView::addItem( CCNode* item )
 {
@@ -736,7 +735,7 @@ void GiftItem::setTitle( const char* title )
 	mName = title;
 	if (NULL == mTitleLabel)
 	{
-		mTitleLabel = CCLabelTTF::create(title,Config::FontName.c_str(), DEFAULT_FONTSIZE);
+		mTitleLabel = CCLabelTTF::create(title,"Arial", DEFAULT_FONTSIZE);
 		mTitleLabel->setDimensions(CCSizeMake(getContentSize().width-16,0));
 		addChild(mTitleLabel,20);
 	}
@@ -751,7 +750,7 @@ void GiftItem::setPrice( const char* price,int isGold/*=false*/)
 	mChips = atof(price);
 	if (NULL == mPriceLabel)
 	{
-		mPriceLabel = CCLabelTTF::create(price,Config::FontName.c_str(),DEFAULT_FONTSIZE);
+		mPriceLabel = CCLabelTTF::create(price,"Arial",DEFAULT_FONTSIZE);
 		//mPriceLabel->setDimensions(CCSizeMake(getContentSize().width-10,0));
 		addChild(mPriceLabel,20);
 	}

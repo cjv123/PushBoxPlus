@@ -5,6 +5,7 @@
 #include "GameData.h"
 #include "SpriteButton.h"
 #include "StateSelectLv.h"
+#include "LanguageText.h"
 
 /*
 	Wall	 #	 0x23
@@ -25,7 +26,7 @@ static int box_tag = 1000;
 static int pusher_tag = 1001;
 
 
-StateGame::StateGame() : mIsmove(false),mMapLayer(NULL),mGamePad(NULL)
+StateGame::StateGame() : mIsmove(false),mMapLayer(NULL),mGamePad(NULL),mStepCount(0)
 {
 
 }
@@ -309,7 +310,10 @@ bool StateGame::move( char direct )
 	if (mMapDataDriver.move(direct))
 	{
 		playMove();
-
+		mStepCount++;
+		char strtmp[1024]={0};
+		sprintf(strtmp,"%d",mStepCount);
+		mLabelStep->setString(strtmp);
 		return true;
 	}
 	
@@ -325,6 +329,16 @@ void StateGame::onMoveAnimComplete(CCNode* target)
 		if (checkPassLv())
 		{
 			CCLOG("pass level!");
+			CCLabelBMFont* label = CCLabelBMFont::create("CLEAR", "label.fnt");
+			addChild(label,ui_orderz);
+			label->setPosition(ccp(label->getContentSize().width,getContentSize().height/2 + 150));
+			label->setScale(0.1f);
+			CCSequence* seq = CCSequence::create(
+				CCScaleTo::create(0.3f,1.4f),
+				CCScaleTo::create(0.3f,1.0f),
+				NULL
+				);
+			label->runAction(seq);
 		}
 	}
 	else if (tag == pusher_tag)
@@ -398,6 +412,8 @@ void StateGame::searchRoad()
 	}
 	CCSequence* seq = CCSequence::create(array);
 	runAction(seq);
+
+
 }
 
 void StateGame::onSearchCallback( CCNode* pObj,void* par )
@@ -410,13 +426,49 @@ void StateGame::onSearchCallback( CCNode* pObj,void* par )
 void StateGame::onButtonClick( CCObject* pObj )
 {
 	CCDirector::sharedDirector()->popScene();
-	//backMove();
+
+// 	CCScene *scene = CCScene::create();
+// 	StateGame* layer = StateGame::create();
+// 	layer->searchRoad();
+// 	scene->addChild(layer);
+// 	CCDirector::sharedDirector()->pushScene(scene);
 }
 
 void StateGame::initUi()
 {
 	mGamePad = GamePad::create();
 	addChild(mGamePad,ui_orderz);
+
+	CCLabelTTF* labelStageTitle = CCLabelTTF::create(LanguageText::Stage.c_str(),"Arial",24);
+	mGamePad->addChild(labelStageTitle);
+	labelStageTitle->setPosition(ccp(65,303));
+
+	CCLabelTTF* labelStepTitle = CCLabelTTF::create(LanguageText::Step.c_str(),"Arial",24);
+	mGamePad->addChild(labelStepTitle);
+	labelStepTitle->setPosition(ccp(504,303));
+
+	char strtmp[100]={0};
+    sprintf(strtmp,"%d",GameData::getInstance()->mCurLevel);
+	CCLabelTTF* labelStage = CCLabelTTF::create(strtmp,"Arial",24);
+	mGamePad->addChild(labelStage);
+	labelStage->setPosition(ccp(96,303));
+
+	mLabelStep = CCLabelTTF::create("0","Arial",24);
+	mGamePad->addChild(mLabelStep);
+	mLabelStep->setPosition(ccp(539,303));
+
+	CCLabelBMFont* label = CCLabelBMFont::create("START", "label.fnt");
+	addChild(label,ui_orderz);
+	label->setPosition(ccp(-label->getContentSize().width,getContentSize().height/2 + 150));
+	CCSequence* seq = CCSequence::create(
+		CCMoveTo::create(0.3f,ccp(getContentSize().width/2,label->getPositionY())),
+		CCMoveBy::create(0.1f,ccp(-20,0)),
+		CCMoveBy::create(0.1f,ccp(20,0)),CCDelayTime::create(1.5f),
+		CCMoveTo::create(0.3f,ccp(getContentSize().width + label->getContentSize().width,label->getPositionY())),
+		CCRemoveSelf::create(),
+		NULL
+		);
+	label->runAction(seq);
 
 	SpriteButton* backButton = SpriteButton::createWithName("GUI/button.png",this,menu_selector(StateGame::onButtonClick));
 	backButton->setAnchorPoint(ccp(1,1));

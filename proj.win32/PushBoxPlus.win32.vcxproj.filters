@@ -82,6 +82,9 @@
     <ClInclude Include="..\Classes\MapDataDriver.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\LanguageText.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

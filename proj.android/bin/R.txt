@@ -1,2 +1,6 @@
 int drawable icon 0x7f020000
-int string app_name 0x7f030000
+int id dialog_edit_confirm 0x7f050001
+int id dialog_edit_txt 0x7f050002
+int id dialog_title_txt 0x7f050000
+int layout input_view 0x7f030000
+int string app_name 0x7f040000

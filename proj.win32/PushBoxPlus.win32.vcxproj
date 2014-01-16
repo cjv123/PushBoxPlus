@@ -136,6 +136,7 @@
     <ClInclude Include="..\Classes\GameData.h" />
     <ClInclude Include="..\Classes\GamePad.h" />
     <ClInclude Include="..\Classes\GiftListView.h" />
+    <ClInclude Include="..\Classes\LanguageText.h" />
     <ClInclude Include="..\Classes\MapData.h" />
     <ClInclude Include="..\Classes\MapDataDriver.h" />
     <ClInclude Include="..\Classes\MapSearcher.h" />

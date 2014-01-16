@@ -46,6 +46,7 @@ bool StateHome::init()
 	UIButton* startButton = (UIButton*)uiwidget->getChildByName("Start_Button");
 	startButton->addReleaseEvent(this,coco_releaseselector(StateHome::onButtonClick));
 	startButton->setTouchEnable(true);
+
 	return true;
 }
 

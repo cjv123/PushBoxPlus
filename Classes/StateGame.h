@@ -18,7 +18,6 @@ public:
 	~StateGame();
 
 	static CCScene* scene();
-
 	virtual bool init();
 
 	virtual void update( float delta );
@@ -62,6 +61,9 @@ private:
 	MapDataDriver mMapDataDriver;
 
 	GamePad* mGamePad;
+	CCLabelTTF* mLabelStep;
+
+	int mStepCount;
 
 };
 
