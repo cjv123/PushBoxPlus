@@ -1,0 +1,8 @@
+<root>
+	<word key="Stage" text="关卡:"/>
+	<word key="Step" text="步数:"/>
+	<word key="HelpByFriends" text="向好友求助"/>
+	<word key="HelpByAd" text="点击广告获取答案"/>
+	<word key="Exit" text="退出"/>
+	<word key="BackToGame" text="回到游戏"/>
+</root>

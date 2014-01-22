@@ -36,8 +36,8 @@ bool StateHome::init()
 	CCTextureCache::sharedTextureCache()->addImage("scene_frame.png")->setAliasTexParameters();
 	CCTextureCache::sharedTextureCache()->addImage("wall.png")->setAliasTexParameters();
 	CCTextureCache::sharedTextureCache()->addImage("box.png")->setAliasTexParameters();
-	CCTextureCache::sharedTextureCache()->addImage("floor.png")->setAliasTexParameters();
 	CCTextureCache::sharedTextureCache()->addImage("vx_chara01_b.png")->setAliasTexParameters();
+	
 
 	UILayer* ul =UILayer::create();
 	UIWidget* uiwidget = GUIReader::shareReader()->widgetFromJsonFile("SceneHomeUIEdit_1.json");

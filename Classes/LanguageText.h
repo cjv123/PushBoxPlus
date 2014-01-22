@@ -1,14 +1,23 @@
 #ifndef _LANGUAGETEXT_H
 #define _LANGUAGETEXT_H
 
+#include <string>
+#include <map>
+using namespace std;
+
 class LanguageText
 {
 public:
-	static string Stage;
-	static string Step;
-};
+	static LanguageText* getInstance();
+	void parse();
+	map<string,string>& getStringMap();
+	string getString(const char* key);
+private:
+	
+	LanguageText();
+	~LanguageText();
 
-string LanguageText::Stage ="关卡:";
-string LanguageText::Step = "步数:";
+	map<string,string> mStringMap;
+};
 
 #endif

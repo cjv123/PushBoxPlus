@@ -6,6 +6,7 @@
 #include "SpriteButton.h"
 #include "StateSelectLv.h"
 #include "LanguageText.h"
+#include "StatePause.h"
 
 /*
 	Wall	 #	 0x23
@@ -24,7 +25,7 @@ static int cloud_orderz = 200;
 static int ui_orderz = 201;
 static int box_tag = 1000;
 static int pusher_tag = 1001;
-
+static int startlabel_tag = 1002;
 
 StateGame::StateGame() : mIsmove(false),mMapLayer(NULL),mGamePad(NULL),mStepCount(0)
 {
@@ -47,24 +48,28 @@ CCScene* StateGame::scene()
 
 void StateGame::initBackground()
 {
-// 	CCLayerColor* background = CCLayerColor::create(ccc4(0,255,0,255));
+// 	CCLayerColor* background = CCLayerColor::create(ccc4(91,219,87,255));
 // 	addChild(background);
 	
-	int colnum = ceil(getContentSize().width/MapData::tileW);
-	int rownum = ceil(getContentSize().height/MapData::tileH);
+
+	float tilew = MapData::tileW;
+	float tileh = MapData::tileH;
+
+	int colnum = ceil(getContentSize().width/tilew);
+	int rownum = ceil(getContentSize().height/tileh);
 	for (int i=0;i<rownum;i++)
 	{
 		for (int j=0;j<colnum;j++)
 		{
-			float x = j*MapData::tileW;
-			float y = getContentSize().height - i*MapData::tileH;
-			CCSprite* floor = CCSprite::createWithTexture(
-				CCTextureCache::sharedTextureCache()->textureForKey("floor.png"),CCRectMake(MapData::tileW,0,MapData::tileW,MapData::tileH));
+			float x = j*tilew;
+			float y = getContentSize().height - i*tileh;
+			CCSprite* floor = CCSprite::create("floor2.png");
 			addChild(floor);
 			floor->setAnchorPoint(ccp(0.0f,1.0f));
 			floor->setPosition(ccp(x,y));
 		}
 	}
+	
 }
 
 void StateGame::initMap()
@@ -97,17 +102,14 @@ void StateGame::initMap()
 
 			if (mapdata[i][j]=='.')
 			{
-				CCSprite* floor = CCSprite::createWithTexture(
-					CCTextureCache::sharedTextureCache()->textureForKey("floor.png"),CCRectMake(0,9*MapData::tileH,MapData::tileW,MapData::tileH));
+				CCSprite* floor = CCSprite::create("goal.png");
 				mMapLayer->addChild(floor);
 				floor->setAnchorPoint(ccp(0.0f,0.0f));
 				floor->setPosition(ccp(x,y));
 			}
 			else if (mapdata[i][j]=='+')
 			{
-				CCSprite* floor = CCSprite::createWithTexture(
-					CCTextureCache::sharedTextureCache()->textureForKey("floor.png"),CCRectMake(0,9*MapData::tileH,MapData::tileW,MapData::tileH));
-				mMapLayer->addChild(floor);
+				CCSprite* floor = CCSprite::create("goal.png");
 				floor->setAnchorPoint(ccp(0.0f,0.0f));
 				floor->setPosition(ccp(x,y));
 
@@ -119,8 +121,7 @@ void StateGame::initMap()
 			}
 			else if (mapdata[i][j]=='*')
 			{
-				CCSprite* floor = CCSprite::createWithTexture(
-					CCTextureCache::sharedTextureCache()->textureForKey("floor.png"),CCRectMake(0,9*MapData::tileH,MapData::tileW,MapData::tileH));
+				CCSprite* floor = CCSprite::create("goal.png");
 				mMapLayer->addChild(floor);
 				floor->setAnchorPoint(ccp(0.0f,0.0f));
 				floor->setPosition(ccp(x,y));
@@ -189,6 +190,7 @@ bool StateGame::init()
 	{
 		return false;
 	}
+	
 
 	scheduleUpdate();
 
@@ -227,6 +229,10 @@ void StateGame::update( float delta )
 		else if (mGamePad->isJustPress(GamePad::Button_Back))
 		{
 			backMove();
+		}
+		else if (mGamePad->isJustPress(GamePad::Button_Menu))
+		{
+			CCDirector::sharedDirector()->pushScene(StatePause::scene());
 		}
 	}
 	mGamePad->update(delta);
@@ -329,9 +335,11 @@ void StateGame::onMoveAnimComplete(CCNode* target)
 		if (checkPassLv())
 		{
 			CCLOG("pass level!");
+			if(NULL!=getChildByTag(startlabel_tag))
+				removeChildByTag(startlabel_tag);
 			CCLabelBMFont* label = CCLabelBMFont::create("CLEAR", "label.fnt");
 			addChild(label,ui_orderz);
-			label->setPosition(ccp(label->getContentSize().width,getContentSize().height/2 + 150));
+			label->setPosition(ccp(getContentSize().width/2,getContentSize().height/2 + 150));
 			label->setScale(0.1f);
 			CCSequence* seq = CCSequence::create(
 				CCScaleTo::create(0.3f,1.4f),
@@ -389,13 +397,13 @@ bool StateGame::checkPassLv()
 		for (int j=0;j<(int)mapdata->getMapData().at(i).size();j++)
 		{
 			char sign= mapdata->getMapData().at(i).at(j);
-			if (sign == '.')
+			if (sign == '$')
 			{
 				return false;
 			}
 		}
 	}
-		return true;
+	return true;
 }
 
 void StateGame::searchRoad()
@@ -439,11 +447,13 @@ void StateGame::initUi()
 	mGamePad = GamePad::create();
 	addChild(mGamePad,ui_orderz);
 
-	CCLabelTTF* labelStageTitle = CCLabelTTF::create(LanguageText::Stage.c_str(),"Arial",24);
+	map<string,string>& stringmap = LanguageText::getInstance()->getStringMap(); 
+
+	CCLabelTTF* labelStageTitle = CCLabelTTF::create(stringmap["Stage"].c_str(),"Arial",24);
 	mGamePad->addChild(labelStageTitle);
 	labelStageTitle->setPosition(ccp(65,303));
 
-	CCLabelTTF* labelStepTitle = CCLabelTTF::create(LanguageText::Step.c_str(),"Arial",24);
+	CCLabelTTF* labelStepTitle = CCLabelTTF::create(stringmap["Step"].c_str(),"Arial",24);
 	mGamePad->addChild(labelStepTitle);
 	labelStepTitle->setPosition(ccp(504,303));
 
@@ -459,6 +469,7 @@ void StateGame::initUi()
 
 	CCLabelBMFont* label = CCLabelBMFont::create("START", "label.fnt");
 	addChild(label,ui_orderz);
+	label->setTag(startlabel_tag);
 	label->setPosition(ccp(-label->getContentSize().width,getContentSize().height/2 + 150));
 	CCSequence* seq = CCSequence::create(
 		CCMoveTo::create(0.3f,ccp(getContentSize().width/2,label->getPositionY())),

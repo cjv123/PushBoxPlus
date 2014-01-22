@@ -145,6 +145,7 @@
     <ClInclude Include="..\Classes\StateGame.h" />
     <ClInclude Include="..\Classes\StateHome.h" />
     <ClInclude Include="..\Classes\StateLvInfo.h" />
+    <ClInclude Include="..\Classes\StatePause.h" />
     <ClInclude Include="..\Classes\StateSelectLv.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="resource.h" />
@@ -153,6 +154,7 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
     <ClCompile Include="..\Classes\GamePad.cpp" />
     <ClCompile Include="..\Classes\GiftListView.cpp" />
+    <ClCompile Include="..\Classes\LanguageText.cpp" />
     <ClCompile Include="..\Classes\MapData.cpp" />
     <ClCompile Include="..\Classes\MapDataDriver.cpp" />
     <ClCompile Include="..\Classes\MapSearcher.cpp" />
@@ -161,6 +163,7 @@
     <ClCompile Include="..\Classes\StateGame.cpp" />
     <ClCompile Include="..\Classes\StateHome.cpp" />
     <ClCompile Include="..\Classes\StateLvInfo.cpp" />
+    <ClCompile Include="..\Classes\StatePause.cpp" />
     <ClCompile Include="..\Classes\StateSelectLv.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
