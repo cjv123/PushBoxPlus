@@ -20,6 +20,8 @@ public:
 
 private:
 	void onButtonClick(CCObject* pObj);
+
+	void shotStageSceen();
 };
 
 #endif

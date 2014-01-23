@@ -88,6 +88,9 @@
     <ClInclude Include="..\Classes\StatePause.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\AndroidInterface.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -133,6 +136,9 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\LanguageText.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\AndroidInterface.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

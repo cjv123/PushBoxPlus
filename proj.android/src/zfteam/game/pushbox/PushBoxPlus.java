@@ -23,15 +23,32 @@ THE SOFTWARE.
 ****************************************************************************/
 package zfteam.game.pushbox;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
+import org.cocos2dx.lib.Cocos2dxHelper;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 public class PushBoxPlus extends Cocos2dxActivity{
 	
+	static PushBoxPlus mPushBoxPlusActivity;
+	
     protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);	
+		initJVM();
+		mPushBoxPlusActivity = this;
 	}
 
     public Cocos2dxGLSurfaceView onCreateView() {
@@ -41,6 +58,54 @@ public class PushBoxPlus extends Cocos2dxActivity{
     	
     	return glSurfaceView;
     }
+    
+    public static void setAdViewVisable(int showflag)
+	{
+        
+	}
+	
+	public static void shareToFreinds()
+	{
+		Log.i("weibo","autho");
+		new Thread(new Runnable(){
+
+			public void run()
+			{
+				String imgpath = Cocos2dxHelper.getCocos2dxWritablePath() + "/share.jpg";
+				File copyfilepath = mPushBoxPlusActivity.getContext().getExternalCacheDir();
+				if(null != copyfilepath){
+					try {
+						FileInputStream is = mPushBoxPlusActivity.getContext().openFileInput("share.jpg");
+						File newImgFile = new File(copyfilepath.getPath()+"/share.jpg");
+						OutputStream os = new FileOutputStream(newImgFile);
+						byte[] buf = new byte[1024];
+						int len;
+						while ((len = is.read(buf)) != -1) 
+							os.write(buf,0,len);
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				
+        		Intent intent=new Intent(Intent.ACTION_SEND);
+        		intent.setType("image/*");
+        		intent.putExtra(Intent.EXTRA_SUBJECT, "·ÖÏí");
+        		if(null != copyfilepath)
+        			intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///"+mPushBoxPlusActivity.getContext().getExternalCacheDir()+"/share.jpg"));
+        		intent.putExtra(Intent.EXTRA_TEXT, "test");
+
+        		mPushBoxPlusActivity.startActivity(Intent.createChooser(intent, mPushBoxPlusActivity.getTitle()));
+			}
+			
+            
+        }).start();
+
+	}
+	
+	public static native void initJVM();
 
     static {
         System.loadLibrary("cocos2dcpp");

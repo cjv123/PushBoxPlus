@@ -166,16 +166,14 @@ CCLayer* MapData::makeMapView(int mapindex)
 
 			if (mapdata[i][j]=='.')
 			{
-				CCSprite* floor = CCSprite::createWithTexture(
-					CCTextureCache::sharedTextureCache()->textureForKey("floor.png"),CCRectMake(0,9*tileH,tileW,tileH));
+				CCSprite* floor = CCSprite::create("goal.png");
 				mapLayer->addChild(floor);
 				floor->setAnchorPoint(ccp(0.0f,0.0f));
 				floor->setPosition(ccp(x,y));
 			}
 			else if (mapdata[i][j]=='+')
 			{
-				CCSprite* floor = CCSprite::createWithTexture(
-					CCTextureCache::sharedTextureCache()->textureForKey("floor.png"),CCRectMake(0,9*tileH,tileW,tileH));
+				CCSprite* floor = CCSprite::create("goal.png");
 				mapLayer->addChild(floor);
 				floor->setAnchorPoint(ccp(0.0f,0.0f));
 				floor->setPosition(ccp(x,y));
@@ -183,8 +181,7 @@ CCLayer* MapData::makeMapView(int mapindex)
 			}
 			else if (mapdata[i][j]=='*')
 			{
-				CCSprite* floor = CCSprite::createWithTexture(
-					CCTextureCache::sharedTextureCache()->textureForKey("floor.png"),CCRectMake(0,9*tileH,tileW,tileH));
+				CCSprite* floor = CCSprite::create("goal.png");
 				mapLayer->addChild(floor);
 				floor->setAnchorPoint(ccp(0.0f,0.0f));
 				floor->setPosition(ccp(x,y));
