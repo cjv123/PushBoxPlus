@@ -51,6 +51,7 @@ bool StateLoading::init()
 void StateLoading::onLoadComplete( float d )
 {
 	MapData::getInstance()->initMap("map.mp");
+	MapData::getInstance()->readMapSaveData();
 	MapSearcher::getInstance()->initSearcher("mapanwser.txt");
 	GameData::getInstance();
 

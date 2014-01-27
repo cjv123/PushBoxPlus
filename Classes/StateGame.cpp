@@ -9,6 +9,7 @@
 #include "StatePause.h"
 
 #include "AndroidInterface.h"
+#include "MapData.h"
 /*
 	Wall	 #	 0x23
 	Player	 @	 0x40
@@ -399,6 +400,8 @@ void StateGame::onMoveAnimComplete(CCNode* target)
 				NULL
 				);
 			label->runAction(seq);
+			MapData::getInstance()->getMapSaveData().IsPass[GameData::getInstance()->mCurLevel];
+			MapData::getInstance()->writeSaveData();
 		}
 	}
 	else if (tag == pusher_tag)

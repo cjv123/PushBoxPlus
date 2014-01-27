@@ -109,6 +109,8 @@ void MapData::initMap( const char* mapfilename )
 	}
 
 	delete [] filedata;
+
+	readMapSaveData();
 }
 
 char* MapData::readLine(char* source,char* des )
@@ -229,6 +231,37 @@ CCLayer* MapData::makeMapView(int mapindex)
 	}
 
 	return mapLayer;
+}
+
+void MapData::readMapSaveData()
+{
+	memset(&mMapSaveData,0,sizeof(MapSaveData));
+	unsigned long len;
+	string writepath =CCFileUtils::sharedFileUtils()->getWritablePath();
+	string filepath = string(writepath+MAP_SAVE_DATA_FILENAME);
+	unsigned char* filedata =CCFileUtils::sharedFileUtils()->getFileData(filepath.c_str(),"rb",&len);
+	if (filedata)
+	{
+		memcpy(&mMapSaveData,filedata,sizeof(MapSaveData));
+		delete[] filedata;
+	}
+}
+
+void MapData::writeSaveData()
+{
+	string writepath =CCFileUtils::sharedFileUtils()->getWritablePath();
+	string filepath = string(writepath+MAP_SAVE_DATA_FILENAME);
+	FILE* f= fopen(filepath.c_str(),"wb");
+	if (f)
+	{
+		int s =fwrite(&mMapSaveData,sizeof(char),sizeof(MapSaveData),f);
+		fclose(f);
+	}
+}
+
+MapSaveData& MapData::getMapSaveData()
+{
+	return mMapSaveData;
 }
 
 

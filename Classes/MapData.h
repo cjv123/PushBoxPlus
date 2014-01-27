@@ -6,6 +6,8 @@ using namespace std;
 #include <cocos2d.h>
 using namespace cocos2d;
 
+#define MAP_SAVE_DATA_FILENAME "data.sav"
+
 class MapInfo
 {
 public:
@@ -19,6 +21,11 @@ private:
 	CCSize mMapSize;
 };
 
+struct MapSaveData
+{
+	int IsPass[200];
+	int Step[200];
+};
 
 class MapData 
 {
@@ -32,6 +39,11 @@ public:
 	
 	CCLayer* makeMapView(int mapindex);
 
+	void readMapSaveData();
+	void writeSaveData();
+
+	MapSaveData& getMapSaveData();
+
 	static float tileH;
 	static float tileW;
 private:
@@ -39,6 +51,8 @@ private:
 	~MapData();
 
 	vector<MapInfo*> mMapLvDatas;
+
+	MapSaveData mMapSaveData;
 };
 
 #endif
