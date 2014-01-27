@@ -7,7 +7,7 @@ bool GamePad::init()
 	setTouchEnabled(true);
 
 	mUILayer =UILayer::create();
-	mUIWidget = GUIReader::shareReader()->widgetFromJsonFile("gamepad_ui_1.json");
+	mUIWidget = GUIReader::shareReader()->widgetFromJsonFile("gamepad_ui_1.ExportJson");
 	mUILayer->addWidget(mUIWidget);
 	addChild(mUILayer);
 	

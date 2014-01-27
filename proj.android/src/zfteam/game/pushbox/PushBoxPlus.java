@@ -34,21 +34,69 @@ import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 import org.cocos2dx.lib.Cocos2dxHelper;
 
+import com.google.ads.Ad;
+import com.google.ads.AdListener;
+import com.google.ads.AdRequest;
+import com.google.ads.AdRequest.ErrorCode;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.RelativeLayout;
 
-public class PushBoxPlus extends Cocos2dxActivity{
+public class PushBoxPlus extends Cocos2dxActivity implements AdListener{
 	
-	static PushBoxPlus mPushBoxPlusActivity;
+	private static PushBoxPlus mPushBoxPlusActivity;
+	private static AdView mAdview;
+	private static RelativeLayout mRl;
+	private static String MY_AD_UNIT_ID = "a152e1c8b15bd55";
+	private static MyHandler mHandler;
+	
+	public static native void initJVM();
+	public static native void onClickAd();
 	
     protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);	
 		initJVM();
 		mPushBoxPlusActivity = this;
+		
+		Looper curLooper = Looper.myLooper (); 
+        Looper mainLooper = Looper.getMainLooper (); 
+        if (curLooper== null ){ 
+               mHandler = new MyHandler(mainLooper); 
+        } else { 
+               mHandler = new MyHandler(curLooper); 
+        } 
+		
+		// Create the adView
+        
+		mAdview = new AdView(this, AdSize.BANNER, MY_AD_UNIT_ID);
+		mRl = new RelativeLayout(this);
+	    mAdview.loadAd(new AdRequest());
+	    mRl.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
+	    mRl.bringToFront();
+		mAdview.setId(5);
+		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+		mPushBoxPlusActivity.addContentView(mRl, params);
+		mRl.addView(mAdview);
+		mAdview.setVisibility(View.VISIBLE);
+		mAdview.setAdListener(this);
+		
 	}
 
     public Cocos2dxGLSurfaceView onCreateView() {
@@ -61,7 +109,8 @@ public class PushBoxPlus extends Cocos2dxActivity{
     
     public static void setAdViewVisable(int showflag)
 	{
-        
+    	Message m = mHandler.obtainMessage(1, showflag, 1,"");
+		mHandler.sendMessage(m); 
 	}
 	
 	public static void shareToFreinds()
@@ -105,9 +154,86 @@ public class PushBoxPlus extends Cocos2dxActivity{
 
 	}
 	
-	public static native void initJVM();
+	public static void onClickBackButton()
+	{
+		Message m = mHandler.obtainMessage(1, 2, 1,"");
+		mHandler.sendMessage(m); 
+	}
+	
+	
 
     static {
         System.loadLibrary("cocos2dcpp");
-    }     
+    }
+
+	@Override
+	public void onDismissScreen(Ad arg0) {
+		// TODO Auto-generated method stub
+		Log.i("mytest","onDismissScreen");
+		
+		onClickAd();
+	}
+
+	@Override
+	public void onFailedToReceiveAd(Ad arg0, ErrorCode arg1) {
+		// TODO Auto-generated method stub
+		Log.i("mytest","onFailedToReceiveAd");
+	}
+
+	@Override
+	public void onLeaveApplication(Ad arg0) {
+		// TODO Auto-generated method stub
+		Log.i("mytest","onLeaveApplication");
+	}
+
+	@Override
+	public void onPresentScreen(Ad arg0) {
+		// TODO Auto-generated method stub
+		Log.i("mytest","onPresentScreen");
+	}
+
+	@Override
+	public void onReceiveAd(Ad arg0) {
+		// TODO Auto-generated method stub
+		Log.i("mytest","onReceiveAd");
+	}     
+	
+	
+	private class MyHandler extends Handler{              
+
+        public MyHandler(Looper looper){ 
+               super (looper); 
+        } 
+
+        @Override 
+        public void handleMessage(Message msg) { // 处理消息 
+        	
+        	if (msg.arg1 == 0)
+        	{
+        		mAdview.setVisibility(View.INVISIBLE);
+        	}
+        	else if(msg.arg1 == 1)
+        	{
+        		mAdview.setVisibility(View.VISIBLE);
+        	}
+        	else if(msg.arg1 == 2)
+        	{
+        		new AlertDialog.Builder(mPushBoxPlusActivity)
+        		.setTitle(R.string.app_name)
+        		.setMessage("退出游戏?")
+        		.setPositiveButton(android.R.string.ok,
+        				new OnClickListener() {
+        					public void onClick(DialogInterface dialog,
+        							int which) {
+        						dialog.dismiss();
+        						android.os.Process.killProcess(android.os.Process.myPid());
+        					}
+        				})
+        		.setNegativeButton(android.R.string.cancel,null).
+        		create().show();
+        	}
+    		
+        }             
+
+	} 
 }

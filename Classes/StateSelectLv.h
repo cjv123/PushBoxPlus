@@ -22,6 +22,8 @@ public:
 
 	virtual void onSelItem( GiftItem* item );
 
+	virtual void onEnter();
+
 private:
 	GiftListView* mListView;
 };

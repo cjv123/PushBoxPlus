@@ -327,7 +327,7 @@ void GiftListView::visit()
 	glEnable(GL_SCISSOR_TEST);
 	CCSprite* marksp = (CCSprite*)mPageMarkers.objectAtIndex(0);
 	CCPoint lbPoint = this->convertToWorldSpace(ccp(0,-marksp->getContentSize().height*2+mMarkPosOffset.y-mItemIntervalV));
-	CCPoint trPoint = this->convertToWorldSpace(ccp(getContentSize().width, getContentSize().height+20+mItemIntervalH ) );
+	CCPoint trPoint = this->convertToWorldSpace(ccp(getContentSize().width+mItemIntervalH, getContentSize().height+20+mItemIntervalV ) );
 	CCEGLView::sharedOpenGLView()->setScissorInPoints(lbPoint.x, lbPoint.y, abs(trPoint.x-lbPoint.x), abs(trPoint.y-lbPoint.y));
 	CCNode::visit();
 	glDisable(GL_SCISSOR_TEST);
@@ -638,11 +638,11 @@ void GiftItem::setMenuImage( const char *normalImage, const char *selectedImage,
 	if (mDisaSp)
 		removeChild(mDisaSp,true);
 	
-	mNorSp = CCSprite::create(normalImage);
+	mNorSp = CCSprite::createWithSpriteFrameName(normalImage);
 	mNorSp->setAnchorPoint(ccp(0,0));
-	mSeledSp = CCSprite::create(selectedImage);
+	mSeledSp = CCSprite::createWithSpriteFrameName(selectedImage);
 	mSeledSp->setAnchorPoint(ccp(0,0));
-	mDisaSp = CCSprite::create(disabledImage);
+	mDisaSp = CCSprite::createWithSpriteFrameName(disabledImage);
 	mDisaSp->setAnchorPoint(ccp(0,0));
 	setContentSize(mNorSp->getContentSize());
 
@@ -735,11 +735,11 @@ void GiftItem::setTitle( const char* title )
 	mName = title;
 	if (NULL == mTitleLabel)
 	{
-		mTitleLabel = CCLabelTTF::create(title,"Arial", DEFAULT_FONTSIZE);
+		mTitleLabel = CCLabelTTF::create(title,"nokiafc22.ttf", 28);
 		mTitleLabel->setDimensions(CCSizeMake(getContentSize().width-16,0));
 		addChild(mTitleLabel,20);
 	}
-	mTitleLabel->setPosition(ccp(getContentSize().width/2+1,getContentSize().height - getContentSize().height/5));
+	mTitleLabel->setPosition(ccp(getContentSize().width/2,getContentSize().height/2));
 
 	mTitleLabel->setString(title);
 	
@@ -805,9 +805,9 @@ GiftPageMarker* GiftPageMarker::create(const char* norimg,const char* disimg)
 	{
 		pRet->autorelease();
 		pRet->mMenuItem = CCMenuItemSprite::create(
-			CCSprite::create(norimg),
-			CCSprite::create(norimg),
-			CCSprite::create(disimg));
+			CCSprite::createWithSpriteFrameName(norimg),
+			CCSprite::createWithSpriteFrameName(norimg),
+			CCSprite::createWithSpriteFrameName(disimg));
 		pRet->mMenuItem->setEnabled(false);
 		CCSize s= pRet->mMenuItem->getContentSize();
 		pRet->addChild(pRet->mMenuItem);

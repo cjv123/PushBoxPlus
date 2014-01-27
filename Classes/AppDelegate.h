@@ -32,6 +32,22 @@ public:
     @param  the pointer of the application
     */
     virtual void applicationWillEnterForeground();
+
+
+};
+
+class KeyDelegate : public cocos2d::CCObject, public cocos2d::CCKeypadDelegate
+{
+public:
+	static KeyDelegate* getInstance();
+
+	virtual void keyBackClicked();
+
+	virtual void keyMenuClicked();
+
+private:
+	KeyDelegate();
+	~KeyDelegate();
 };
 
 #endif  // __APP_DELEGATE_H__

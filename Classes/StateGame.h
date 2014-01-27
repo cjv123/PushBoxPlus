@@ -21,12 +21,15 @@ public:
 	virtual bool init();
 
 	virtual void update( float delta );
+	void searchRoad();
 	
 	CREATE_FUNC(StateGame);
 private:
 	void initMap();
 	void initBackground();
+	void initSunshine();
 	void initCloud(float delay);
+	void initBird(float delay);
 	void initUi();
 	void flagBoxState();
 
@@ -39,7 +42,7 @@ private:
 
 	bool checkPassLv();
 
-	void searchRoad();
+	
 	void onSearchCallback(CCNode* pObj,void* par);
 
 	void onDirectButtonPushDown(CCObject* pObj,TouchEventType eventType);
@@ -65,6 +68,8 @@ private:
 
 	int mStepCount;
 
+	bool mSearchRoad;
+	bool mClear;
 };
 
 #endif

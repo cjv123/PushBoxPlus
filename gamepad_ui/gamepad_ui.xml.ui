@@ -10,7 +10,9 @@
   <JsonList>
     <string>gamepad_ui_1.json</string>
   </JsonList>
-  <imageFileList />
+  <imageFileList>
+    <string>gamepad_ui0.plist</string>
+  </imageFileList>
   <JsonSuffix>.json</JsonSuffix>
   <CurrentUIJson>gamepad_ui_1.json</CurrentUIJson>
   <CanvasSize>

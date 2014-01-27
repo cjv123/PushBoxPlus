@@ -2,9 +2,8 @@
 #include "CCEGLView.h"
 #include "AppDelegate.h"
 #include "SimpleAudioEngine.h"
-#include "StateGame.h"
-#include "StateSelectLv.h"
-#include "StateHome.h"
+#include "StateLoading.h"
+#include "AndroidInterface.h"
 
 using namespace CocosDenshion;
 
@@ -12,8 +11,9 @@ USING_NS_CC;
 
 AppDelegate::AppDelegate()
 {
-}
 
+}
+	
 AppDelegate::~AppDelegate()
 {
     SimpleAudioEngine::end();
@@ -28,14 +28,17 @@ bool AppDelegate::applicationDidFinishLaunching()
 	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(640,1136,kResolutionShowAll);
 
     // turn on display FPS
-    pDirector->setDisplayStats(true);
+   // pDirector->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
-	CCScene* pScene = StateHome::scene();
+	CCScene* pScene = StateLoading::scene();
     // run
     pDirector->runWithScene(pScene);
+
+	pDirector->getKeypadDispatcher()->addDelegate(KeyDelegate::getInstance());
+
     return true;
 }
 
@@ -53,4 +56,34 @@ void AppDelegate::applicationWillEnterForeground()
     CCDirector::sharedDirector()->startAnimation();
 
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+}
+
+
+
+
+
+void KeyDelegate::keyBackClicked()
+{
+	exit_game();
+}
+
+void KeyDelegate::keyMenuClicked()
+{
+	
+}
+
+KeyDelegate* KeyDelegate::getInstance()
+{
+	static KeyDelegate instance;
+	return &instance;
+}
+
+KeyDelegate::KeyDelegate()
+{
+
+}
+
+KeyDelegate::~KeyDelegate()
+{
+
 }

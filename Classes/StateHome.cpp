@@ -4,9 +4,12 @@
 #include "StateSelectLv.h"
 #include "StateGame.h"
 #include "GameData.h"
+#include "SpriteButton.h"
+#include "LanguageText.h"
+#include "PusherSprite.h"
 
 
-StateHome::StateHome()
+StateHome::StateHome() : mNextSceneAnim(false)
 {
 
 }
@@ -29,23 +32,24 @@ bool StateHome::init()
 	if (!CCLayer::init())
 		return false;
 
-	MapData::getInstance()->initMap("map.mp");
-	MapSearcher::getInstance()->initSearcher("mapanwser.txt");
-	GameData::getInstance();
+	CCLayerColor* bg = CCLayerColor::create(ccc4(255,255,255,255));
+	addChild(bg);
 
-	CCTextureCache::sharedTextureCache()->addImage("scene_frame.png")->setAliasTexParameters();
-	CCTextureCache::sharedTextureCache()->addImage("wall.png")->setAliasTexParameters();
-	CCTextureCache::sharedTextureCache()->addImage("box.png")->setAliasTexParameters();
-	CCTextureCache::sharedTextureCache()->addImage("vx_chara01_b.png")->setAliasTexParameters();
-	
+	createBg();
 
-	UILayer* ul =UILayer::create();
-	UIWidget* uiwidget = GUIReader::shareReader()->widgetFromJsonFile("SceneHomeUIEdit_1.json");
-	ul->addWidget(uiwidget);
-	addChild(ul);
-	UIButton* startButton = (UIButton*)uiwidget->getChildByName("Start_Button");
-	startButton->addReleaseEvent(this,coco_releaseselector(StateHome::onButtonClick));
-	startButton->setTouchEnable(true);
+	CCSprite* title = CCSprite::createWithSpriteFrameName("title.png");
+	addChild(title);
+	title->setPosition(ccp(getContentSize().width/2,getContentSize().height/2 + 100));
+
+	CCLabelTTF* touchlabel = CCLabelTTF::create("TOUCH TO START","nokiafc22.ttf",32);
+	addChild(touchlabel);
+	touchlabel->setColor(ccc3(0,0,0));
+	touchlabel->setPosition(ccp(getContentSize().width/2,380));
+	CCSequence* seq = CCSequence::create(CCFadeOut::create(0.5f),CCFadeIn::create(0.5f),NULL);
+	touchlabel->runAction(CCRepeatForever::create(seq));
+
+	setTouchEnabled(true);
+
 
 	return true;
 }
@@ -55,8 +59,89 @@ void StateHome::onEnter()
 	CCLayer::onEnter();
 }
 
-void StateHome::onButtonClick( CCObject* pObj)
+bool StateHome::ccTouchBegan( CCTouch *pTouch, CCEvent *pEvent )
 {
-	CCDirector::sharedDirector()->replaceScene(StateSelectLv::scene());
+	if (mNextSceneAnim)
+	{
+		return false;
+	}
+	return true;
 }
+
+void StateHome::ccTouchMoved( CCTouch *pTouch, CCEvent *pEvent )
+{
+}
+
+void StateHome::ccTouchEnded( CCTouch *pTouch, CCEvent *pEvent )
+{
+	CCLayerColor* layer = CCLayerColor::create(ccc4(0,0,0,255));
+	layer->setOpacity(0);
+	addChild(layer);
+	CCSequence* outseq = CCSequence::create(CCFadeIn::create(0.3f),CCCallFunc::create(this,callfunc_selector(StateHome::onCreateNextScene)),NULL);
+	layer->runAction(outseq);
+	mNextSceneAnim = true;
+}
+
+void StateHome::registerWithTouchDispatcher( void )
+{
+	CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, getTouchPriority(), false);
+}
+
+
+void StateHome::onCreateNextScene()
+{
+	CCScene* nextscene = StateSelectLv::scene();
+	CCDirector::sharedDirector()->replaceScene(nextscene);
+	CCLayerColor* layer = CCLayerColor::create(ccc4(0,0,0,255));
+	CCSequence* inseq = CCSequence::create(CCFadeOut::create(0.3f),CCRemoveSelf::create(),NULL);
+	layer->runAction(inseq);
+	nextscene->addChild(layer);
+}
+
+void StateHome::createBg()
+{
+	int interval = 200;
+	int colCount = getContentSize().width/interval +2;
+	int rowCount = getContentSize().height/interval + 3;
+
+	if (mBoxs.size()==0)
+	{
+		for (int i=0;i<colCount*rowCount;i++)
+		{
+			CCSprite* box = CCSprite::createWithSpriteFrameName("box.png");
+			mBoxs.push_back(box);
+			box->setScale(2.0f);
+			box->setOpacity(120);
+			addChild(box);
+		}
+	}
+
+	int k=0;
+	for (int i=0;i<colCount;i++)
+	{
+		for (int j=0;j<rowCount;j++)
+		{
+			CCSprite* box = mBoxs[k];
+			float x = -interval + i*interval;
+			float y =j*interval;
+
+			box->setPosition(ccp(x,y));
+			box->stopAllActions();
+			CCSequence* seq = CCSequence::create(CCMoveBy::create(2.5f,ccp(interval,-interval)),
+				CCCallFunc::create(this,callfunc_selector(StateHome::onMoveComplete)),
+				NULL);
+			box->runAction(seq);
+			k++;
+		}
+	}
+}
+
+void StateHome::onMoveComplete()
+{
+	createBg();
+}
+
+
+
+
 

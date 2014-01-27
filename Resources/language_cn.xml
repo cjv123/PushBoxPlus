@@ -5,4 +5,9 @@
 	<word key="HelpByAd" text="点击广告获取答案"/>
 	<word key="Exit" text="退出"/>
 	<word key="BackToGame" text="回到游戏"/>
+	<word key="ContinuePlay" text="继续播放答案"/>
+	<word key="playSearch" text="播放答案"/>
+	<word key="resStartGame" text="重新开始"/>
+	<word key="startGame" text="开始"/>
+	<word key="back" text="返回"/>
 </root>

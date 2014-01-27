@@ -1,11 +1,11 @@
 #include "PusherSprite.h"
 
 float PusherSprite::w = 32.0f;
-float PusherSprite::h = 48.0f;
+float PusherSprite::h = 47.0f;
 
 PusherSprite::PusherSprite()
 {
-	mFaceDir = 'd';
+	mFaceDir = 'u';
 }
 
 PusherSprite::~PusherSprite()
@@ -20,9 +20,9 @@ bool PusherSprite::init( void )
 
 	scheduleUpdate();
 
-	mTexture = CCTextureCache::sharedTextureCache()->addImage("vx_chara01_b.png");
+	mTexture = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("vx_chara01_b.png")->getTexture();
 	initWithTexture(mTexture,CCRectMake(0,0,w,h));
-	playUpMoveAnim();
+	playDownMoveAnim();
 
 	return true;
 }

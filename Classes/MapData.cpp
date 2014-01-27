@@ -166,28 +166,32 @@ CCLayer* MapData::makeMapView(int mapindex)
 
 			if (mapdata[i][j]=='.')
 			{
-				CCSprite* floor = CCSprite::create("goal.png");
+				CCSprite* floor = CCSprite::createWithSpriteFrameName("goal.png");
 				mapLayer->addChild(floor);
 				floor->setAnchorPoint(ccp(0.0f,0.0f));
 				floor->setPosition(ccp(x,y));
 			}
 			else if (mapdata[i][j]=='+')
 			{
-				CCSprite* floor = CCSprite::create("goal.png");
+				CCSprite* floor = CCSprite::createWithSpriteFrameName("goal.png");
 				mapLayer->addChild(floor);
 				floor->setAnchorPoint(ccp(0.0f,0.0f));
 				floor->setPosition(ccp(x,y));
-
+				
+				CCSprite* pusher = CCSprite::createWithTexture(
+					CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("vx_chara01_b.png")->getTexture(),CCRectMake(PusherSprite::w,0,PusherSprite::w,PusherSprite::h));
+				pusher->setAnchorPoint(ccp(0,0));
+				mapLayer->addChild(pusher);
+				pusher->setPosition(ccp(x,y));
 			}
 			else if (mapdata[i][j]=='*')
 			{
-				CCSprite* floor = CCSprite::create("goal.png");
+				CCSprite* floor = CCSprite::createWithSpriteFrameName("goal.png");
 				mapLayer->addChild(floor);
 				floor->setAnchorPoint(ccp(0.0f,0.0f));
 				floor->setPosition(ccp(x,y));
 
-				CCSprite* box = CCSprite::createWithTexture(
-					CCTextureCache::sharedTextureCache()->textureForKey("box.png"),CCRectMake(0,0,tileW,tileH));
+				CCSprite* box = CCSprite::createWithSpriteFrameName("box.png");
 				mapLayer->addChild(box);
 				box->setAnchorPoint(ccp(0.0f,0.0f));
 				box->setPosition(ccp(x,y));
@@ -195,16 +199,16 @@ CCLayer* MapData::makeMapView(int mapindex)
 			}
 			else if (mapdata[i][j]=='$')
 			{
-				CCSprite* box = CCSprite::createWithTexture(
-					CCTextureCache::sharedTextureCache()->textureForKey("box.png"),CCRectMake(0,0,tileW,tileH));
+				CCSprite* box = CCSprite::createWithSpriteFrameName("box.png");
 				mapLayer->addChild(box);
 				box->setAnchorPoint(ccp(0.0f,0.0f));
 				box->setPosition(ccp(x,y));
 			}
 			else if (mapdata[i][j]=='#')
 			{
+				CCSpriteFrame* spriteframe = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("wall.png");
 				CCSprite* wall = CCSprite::createWithTexture(
-					CCTextureCache::sharedTextureCache()->textureForKey("wall.png"),CCRectMake(0,tileH,tileW,tileH));
+					spriteframe->getTexture(),CCRectMake(spriteframe->getRect().origin.x,spriteframe->getRect().origin.y + tileH,tileW,tileH));
 				mapLayer->addChild(wall);
 				wall->setAnchorPoint(ccp(0.0f,0.0f));
 				wall->setPosition(ccp(x,y));
@@ -212,7 +216,8 @@ CCLayer* MapData::makeMapView(int mapindex)
 			else if (mapdata[i][j]=='@')
 			{
 				CCSprite* pusher = CCSprite::createWithTexture(
-					CCTextureCache::sharedTextureCache()->textureForKey("vx_chara01_b.png"),CCRectMake(PusherSprite::w,0,PusherSprite::w,PusherSprite::h));
+					CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("vx_chara01_b.png")->getTexture(),CCRectMake(PusherSprite::w,0,PusherSprite::w,PusherSprite::h));
+				
 				pusher->setAnchorPoint(ccp(0,0));
 				mapLayer->addChild(pusher);
 				pusher->setPosition(ccp(x,y));

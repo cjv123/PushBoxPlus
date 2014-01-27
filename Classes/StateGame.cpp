@@ -8,6 +8,7 @@
 #include "LanguageText.h"
 #include "StatePause.h"
 
+#include "AndroidInterface.h"
 /*
 	Wall	 #	 0x23
 	Player	 @	 0x40
@@ -22,12 +23,14 @@
 static int pusher_orderz = 100;
 static int box_orderz = 99;
 static int cloud_orderz = 200;
-static int ui_orderz = 201;
+static int bird_orderz = 199;
+static int sunshine_orderz = 201;
+static int ui_orderz = 202;
 static int box_tag = 1000;
 static int pusher_tag = 1001;
 static int startlabel_tag = 1002;
 
-StateGame::StateGame() : mIsmove(false),mMapLayer(NULL),mGamePad(NULL),mStepCount(0)
+StateGame::StateGame() : mIsmove(false),mMapLayer(NULL),mGamePad(NULL),mStepCount(0),mSearchRoad(false),mClear(false)
 {
 
 }
@@ -48,10 +51,6 @@ CCScene* StateGame::scene()
 
 void StateGame::initBackground()
 {
-// 	CCLayerColor* background = CCLayerColor::create(ccc4(91,219,87,255));
-// 	addChild(background);
-	
-
 	float tilew = MapData::tileW;
 	float tileh = MapData::tileH;
 
@@ -61,11 +60,11 @@ void StateGame::initBackground()
 	{
 		for (int j=0;j<colnum;j++)
 		{
-			float x = j*tilew;
-			float y = getContentSize().height - i*tileh;
-			CCSprite* floor = CCSprite::create("floor2.png");
+			CCSprite* floor = CCSprite::createWithSpriteFrameName("floor2.png");
 			addChild(floor);
 			floor->setAnchorPoint(ccp(0.0f,1.0f));
+			float x = j*floor->getContentSize().width;
+			float y = getContentSize().height - i*floor->getContentSize().height;
 			floor->setPosition(ccp(x,y));
 		}
 	}
@@ -87,7 +86,7 @@ void StateGame::initMap()
 	mMapLayer->setContentSize(CCSizeMake(mapw,maph));
 	mMapLayer->setPosition(ccp(mapx,mapy));
 	addChild(mMapLayer);
-	float scale = min((getContentSize().width-20) / mapw,getContentSize().height/2/maph);
+	float scale = min((getContentSize().width-30) / mapw,getContentSize().height/2/maph);
 	if (scale>2)
 		scale = 2;
 	mMapLayer->setScale(scale);
@@ -102,16 +101,17 @@ void StateGame::initMap()
 
 			if (mapdata[i][j]=='.')
 			{
-				CCSprite* floor = CCSprite::create("goal.png");
+				CCSprite* floor = CCSprite::createWithSpriteFrameName("goal.png");
 				mMapLayer->addChild(floor);
 				floor->setAnchorPoint(ccp(0.0f,0.0f));
 				floor->setPosition(ccp(x,y));
 			}
 			else if (mapdata[i][j]=='+')
 			{
-				CCSprite* floor = CCSprite::create("goal.png");
+				CCSprite* floor = CCSprite::createWithSpriteFrameName("goal.png");
 				floor->setAnchorPoint(ccp(0.0f,0.0f));
 				floor->setPosition(ccp(x,y));
+				mMapLayer->addChild(floor);
 
 				mPusher = PusherSprite::create();
 				mPusher->setAnchorPoint(ccp(0,0));
@@ -121,13 +121,12 @@ void StateGame::initMap()
 			}
 			else if (mapdata[i][j]=='*')
 			{
-				CCSprite* floor = CCSprite::create("goal.png");
+				CCSprite* floor = CCSprite::createWithSpriteFrameName("goal.png");
 				mMapLayer->addChild(floor);
 				floor->setAnchorPoint(ccp(0.0f,0.0f));
 				floor->setPosition(ccp(x,y));
 
-				CCSprite* box = CCSprite::createWithTexture(
-					CCTextureCache::sharedTextureCache()->textureForKey("box.png"),CCRectMake(0,0,MapData::tileW,MapData::tileH));
+				CCSprite* box = CCSprite::createWithSpriteFrameName("box.png");
 				mMapLayer->addChild(box,box_orderz);
 				mBoxs.push_back(box);
 				box->setAnchorPoint(ccp(0.0f,0.0f));
@@ -136,8 +135,7 @@ void StateGame::initMap()
 			}
 			else if (mapdata[i][j]=='$')
 			{
-				CCSprite* box = CCSprite::createWithTexture(
-					CCTextureCache::sharedTextureCache()->textureForKey("box.png"),CCRectMake(0,0,MapData::tileW,MapData::tileH));
+				CCSprite* box = CCSprite::createWithSpriteFrameName("box.png");
 				mMapLayer->addChild(box,box_orderz);
 				mBoxs.push_back(box);
 				box->setAnchorPoint(ccp(0.0f,0.0f));
@@ -146,8 +144,9 @@ void StateGame::initMap()
 			}
 			else if (mapdata[i][j]=='#')
 			{
+				CCSpriteFrame* spriteframe = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("wall.png");
 				CCSprite* wall = CCSprite::createWithTexture(
-					CCTextureCache::sharedTextureCache()->textureForKey("wall.png"),CCRectMake(0,MapData::tileH,MapData::tileW,MapData::tileH));
+					spriteframe->getTexture(),CCRectMake(spriteframe->getRect().origin.x,spriteframe->getRect().origin.y + MapData::tileH,MapData::tileW,MapData::tileH));
 				mMapLayer->addChild(wall);
 				mWalls.push_back(wall);
 				wall->setAnchorPoint(ccp(0.0f,0.0f));
@@ -170,9 +169,22 @@ void StateGame::initMap()
 	flagBoxState();
 }
 
+
+void StateGame::initSunshine()
+{
+	CCSprite* light = CCSprite::createWithSpriteFrameName("light.png");
+	light->setAnchorPoint(ccp(0,1));
+	addChild(light,sunshine_orderz);
+	light->setPosition(ccp(0,getContentSize().height));
+	light->setScale(3.0f);
+	ccBlendFunc blendFunc1 = { GL_ONE_MINUS_SRC_COLOR, GL_ONE };
+	light->setBlendFunc(blendFunc1);
+}
+
+
 void StateGame::initCloud(float delay)
 {
-	mCloud = CCSprite::create("cloud.png");
+	mCloud = CCSprite::createWithSpriteFrameName("cloud.png");
 	addChild(mCloud,cloud_orderz);
 	mCloud->setPosition(ccp(0,-100));
 	mCloud->setScale(4);
@@ -184,6 +196,28 @@ void StateGame::initCloud(float delay)
 	mCloud->runAction(seq);
 }
 
+void StateGame::initBird(float delay)
+{
+	for (int i=0;i<3;i++)
+	{
+		CCSprite* bird = CCSprite::createWithSpriteFrameName("bird1.png");
+		CCAnimation* animation = CCAnimation::create();
+		for (int i=0;i<4;i++)
+		{
+			CCString* str = CCString::createWithFormat("bird%d.png",i+1);
+			animation->addSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(str->getCString()));
+		}
+		animation->setDelayPerUnit(0.1f);
+		CCAnimate* anim = CCAnimate::create(animation);
+		bird->runAction(CCRepeatForever::create(anim));
+		addChild(bird,bird_orderz);
+		bird->setPosition(ccp(-50,getContentSize().height - 100 - 80*i));
+		bird->setScale(2.0f);
+		CCSequence* seq = CCSequence::create(CCMoveTo::create(2.0f,ccp(700,600- 80*i)),CCRemoveSelf::create(),NULL);
+		bird->runAction(seq);
+	}
+}
+
 bool StateGame::init()
 {
 	if (!CCLayer::init())
@@ -191,50 +225,67 @@ bool StateGame::init()
 		return false;
 	}
 	
+	set_adview_visible(0);
 
 	scheduleUpdate();
 
 	initBackground();
 	initMap();
 	
+	initBird(0);
 	initCloud(0);
+	initSunshine();
+
 	initUi();
+
+	//schedule(schedule_selector(StateGame::initBird),10.0f);
 	schedule(schedule_selector(StateGame::initCloud),10.0f);
 
-	//searchRoad();
 
 	return true;
 }
 
 void StateGame::update( float delta )
 {
-	if(!mIsmove)
+	if(!mSearchRoad)
 	{
-		if (mGamePad->isPress(GamePad::Button_Up))
+		if (!mIsmove && !mClear)
 		{
-			move('u');
+			if (mGamePad->isPress(GamePad::Button_Up))
+			{
+				move('u');
+			}
+			else if (mGamePad->isPress(GamePad::Button_Down))
+			{
+				move('d');
+			}
+			else if (mGamePad->isPress(GamePad::Button_Left))
+			{
+				move('l');
+			}
+			else if (mGamePad->isPress(GamePad::Button_Right))
+			{
+				move('r');
+			}
+			else if (mGamePad->isJustPress(GamePad::Button_Back))
+			{
+				backMove();
+			}
 		}
-		else if (mGamePad->isPress(GamePad::Button_Down))
-		{
-			move('d');
-		}
-		else if (mGamePad->isPress(GamePad::Button_Left))
-		{
-			move('l');
-		}
-		else if (mGamePad->isPress(GamePad::Button_Right))
-		{
-			move('r');
-		}
-		else if (mGamePad->isJustPress(GamePad::Button_Back))
-		{
-			backMove();
-		}
-		else if (mGamePad->isJustPress(GamePad::Button_Menu))
+
+		if (mGamePad->isJustPress(GamePad::Button_Menu))
 		{
 			CCDirector::sharedDirector()->pushScene(StatePause::scene());
 		}
 	}
+	else
+	{
+		if (mGamePad->isJustPress(GamePad::Button_Menu))
+		{
+			CCDirector::sharedDirector()->pushScene(StatePause::scene(true));
+		}
+	}
+
 	mGamePad->update(delta);
 	CCLayer::update(delta);
 }
@@ -335,6 +386,7 @@ void StateGame::onMoveAnimComplete(CCNode* target)
 		if (checkPassLv())
 		{
 			CCLOG("pass level!");
+			mClear = true;
 			if(NULL!=getChildByTag(startlabel_tag))
 				removeChildByTag(startlabel_tag);
 			CCLabelBMFont* label = CCLabelBMFont::create("CLEAR", "label.fnt");
@@ -408,6 +460,7 @@ bool StateGame::checkPassLv()
 
 void StateGame::searchRoad()
 {
+	mSearchRoad = true;
 	string searchData = MapSearcher::getInstance()->getAnswerdata().at(GameData::getInstance()->mCurLevel);
 	
 	CCArray* array = CCArray::create();
@@ -458,14 +511,16 @@ void StateGame::initUi()
 	labelStepTitle->setPosition(ccp(504,303));
 
 	char strtmp[100]={0};
-    sprintf(strtmp,"%d",GameData::getInstance()->mCurLevel);
+    sprintf(strtmp,"%d",GameData::getInstance()->mCurLevel+1);
 	CCLabelTTF* labelStage = CCLabelTTF::create(strtmp,"Arial",24);
 	mGamePad->addChild(labelStage);
+	labelStage->setAnchorPoint(ccp(0,0.5));
 	labelStage->setPosition(ccp(96,303));
 
 	mLabelStep = CCLabelTTF::create("0","Arial",24);
 	mGamePad->addChild(mLabelStep);
 	mLabelStep->setPosition(ccp(539,303));
+	mLabelStep->setAnchorPoint(ccp(0,0.5));
 
 	CCLabelBMFont* label = CCLabelBMFont::create("START", "label.fnt");
 	addChild(label,ui_orderz);
@@ -481,13 +536,6 @@ void StateGame::initUi()
 		);
 	label->runAction(seq);
 
-	SpriteButton* backButton = SpriteButton::createWithName("GUI/button.png",this,menu_selector(StateGame::onButtonClick));
-	backButton->setAnchorPoint(ccp(1,1));
-	backButton->setPosition(ccp(getContentSize().width,getContentSize().height));
-
-	CCMenu* menu = CCMenu::create(backButton,NULL);
-	addChild(menu);
-	menu->setPosition(ccp(0,0));
 }
 
 void StateGame::backMove()
@@ -499,6 +547,8 @@ void StateGame::backMove()
 		playMove();
 	}
 }
+
+
 
 
 
