@@ -10,6 +10,9 @@
 
 #include "AndroidInterface.h"
 #include "MapData.h"
+#include "SimpleAudioEngine.h"
+
+using namespace CocosDenshion;
 /*
 	Wall	 #	 0x23
 	Player	 @	 0x40
@@ -203,9 +206,9 @@ void StateGame::initBird(float delay)
 	{
 		CCSprite* bird = CCSprite::createWithSpriteFrameName("bird1.png");
 		CCAnimation* animation = CCAnimation::create();
-		for (int i=0;i<4;i++)
+		for (int j=0;j<4;j++)
 		{
-			CCString* str = CCString::createWithFormat("bird%d.png",i+1);
+			CCString* str = CCString::createWithFormat("bird%d.png",j+1);
 			animation->addSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(str->getCString()));
 		}
 		animation->setDelayPerUnit(0.1f);
@@ -400,7 +403,13 @@ void StateGame::onMoveAnimComplete(CCNode* target)
 				NULL
 				);
 			label->runAction(seq);
-			MapData::getInstance()->getMapSaveData().IsPass[GameData::getInstance()->mCurLevel];
+
+			MapSaveData& data = MapData::getInstance()->getMapSaveData();
+			data.IsPass[GameData::getInstance()->mCurLevel] = 1;
+			if (data.Step[GameData::getInstance()->mCurLevel]==0 || mStepCount<data.Step[GameData::getInstance()->mCurLevel])
+			{
+				data.Step[GameData::getInstance()->mCurLevel] = mStepCount;
+			}
 			MapData::getInstance()->writeSaveData();
 		}
 	}
@@ -500,6 +509,8 @@ void StateGame::onButtonClick( CCObject* pObj )
 
 void StateGame::initUi()
 {
+	SimpleAudioEngine::sharedEngine()->playBackgroundMusic("bgm1.ogg");
+
 	mGamePad = GamePad::create();
 	addChild(mGamePad,ui_orderz);
 
@@ -511,7 +522,7 @@ void StateGame::initUi()
 
 	CCLabelTTF* labelStepTitle = CCLabelTTF::create(stringmap["Step"].c_str(),"Arial",24);
 	mGamePad->addChild(labelStepTitle);
-	labelStepTitle->setPosition(ccp(504,303));
+	labelStepTitle->setPosition(ccp(254,303));
 
 	char strtmp[100]={0};
     sprintf(strtmp,"%d",GameData::getInstance()->mCurLevel+1);
@@ -522,8 +533,16 @@ void StateGame::initUi()
 
 	mLabelStep = CCLabelTTF::create("0","Arial",24);
 	mGamePad->addChild(mLabelStep);
-	mLabelStep->setPosition(ccp(539,303));
+	mLabelStep->setPosition(ccp(309,303));
 	mLabelStep->setAnchorPoint(ccp(0,0.5));
+
+	int minstep = MapData::getInstance()->getMapSaveData().Step[GameData::getInstance()->mCurLevel];
+	CCString* ccstrtmp = CCString::createWithFormat("%s%d",stringmap["highScore"].c_str(),minstep);
+	if(minstep == 0)
+		ccstrtmp = CCString::createWithFormat("%s%s",stringmap["highScore"].c_str(),stringmap["not"].c_str());
+	CCLabelTTF* labelHighScore = CCLabelTTF::create(ccstrtmp->getCString(),"Arial",24);
+	mGamePad->addChild(labelHighScore);
+	labelHighScore->setPosition(ccp(504,303));
 
 	CCLabelBMFont* label = CCLabelBMFont::create("START", "label.fnt");
 	addChild(label,ui_orderz);
@@ -549,6 +568,16 @@ void StateGame::backMove()
 		mPusher->playMoveAnim(pusherdirect);
 		playMove();
 	}
+}
+
+void StateGame::onEnter()
+{
+	CCLayer::onEnter();
+}
+
+void StateGame::onExit()
+{
+	CCLayer::onExit();
 }
 
 

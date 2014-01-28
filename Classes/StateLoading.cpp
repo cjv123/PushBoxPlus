@@ -58,6 +58,7 @@ void StateLoading::onLoadComplete( float d )
 	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("pushboxres.plist");
 	CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("wall.png")->getTexture()->setAliasTexParameters();
 	CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("box.png")->getTexture()->setAliasTexParameters();
+	CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("star.png")->getTexture()->setAliasTexParameters();
 	CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("vx_chara01_b.png")->getTexture()->setAliasTexParameters();
 
 	CCScene* homescene = StateHome::scene();

@@ -4,6 +4,8 @@
 #include "GameData.h"
 #include "StateGame.h"
 #include "LanguageText.h"
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 
 CCScene* StateLvInfo::scene(int lvindex)
 {
@@ -41,14 +43,14 @@ bool StateLvInfo::init()
 	SpriteButton* backbutton = SpriteButton::createWithSpriteFrameName("lv9scale.png",this,menu_selector(StateLvInfo::onButtonClick),Scale9SpriteCapDefine);
 	backbutton->setCapMode(Scale9SpriteCapDefine,CCRectMake(4,4,2,2));
 	backbutton->setBgImageSize(CCSizeMake(100,70));
-	backbutton->setTitle(LanguageText::getInstance()->getString("back").c_str());
+	backbutton->setTitle(LanguageText::getInstance()->getString("back").c_str(),"Arial",28);
 	backbutton->setPosition(ccp(getContentSize().width/2-150,200));
 	backbutton->setTag(1);
 
 	SpriteButton* gobutton = SpriteButton::createWithSpriteFrameName("lv9scale.png",this,menu_selector(StateLvInfo::onButtonClick),Scale9SpriteCapDefine);
 	gobutton->setCapMode(Scale9SpriteCapDefine,CCRectMake(4,4,2,2));
 	gobutton->setBgImageSize(CCSizeMake(100,70));
-	gobutton->setTitle(LanguageText::getInstance()->getString("startGame").c_str());
+	gobutton->setTitle(LanguageText::getInstance()->getString("startGame").c_str(),"Arial",28);
 	gobutton->setPosition(ccp(getContentSize().width/2+150,200));
 	gobutton->setTag(2);
 
@@ -65,17 +67,44 @@ void StateLvInfo::onButtonClick( CCObject* pObj )
 	int tag = button->getTag();
 	if (tag == 1)
 	{
+		SimpleAudioEngine::sharedEngine()->playEffect("button.ogg");
 		CCDirector::sharedDirector()->popScene();
 	}
 	else if (tag == 2)
 	{
-		GameData::getInstance()->mCurLevel = mLvIndex;
-		CCDirector::sharedDirector()->replaceScene(StateGame::scene());
+		if (!mNextSceneAnim)
+		{
+			SimpleAudioEngine::sharedEngine()->playEffect("run.ogg");
+			CCLayerColor* layer = CCLayerColor::create(ccc4(0,0,0,255));
+			layer->setOpacity(0);
+			addChild(layer);
+			CCSequence* outseq = CCSequence::create(CCFadeIn::create(0.3f),CCCallFunc::create(this,callfunc_selector(StateLvInfo::onCreateNextScene)),NULL);
+			layer->runAction(outseq);
+			mNextSceneAnim = true;
+		}
 	}
+}
+
+void StateLvInfo::onCreateNextScene()
+{
+	GameData::getInstance()->mCurLevel = mLvIndex;
+	CCScene* nextscene = StateGame::scene();
+	CCDirector::sharedDirector()->replaceScene(nextscene);
+	CCLayerColor* layer = CCLayerColor::create(ccc4(0,0,0,255));
+	CCSequence* inseq = CCSequence::create(CCFadeOut::create(0.3f),CCRemoveSelf::create(),NULL);
+	layer->runAction(inseq);
+	nextscene->addChild(layer);
 }
 
 StateLvInfo::~StateLvInfo()
 {
 
 }
+
+void StateLvInfo::onEnter()
+{
+	CCLayer::onEnter();
+	mNextSceneAnim = false;
+}
+
 

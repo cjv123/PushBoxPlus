@@ -144,7 +144,7 @@ public class PushBoxPlus extends Cocos2dxActivity implements AdListener{
         		intent.putExtra(Intent.EXTRA_SUBJECT, "分享");
         		if(null != copyfilepath)
         			intent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///"+mPushBoxPlusActivity.getContext().getExternalCacheDir()+"/share.jpg"));
-        		intent.putExtra(Intent.EXTRA_TEXT, "test");
+        		intent.putExtra(Intent.EXTRA_TEXT, "这个推箱子关卡好难，我不会啊，求解！\n来自:推箱子");
 
         		mPushBoxPlusActivity.startActivity(Intent.createChooser(intent, mPushBoxPlusActivity.getTitle()));
 			}

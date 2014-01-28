@@ -615,7 +615,10 @@ void GiftItem::setIcon( CCSprite* icon )
 }
 
 GiftItem::GiftItem() : 
-mIcon(NULL),mStatus(nor),mNorSp(NULL),mSeledSp(NULL),mDisaSp(NULL),mTitleLabel(NULL),mPriceLabel(NULL),mChips(0),mGold(0),mCoinSignSp(NULL)
+	mIcon(NULL),
+	mStatus(nor),mNorSp(NULL),
+	mSeledSp(NULL),mDisaSp(NULL),
+	mTitleLabel(NULL),mPriceLabel(NULL),mChips(0),mGold(0),mCoinSignSp(NULL),mPass(NULL)
 {
 	//setAnchorPoint(ccp(0,0));
 	
@@ -784,6 +787,11 @@ void GiftItem::setPrice( const char* price,int isGold/*=false*/)
 		ccp(mCoinSignSp->getPositionX()+mCoinSignSp->getContentSize().width+interval,mPriceLabel->getContentSize().height));
 	
 	mPriceLabel->setString(price);
+}
+
+CCNode* GiftItem::getMenuImage()
+{
+	return mNorSp;
 }
 
 

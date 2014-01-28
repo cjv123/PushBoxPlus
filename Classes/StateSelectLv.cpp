@@ -10,6 +10,8 @@ using namespace cocos2d::extension;
 
 #include "AndroidInterface.h"
 #include "PusherSprite.h"
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 
 StateSelectLv::StateSelectLv() : mListView(NULL)
 {
@@ -35,8 +37,6 @@ bool StateSelectLv::init()
 	{
 		return false;
 	}
-
-	set_adview_visible(1);
 
 	CCLayerColor* bg = CCLayerColor::create(ccc4(255,255,255,255));
 	addChild(bg);
@@ -67,10 +67,32 @@ bool StateSelectLv::init()
 	titlebg->setPosition(ccp(getContentSize().width/2,getContentSize().height - 100));
 	titlebg->setCapInsets(CCRectMake(4,4,2,2));
 	titlebg->setContentSize(CCSizeMake(600,50));
-	CCLabelTTF* titlelabel = CCLabelTTF::create("Select Stage","nokiafc22.ttf",24);
+	CCLabelTTF* titlelabel = CCLabelTTF::create("SELECT STAGE","nokiafc22.ttf",24);
 	titlebg->addChild(titlelabel);
 	titlelabel->setPosition(ccp(titlebg->getContentSize().width/2,titlebg->getContentSize().height/2));
 	
+	initListView();
+
+	return true;
+}
+
+void StateSelectLv::onSelItem( GiftItem* item )
+{
+	SimpleAudioEngine::sharedEngine()->playEffect("button.ogg");
+	int index = item->getTag();
+	CCDirector::sharedDirector()->pushScene(StateLvInfo::scene(index));
+}
+
+void StateSelectLv::onEnter()
+{
+	CCLayer::onEnter();
+	set_adview_visible(1);
+	
+	updateListView();
+}
+
+void StateSelectLv::initListView()
+{
 	int mapcount = MapData::getInstance()->getMapLvDatas().size();
 	for (int i=0;i<mapcount;i++)
 	{
@@ -92,25 +114,36 @@ bool StateSelectLv::init()
 			mListView->setApater(this);
 			addChild(mListView);
 		}
+
 		item->setTag(i);
 		mListView->addItem(item);
 	}
 
 	mListView->setPosition(ccp(getContentSize().width/2 - mListView->getContentSize().width/2,getContentSize().height/2 - mListView->getContentSize().height/2));
 
-	return true;
 }
 
-void StateSelectLv::onSelItem( GiftItem* item )
+void StateSelectLv::updateListView()
 {
-	int index = item->getTag();
-	CCDirector::sharedDirector()->pushScene(StateLvInfo::scene(index));
-}
+	MapSaveData& savedata = MapData::getInstance()->getMapSaveData();
 
-void StateSelectLv::onEnter()
-{
-	CCLayer::onEnter();
-	set_adview_visible(1);
+	CCArray& items = mListView->getItems();
+	int mapcount = MapData::getInstance()->getMapLvDatas().size();
+	for (int i=0;i<mapcount;i++)
+	{
+		GiftItem* item =(GiftItem*)items.objectAtIndex(i);
+
+		if (savedata.IsPass[i] && !item->mPass)
+		{
+			item->mPass = true;
+			CCScale9Sprite* itemsp = (CCScale9Sprite*)item->getMenuImage();
+			CCSprite* star = CCSprite::createWithSpriteFrameName("star.png");
+			itemsp->addChild(star);
+			star->setPosition(ccp(itemsp->getContentSize().width,0));
+			star->setAnchorPoint(ccp(1,0));
+			star->setScale(3.0f);
+		}
+	}
 }
 
 

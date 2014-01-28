@@ -7,6 +7,8 @@
 #include "SpriteButton.h"
 #include "LanguageText.h"
 #include "PusherSprite.h"
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 
 
 StateHome::StateHome() : mNextSceneAnim(false)
@@ -35,22 +37,25 @@ bool StateHome::init()
 	CCLayerColor* bg = CCLayerColor::create(ccc4(255,255,255,255));
 	addChild(bg);
 
-	createBg();
+	createBg(); 
 
 	CCSprite* title = CCSprite::createWithSpriteFrameName("title.png");
 	addChild(title);
-	title->setPosition(ccp(getContentSize().width/2,getContentSize().height/2 + 100));
+	title->setPosition(ccp(getContentSize().width/2,getContentSize().height/2 + 200));
 
 	CCLabelTTF* touchlabel = CCLabelTTF::create("TOUCH TO START","nokiafc22.ttf",32);
 	addChild(touchlabel);
 	touchlabel->setColor(ccc3(0,0,0));
-	touchlabel->setPosition(ccp(getContentSize().width/2,380));
+	touchlabel->setPosition(ccp(getContentSize().width/2,480));
 	CCSequence* seq = CCSequence::create(CCFadeOut::create(0.5f),CCFadeIn::create(0.5f),NULL);
 	touchlabel->runAction(CCRepeatForever::create(seq));
 
+	CCLabelTTF* copyright = CCLabelTTF::create("Power By ZF Studio 2013-2014.","nokiafc22.ttf",22);
+	addChild(copyright);
+	copyright->setPosition(ccp(getContentSize().width/2,180));
+	copyright->setColor(ccc3(0,0,0));
+
 	setTouchEnabled(true);
-
-
 	return true;
 }
 
@@ -74,6 +79,7 @@ void StateHome::ccTouchMoved( CCTouch *pTouch, CCEvent *pEvent )
 
 void StateHome::ccTouchEnded( CCTouch *pTouch, CCEvent *pEvent )
 {
+	SimpleAudioEngine::sharedEngine()->playEffect("button.ogg");
 	CCLayerColor* layer = CCLayerColor::create(ccc4(0,0,0,255));
 	layer->setOpacity(0);
 	addChild(layer);
@@ -127,7 +133,7 @@ void StateHome::createBg()
 
 			box->setPosition(ccp(x,y));
 			box->stopAllActions();
-			CCSequence* seq = CCSequence::create(CCMoveBy::create(2.5f,ccp(interval,-interval)),
+			CCSequence* seq = CCSequence::create(CCMoveBy::create(3.5f,ccp(interval,-interval)),
 				CCCallFunc::create(this,callfunc_selector(StateHome::onMoveComplete)),
 				NULL);
 			box->runAction(seq);

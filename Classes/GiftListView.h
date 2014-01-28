@@ -106,6 +106,7 @@ public:
 	void setMenuImage(const char *normalImage, const char *selectedImage, const char *disabledImage);
 	void setMenuImageWithFramename( const char *normalImage, const char *selectedImage, const char *disabledImage );
 	void setMenuImage(CCNodeRGBA* itemSp);
+	CCNode* getMenuImage();
 
 	enum ItemStatus
 	{
@@ -128,6 +129,8 @@ public:
 	float mGold;
 	string mDesc;
 	string mName;
+
+	bool mPass;
 protected:
 	
 	long m_Expiretime; 

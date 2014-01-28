@@ -16,6 +16,11 @@ public:
 private:
 	void onButtonClick(CCObject* pObj);
 
+	virtual void onEnter();
+
+	void onCreateNextScene();
+
+	bool mNextSceneAnim;
 	int mLvIndex;
 };
 

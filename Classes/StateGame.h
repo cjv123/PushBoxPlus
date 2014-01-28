@@ -50,6 +50,10 @@ private:
 
 	void backMove();
 
+	virtual void onEnter();
+
+	virtual void onExit();
+
 
 	CCLayer* mMapLayer;
 	PusherSprite* mPusher;

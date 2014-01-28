@@ -5,6 +5,8 @@
 #include "AndroidInterface.h"
 #include "StateGame.h"
 #include "PusherSprite.h"
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 
 StatePause::StatePause() : mSearchRoad(false),isupdate_title(0)
 {
@@ -85,7 +87,7 @@ bool StatePause::init()
 		SpriteButton* backbutton = SpriteButton::createWithSpriteFrameName("lv9scale.png",this,menu_selector(StatePause::onButtonClick),Scale9SpriteCapDefine);
 		backbutton->setCapMode(Scale9SpriteCapDefine,CCRectMake(4,4,2,2));
 		backbutton->setBgImageSize(CCSizeMake(300,100));
-		backbutton->setTitle(title[i]);
+		backbutton->setTitle(title[i],"Arial",32);
 
 		float x = 320;
 		float y = getContentSize().height - (backbutton->getContentSize().height+20)*i - 250;
@@ -141,6 +143,7 @@ void StatePause::onButtonClick( CCObject* pObj )
 	}
 	else if (tag == 3)
 	{
+		SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
 		CCDirector::sharedDirector()->popToRootScene();
 	}
 	else if (tag == 4)

@@ -147,6 +147,19 @@
                 <key>sourceSize</key>
                 <string>{12,12}</string>
             </dict>
+            <key>star.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{502,66},{7,7}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{7,7}}</string>
+                <key>sourceSize</key>
+                <string>{7,7}</string>
+            </dict>
             <key>vx_chara01_b.png</key>
             <dict>
                 <key>frame</key>
@@ -183,7 +196,7 @@
             <key>size</key>
             <string>{512,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:dbd00d9b53d5fca6bae992fcefa7573e$</string>
+            <string>$TexturePacker:SmartUpdate:49e91e1067548b34fa3597cf8588278e$</string>
             <key>textureFileName</key>
             <string>pushboxres.png</string>
         </dict>

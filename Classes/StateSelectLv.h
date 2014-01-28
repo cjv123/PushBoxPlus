@@ -17,6 +17,8 @@ public:
 	static CCScene* scene();
 
 	virtual bool init();
+	void initListView();
+	void updateListView();
 
 	CREATE_FUNC(StateSelectLv);
 
