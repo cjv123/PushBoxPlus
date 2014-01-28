@@ -404,6 +404,9 @@ void StateGame::onMoveAnimComplete(CCNode* target)
 				);
 			label->runAction(seq);
 
+			SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
+			SimpleAudioEngine::sharedEngine()->playEffect("win.ogg");
+
 			MapSaveData& data = MapData::getInstance()->getMapSaveData();
 			data.IsPass[GameData::getInstance()->mCurLevel] = 1;
 			if (data.Step[GameData::getInstance()->mCurLevel]==0 || mStepCount<data.Step[GameData::getInstance()->mCurLevel])
