@@ -512,7 +512,7 @@ void StateGame::onButtonClick( CCObject* pObj )
 
 void StateGame::initUi()
 {
-	SimpleAudioEngine::sharedEngine()->playBackgroundMusic("bgm1.ogg");
+	SimpleAudioEngine::sharedEngine()->playBackgroundMusic("bgm1.ogg",true);
 
 	mGamePad = GamePad::create();
 	addChild(mGamePad,ui_orderz);
