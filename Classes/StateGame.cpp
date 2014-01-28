@@ -253,28 +253,43 @@ void StateGame::update( float delta )
 {
 	if(!mSearchRoad)
 	{
-		if (!mIsmove && !mClear)
+		if (!mIsmove)
 		{
-			if (mGamePad->isPress(GamePad::Button_Up))
+			if ( !mClear)
 			{
-				move('u');
+				if (mGamePad->isPress(GamePad::Button_Up))
+				{
+					move('u');
+				}
+				else if (mGamePad->isPress(GamePad::Button_Down))
+				{
+					move('d');
+				}
+				else if (mGamePad->isPress(GamePad::Button_Left))
+				{
+					move('l');
+				}
+				else if (mGamePad->isPress(GamePad::Button_Right))
+				{
+					move('r');
+				}
+				else if (mGamePad->isJustPress(GamePad::Button_Back))
+				{
+					backMove();
+				}
 			}
-			else if (mGamePad->isPress(GamePad::Button_Down))
+			else
 			{
-				move('d');
+				if (mGamePad->isPress(GamePad::Button_Left))
+				{
+					CCDirector::sharedDirector()->replaceScene(StateGame::scene());
+				}
+				else if (mGamePad->isPress(GamePad::Button_Right))
+				{
+					runNextStage();
+				}
 			}
-			else if (mGamePad->isPress(GamePad::Button_Left))
-			{
-				move('l');
-			}
-			else if (mGamePad->isPress(GamePad::Button_Right))
-			{
-				move('r');
-			}
-			else if (mGamePad->isJustPress(GamePad::Button_Back))
-			{
-				backMove();
-			}
+			
 		}
 
 		if (mGamePad->isJustPress(GamePad::Button_Menu))
@@ -288,6 +303,7 @@ void StateGame::update( float delta )
 		{
 			CCDirector::sharedDirector()->pushScene(StatePause::scene(true));
 		}
+
 	}
 
 	mGamePad->update(delta);
@@ -403,6 +419,17 @@ void StateGame::onMoveAnimComplete(CCNode* target)
 				NULL
 				);
 			label->runAction(seq);
+
+			int curlv = GameData::getInstance()->mCurLevel + 1;
+			int mapcount = MapData::getInstance()->getMapLvDatas().size();
+			if (curlv<mapcount)
+			{
+				CCLabelTTF* buttoninfo = 
+					CCLabelTTF::create(LanguageText::getInstance()->getString("clearButtonInfo").c_str(),"Arial",24);
+				addChild(buttoninfo,ui_orderz);
+				buttoninfo->setColor(ccc3(255,0,0));
+				buttoninfo->setPosition(ccp(getContentSize().width/2,getContentSize().height/2 + 100));
+			}
 
 			SimpleAudioEngine::sharedEngine()->stopBackgroundMusic();
 			SimpleAudioEngine::sharedEngine()->playEffect("win.ogg");
@@ -581,6 +608,18 @@ void StateGame::onEnter()
 void StateGame::onExit()
 {
 	CCLayer::onExit();
+}
+
+void StateGame::runNextStage()
+{
+	int curlv = GameData::getInstance()->mCurLevel + 1;
+	int mapcount = MapData::getInstance()->getMapLvDatas().size();
+	if (curlv<mapcount)
+	{
+		GameData::getInstance()->mCurLevel+=1;
+		CCDirector::sharedDirector()->replaceScene(StateGame::scene());
+	}
+	
 }
 
 

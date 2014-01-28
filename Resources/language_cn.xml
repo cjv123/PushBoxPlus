@@ -12,4 +12,5 @@
 	<word key="back" text="返回"/>
 	<word key="highScore" text="最少步数:"/>
 	<word key="not" text="无"/>
+	<word key="clearButtonInfo" text="按->键进入下一关"/>
 </root>

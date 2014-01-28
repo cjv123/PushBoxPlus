@@ -33,6 +33,8 @@ private:
 	void initUi();
 	void flagBoxState();
 
+	void runNextStage();
+
 	void onMoveAnimComplete(CCNode* target);
 
 	bool move(char direct);
