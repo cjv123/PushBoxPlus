@@ -2,6 +2,7 @@
 #include <cocos2d.h>
 using namespace cocos2d;
 int g_clickad_flag = 0;
+int g_loading_show = 0;
 
 #ifdef ANDROID
 JavaVM* g_javaVM = NULL;
@@ -18,6 +19,12 @@ JNIEXPORT void JNICALL Java_zfteam_game_pushbox_PushBoxPlus_onClickAd(JNIEnv *en
 {
 	CCLOG("click ad cpp");
 	g_clickad_flag = 1;
+}
+
+JNIEXPORT void JNICALL Java_zfteam_game_pushbox_PushBoxPlus_closeLoading(JNIEnv *env,jclass)
+{
+	CCLOG("close loading");
+	g_loading_show = 0;
 }
 
 jmethodID getMethodID(JNIEnv* env, const char* method, const char* parames)

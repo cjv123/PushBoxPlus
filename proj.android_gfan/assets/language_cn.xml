@@ -1,0 +1,16 @@
+<root>
+	<word key="Stage" text="关卡:"/>
+	<word key="Step" text="当前步数:"/>
+	<word key="HelpByFriends" text="向好友求助"/>
+	<word key="HelpByAd" text="点击广告获取答案"/>
+	<word key="Exit" text="退出"/>
+	<word key="BackToGame" text="回到游戏"/>
+	<word key="ContinuePlay" text="继续播放答案"/>
+	<word key="playSearch" text="播放答案"/>
+	<word key="resStartGame" text="重新开始"/>
+	<word key="startGame" text="开始"/>
+	<word key="back" text="返回"/>
+	<word key="highScore" text="最少步数:"/>
+	<word key="not" text="无"/>
+	<word key="clearButtonInfo" text="按->键进入下一关"/>
+</root>

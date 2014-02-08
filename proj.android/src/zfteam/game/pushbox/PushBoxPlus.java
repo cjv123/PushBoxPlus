@@ -69,6 +69,7 @@ public class PushBoxPlus extends Cocos2dxActivity implements AdListener{
 	
 	public static native void initJVM();
 	public static native void onClickAd();
+	public static native void closeLoading();
 	
     protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);	
@@ -111,6 +112,8 @@ public class PushBoxPlus extends Cocos2dxActivity implements AdListener{
 	{
     	Message m = mHandler.obtainMessage(1, showflag, 1,"");
 		mHandler.sendMessage(m); 
+		if(showflag == 3)
+			closeLoading();
 	}
 	
 	public static void shareToFreinds()
@@ -212,7 +215,7 @@ public class PushBoxPlus extends Cocos2dxActivity implements AdListener{
         	{
         		mAdview.setVisibility(View.INVISIBLE);
         	}
-        	else if(msg.arg1 == 1)
+        	else if(msg.arg1 == 1 || msg.arg1 == 3)
         	{
         		mAdview.setVisibility(View.VISIBLE);
         	}

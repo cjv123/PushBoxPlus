@@ -30,6 +30,21 @@ private:
 
 	bool mSearchRoad;
 	vector<SpriteButton*> mButtons;
+
+	class LoadingView : public CCLayerColor
+	{
+	public:
+		CREATE_FUNC(LoadingView);
+
+		virtual bool init();
+
+		virtual bool ccTouchBegan( CCTouch *pTouch, CCEvent *pEvent );
+
+		virtual void registerWithTouchDispatcher( void );
+
+
+	};
+	LoadingView* mLoadingView;
 	
 	int isupdate_title;
 };

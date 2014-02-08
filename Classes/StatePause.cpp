@@ -99,6 +99,12 @@ bool StatePause::init()
 	}
 
 	scheduleUpdate();
+
+	mLoadingView = LoadingView::create();
+	mLoadingView->setContentSize(getContentSize());
+	addChild(mLoadingView);
+	mLoadingView->setVisible(false);
+	
 	
 	return true;
 }
@@ -112,7 +118,12 @@ void StatePause::onButtonClick( CCObject* pObj )
 		if (!mSearchRoad)
 		{
 			if(!g_clickad_flag)
-				set_adview_visible(1);
+			{
+				g_loading_show = 1;
+				set_adview_visible(3);
+				mLoadingView->setVisible(true);
+				mLoadingView->setTouchEnabled(true);
+			}
 			else 
 			{
 				CCDirector::sharedDirector()->popScene();
@@ -171,8 +182,37 @@ void StatePause::update( float delta )
 		mButtons[0]->setTitle(LanguageText::getInstance()->getString("playSearch").c_str());
 		isupdate_title = 1;
 	}
+
+	if (!g_loading_show && mLoadingView->isVisible())
+	{
+		mLoadingView->setVisible(false);
+		mLoadingView->setTouchEnabled(false);
+	}
 }
 
 
 
 
+
+bool StatePause::LoadingView::init()
+{
+	if(!CCLayerColor::initWithColor(ccc4(0,0,0,128)))
+		return false;
+	
+
+	CCLabelTTF* loadLabel = CCLabelTTF::create("Loading...","nokiafc22.ttf",32);
+	addChild(loadLabel);
+	loadLabel->setPosition(ccp(getContentSize().width/2,getContentSize().height/2));
+
+	return true;
+}
+
+bool StatePause::LoadingView::ccTouchBegan( CCTouch *pTouch, CCEvent *pEvent )
+{
+	return true;
+}
+
+void StatePause::LoadingView::registerWithTouchDispatcher( void )
+{
+	CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this,-128,true);
+}
